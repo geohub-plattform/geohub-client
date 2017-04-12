@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GeoHub Online Editor</title>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.16.0/mapbox-gl-draw.css'
+          type='text/css'/>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.0/mapbox-gl.css' rel='stylesheet'/>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.0/mapbox-gl.js'></script>
+    <!--script src='http://localhost:9967/mapbox-gl-draw.js'></script-->
+    <script src='mapbox-gl-draw.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .zoom-container {
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<div class="zoom-container">Zoom: <span id="zoom"></span></div>
+
+<script>
+    var zoomContainer = document.getElementById('zoom');
+
+    var demodata = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {geohub: true},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                9.220619201660154,
+                                49.131857702226306
+                            ],
+                            [
+                                9.200019836425781,
+                                49.09972333107745
+                            ],
+                            [
+                                9.254951477050781,
+                                49.08398562960475
+                            ],
+                            [
+                                9.287567138671875,
+                                49.10579225413703
+                            ],
+                            [
+                                9.287567138671875,
+                                49.13590111304867
+                            ],
+                            [
+                                9.220619201660154,
+                                49.131857702226306
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [
+                        [
+                            9.236068725585938,
+                            49.141516414286166
+                        ],
+                        [
+                            9.226112365722656,
+                            49.16576720541831
+                        ],
+                        [
+                            9.270057678222656,
+                            49.181478970054584
+                        ],
+                        [
+                            9.295806884765625,
+                            49.1653182245806
+                        ],
+                        [
+                            9.271087646484375,
+                            49.1448852896622
+                        ],
+                        [
+                            9.243278503417969,
+                            49.139045760119835
+                        ]
+                    ]
+                }
+            }
+        ]
+    };
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibml0ZWdhdGUiLCJhIjoiY2l4ejFxc2d6MDA1aDJxbzc5bjZrMzI0ZyJ9.EEPEOLNhdFz9DVNx4TCvBw';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v8',
+        center: [9.237205863630237, 49.13669396742608],
+        zoom: 17
+    });
+    map.showTileBoundaries = true;
+
+    var draw = new MapboxDraw();
+    map.addControl(draw);
+
+    map.on("click", function (event) {
+        console.log("event: ", event);
+    });
+    map.on('zoom', function () {
+        zoomContainer.innerText = map.getZoom();
+    });
+
+    map.on("load", function () {
+        map.addSource('demodata', {
+            type: 'geojson',
+            data: 'friedhof.geojson'
+        });
+        /*        map.addLayer({
+         id: "demodata",
+         source: "demodata",
+         type: "circle",
+         paint: {
+         "circle-color": "#cd00ff",
+         "circle-radius": 4,
+         "circle-opacity": 0.5
+         }
+         });*/
+
+        map.addLayer({
+            id: "demodata",
+            source: "demodata",
+            type: "line",
+            paint: {
+                "line-color": "#888",
+                "line-width": 4,
+                "line-opacity": 0.5
+            }
+        });
+
+
+    });
+
+
+</script>
+</body>
+</html>
