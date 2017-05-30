@@ -65,7 +65,7 @@ test("geohub - convert lineStrings into mesh", {skip: false}, t => {
 
 test("geohub - find close by points", {skip: false}, t => {
   const fc = JSON.parse(fs.readFileSync("./test/testdata.json"));
-  const indexData = utils.createFeaturesIndex(fc);
+  const indexData = utils.createFeaturesIndex(fc.features);
   const features = utils.findClosestFeatures(indexData, {lng: 9.2442388, lat: 49.1373489}, 0.0005);
   t.equals(features.length, 1);
   t.end();
@@ -170,6 +170,133 @@ test("geohub - dijkstras with mesh", {skip: false}, t => {
     const pair = point.split("#");
     coords.push([Number(pair[0]), Number(pair[1])]);
   });
+
+  t.end();
+});
+
+
+test("geohub - test lineIntersect 1", {skip: false}, t => {
+  const line1 = turf.lineString([[10, 50], [11, 50]]);
+  const line2 = turf.lineString([[10.5, 50], [10.5, 55]]);
+  const features = turf.lineIntersect(line1, line2);
+  t.equals(features.features.length, 1);
+  t.equals(JSON.stringify(features.features[0].geometry), '{"type":"Point","coordinates":[10.5,50]}');
+  t.end();
+});
+
+test("geohub - test lineIntersect 2", {skip: false}, t => {
+  const line1 = turf.lineString([[10, 50], [11, 50]]);
+  const line2 = turf.lineString([[10, 50], [10, 55]]);
+  const features = turf.lineIntersect(line1, line2);
+  t.equals(features.features.length, 1);
+  t.equals(JSON.stringify(features.features[0].geometry), '{"type":"Point","coordinates":[10,50]}');
+  t.end();
+});
+
+function isPointEqual(coords1, coords2) {
+  return coords1[0] === coords2[0] && coords1[1] === coords2[1];
+}
+
+test("geohub - mesh with intersections", {skip: false}, t => {
+  const fc = JSON.parse(fs.readFileSync("./test/testdata.json"));
+
+  const features2 = fc.features;
+  const features = [turf.lineString([[9.214, 49.133], [9.232, 49.133]]),
+    turf.lineString([[9.214, 49.136], [9.231, 49.127]]), turf.lineString([[9.213, 49.126], [9.231, 49.136]])];
+
+  console.time("Meshing");
+  const allSegments = [];
+  const segmentById = {};
+  let segmentId = 0;
+  features.forEach((lineString) => {
+    const props = lineString.properties;
+    const coords = lineString.geometry.coordinates;
+    let firstPoint = coords[0];
+    let secondPoint = null;
+    for (let index = 1; index < coords.length; index++) {
+      secondPoint = coords[index];
+      const line = utils.createLineAndSaveLength([firstPoint, secondPoint], props);
+      utils.setProperty(line, "geoHubId", segmentId);
+      segmentById[segmentId] = line;
+      segmentId++;
+      allSegments.push(line);
+      firstPoint = secondPoint;
+    }
+  });
+
+  const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeatures) {
+    let segCutPoints = segmentsWithCutPoints[feature.properties.geoHubId];
+    if (segCutPoints === undefined) {
+      segCutPoints = [];
+      segmentsWithCutPoints[feature.properties.geoHubId] = segCutPoints;
+    }
+    cutPointFeatures.forEach((feature) => {
+      segCutPoints.push(feature.geometry.coordinates);
+    });
+  };
+
+  const checkedSegments = {};
+  const segmentsWithCutPoints = {};
+  allSegments.forEach((segmentFeature1, idx1) => {
+    allSegments.forEach((segmentFeature2, idx2) => {
+      const forwardDir = `${idx1}:${idx2}`;
+      const backDir = `${idx2}:${idx1}`;
+      if (segmentFeature1 !== segmentFeature2 && checkedSegments[backDir] === undefined) {
+        checkedSegments[forwardDir] = true;
+        const fc = turf.lineIntersect(segmentFeature1, segmentFeature2);
+        turf.featureEach(fc, (point) => {
+          const pointCoords = point.geometry.coordinates;
+          const seg1Coords = segmentFeature1.geometry.coordinates;
+          const seg2Coords = segmentFeature2.geometry.coordinates;
+          if ((!isPointEqual(pointCoords, seg1Coords[0])) && (!isPointEqual(pointCoords, seg1Coords[1])) &&
+            (!isPointEqual(pointCoords, seg2Coords[0])) && (!isPointEqual(pointCoords, seg2Coords[1]))) {
+            appendCutFeatures(segmentsWithCutPoints, segmentFeature1, fc.features);
+            appendCutFeatures(segmentsWithCutPoints, segmentFeature2, fc.features);
+          }
+        });
+      }
+    });
+  });
+
+
+  // iterate over all segments, copy segments into a new array,
+  // if a segment has cut point then replace it with the new sub segments
+  const result = [];
+  allSegments.forEach((segment) => {
+    const cutPoints = segmentsWithCutPoints[segment.properties.geoHubId];
+    if (cutPoints !== undefined) {
+      const fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
+      result.push(...fc.features);
+
+/*      const coords = segment.geometry.coordinates;
+      const distanceMap = {};
+
+      cutPoints.forEach((cutPoint) => {
+        const distance = turf.distance(cutPoint, turf.point(coords[0]));
+        distanceMap[distance] = cutPoint;
+      });
+      let lastSegment = segment;
+      Object.keys(distanceMap).sort().forEach((distance) => {
+        const cutPoint = distanceMap[distance];
+        const fc = turf.lineSplit(lastSegment, cutPoint);
+        const resultElement = fc.features[0];
+        //utils.addProperties(resultElement, utils.createRandomStroke());
+        result.push(resultElement);
+        lastSegment = fc.features[1];
+      });
+      //utils.addProperties(lastSegment, utils.createRandomStroke());
+      result.push(lastSegment);*/
+    } else {
+      result.push(segment);
+    }
+  });
+
+  t.equals(result.length, 9);
+  //t.equals(JSON.stringify(result), '[{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.214,49.133],[9.219666666666667,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.219666666666667,49.133],[9.225600000000002,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.225600000000002,49.133],[9.232,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.214,49.136],[9.219666666666667,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.219666666666667,49.133],[9.22270481927711,49.13139156626506]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.22270481927711,49.13139156626506],[9.231,49.127]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.213,49.126],[9.22270481927711,49.13139156626506]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.22270481927711,49.13139156626506],[9.225600000000002,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.225600000000002,49.133],[9.231,49.136]]}}]');
+
+  console.timeEnd("Meshing");
+
+  //console.log("result: ", JSON.stringify(turf.featureCollection(result)));
 
   t.end();
 });

@@ -155,17 +155,30 @@ function createMesh(features) {
   return mesh;
 }
 
-function createFeaturesIndex(featureCollection) {
-  const result = {pointFeatureMap: {}, featureById: {}};
+function setProperty(feature, name, value) {
+  let props = feature.properties;
+  if (!props) {
+    props = {};
+    feature.properties = props;
+  }
+  props[name] = value;
+}
+
+function addProperties(feature, newProps) {
+  feature.properties = Object.assign(feature.properties || {}, newProps);
+}
+
+function createFeaturesIndex(features) {
+  const result = {pointFeatureMap: {}, featureById: {}, featureIdCounter: 0};
   const allPoints = [];
-  let featureIdCounter = 0;
-  turf.featureEach(featureCollection, (feature) => {
-    result.featureById[featureIdCounter] = feature;
+  features.forEach((feature) => {
+    result.featureById[result.featureIdCounter] = feature;
+    setProperty(feature, "geoHubId", result.featureIdCounter);
     turf.coordEach(feature, (coord) => {
       allPoints.push(coord);
-      result.pointFeatureMap[allPoints.length - 1] = featureIdCounter;
+      result.pointFeatureMap[allPoints.length - 1] = result.featureIdCounter;
     });
-    featureIdCounter++;
+    result.featureIdCounter++;
   });
   result.pointIndex = kdbush(allPoints);
   return result;
@@ -186,6 +199,7 @@ function findClosestFeatures(indexData, point, radius) {
 }
 
 module.exports = {
-  pointInCoordinates, lineSplit, splitLines, createSimpleMesh,
-  createMesh, createFeaturesIndex, findClosestFeatures, sameBorders
+  pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
+  createMesh, createFeaturesIndex, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
+  addProperties
 };

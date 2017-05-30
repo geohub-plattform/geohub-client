@@ -177,6 +177,7 @@ module.exports = function (ctx) {
         if (ctx.hotFeature) {
           ctx.coldFeatures.push(ctx.hotFeature);
           ctx.hotFeature = null;
+          ctx.api.recreateIndices(ctx.coldFeatures);
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
           ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
           ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
@@ -194,6 +195,7 @@ module.exports = function (ctx) {
         } else {
           hotFeature = turf.lineString(snapCoords);
           ctx.hotFeature = hotFeature;
+          ctx.api.addFeatureToIndex(ctx.hotFeature);
         }
         ctx.snapFeature = null;
         ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));

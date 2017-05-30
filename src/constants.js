@@ -15,9 +15,9 @@ module.exports = {
     BOX_SELECT: 'mapbox-gl-draw_boxselect'
   },
   sources: {
+    SNAP: 'geohub-draw-snap',
     HOT: 'geohub-draw-hot',
-    COLD: 'geohub-draw-cold',
-    SNAP: 'geohub-draw-snap'
+    COLD: 'geohub-draw-cold'
   },
   cursors: {
     ADD: 'add',

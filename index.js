@@ -26,6 +26,32 @@ const setupGeoHub = function (options = {}, api) {
       });
 
       ctx.map.addLayer({
+        'source': Constants.sources.COLD,
+        'id': 'geohub-line-cold',
+        'type': 'line',
+        'layout': {
+          'line-cap': 'round',
+          'line-join': 'round'
+        },
+        'paint': {
+          'line-color': '#ff0015',
+          'line-width': 2
+        }
+      });
+      ctx.map.addLayer({
+        'source': Constants.sources.HOT,
+        'id': 'geohub-line-hot',
+        'type': 'line',
+        'layout': {
+          'line-cap': 'round',
+          'line-join': 'round'
+        },
+        'paint': {
+          'line-color': '#0000ff',
+          'line-width': 2
+        }
+      });
+      ctx.map.addLayer({
         'source': Constants.sources.SNAP,
         'id': 'geohub-point-active',
         'type': 'circle',
@@ -47,32 +73,6 @@ const setupGeoHub = function (options = {}, api) {
           'line-width': 2
         }
       });
-      ctx.map.addLayer({
-        'source': Constants.sources.HOT,
-        'id': 'geohub-line-hot',
-        'type': 'line',
-        'layout': {
-          'line-cap': 'round',
-          'line-join': 'round'
-        },
-        'paint': {
-          'line-color': '#0000ff',
-          'line-width': 2
-        }
-      });
-      ctx.map.addLayer({
-        'source': Constants.sources.COLD,
-        'id': 'geohub-line-cold',
-        'type': 'line',
-        'layout': {
-          'line-cap': 'round',
-          'line-join': 'round'
-        },
-        'paint': {
-          'line-color': '#ff0015',
-          'line-width': 2
-        }
-      });
       return document.createElement('div');
     };
     api.onRemove = function () {
@@ -85,6 +85,8 @@ const setupGeoHub = function (options = {}, api) {
     api.addData = ctx.pointindex.addData;
     api.featuresAt = ctx.pointindex.featuresAt;
     api.getRouteFromTo = ctx.pointindex.getRouteFromTo;
+    api.recreateIndices = ctx.pointindex.recreateIndices;
+    api.addFeatureToIndex = ctx.pointindex.addFeatureToIndex;
     api.options = options;
 
     return api;

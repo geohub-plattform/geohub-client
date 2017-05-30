@@ -5,7 +5,8 @@ import turf from "@turf/turf";
 
 module.exports = function (ctx) {
   let indexData = null;
-  const graphData = {};
+  let graphData = {};
+  let originalData = null;
 
   const addVertex = function (startPoint, endPoint, length, data) {
     let startData = data[startPoint];
@@ -26,6 +27,7 @@ module.exports = function (ctx) {
   };
 
   const createDataGraph = function (mesh) {
+    graphData = {};
     mesh.forEach((vertex) => {
       const coords = vertex.geometry.coordinates;
       const startPoint = coords[0].join("#");
@@ -36,14 +38,59 @@ module.exports = function (ctx) {
     });
   };
 
+  const queryMapFeatures = function (lngLat) {
+    const radius = 0.001;
+    const bbox = [
+      ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
+      ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
+    ];
+    const filter = {layers: ["geohub-snaplayer", "geohub-line-cold", "geohub-line-hot"]};
+    const features = ctx.map.queryRenderedFeatures(bbox, filter);
+    //console.log("bbox: ", bbox, " results: ", features);
+    const result = [];
+    features.forEach((feature) => {
+      const id = feature.properties.geoHubId;
+      result.push(indexData.featureById[id]);
+    });
+    return result;
+  };
+
   return {
     addData: function (fc) {
-      indexData = utils.createFeaturesIndex(fc);
+      originalData = fc;
+      indexData = utils.createFeaturesIndex(fc.features);
       createDataGraph(utils.createSimpleMesh(fc.features));
+      ctx.map.addSource('geohub-snaplayer', {
+        type: 'geojson',
+        data: fc
+      });
+
+      ctx.map.addLayer({
+        id: "geohub-snaplayer",
+        source: "geohub-snaplayer",
+        type: "line",
+        paint: {
+          "line-color": "#888",
+          "line-width": 4,
+          "line-opacity": 0.3
+        }
+      });
+    },
+    recreateIndices: function (newFeatures) {
+      const allFeatures = [...originalData.features, ...newFeatures];
+      indexData = utils.createFeaturesIndex(allFeatures);
+      createDataGraph(utils.createSimpleMesh(allFeatures));
+    },
+    addFeatureToIndex: function (newFeature) {
+      indexData.featureById[indexData.featureIdCounter] = newFeature;
+      utils.setProperty(newFeature, "geoHubId", indexData.featureIdCounter);
+      indexData.featureIdCounter++;
+      const allFeatures = [...originalData.features, newFeature];
+      createDataGraph(utils.createSimpleMesh(allFeatures));
     },
     featuresAt: function (lnglat) {
       if (indexData)
-        return utils.findClosestFeatures(indexData, lnglat, 0.001);
+        return queryMapFeatures(lnglat); //utils.findClosestFeatures(indexData, lnglat, 0.001);
       else
         return null;
     },
