@@ -1,7 +1,6 @@
 import test from "tape";
 import turf from "@turf/turf";
 import fs from "fs";
-import kdbush from "kdbush";
 import utils from "../src/utils";
 import Dijkstras from "../src/dijkstras";
 
@@ -60,22 +59,6 @@ test("geohub - convert lineStrings into mesh", {skip: false}, t => {
   const mesh = utils.createMesh(features);
   console.timeEnd("Meshing");
   console.log("Mesh size: ", mesh.length);
-  t.end();
-});
-
-test("geohub - find close by points", {skip: false}, t => {
-  const fc = JSON.parse(fs.readFileSync("./test/testdata.json"));
-  const indexData = utils.createFeaturesIndex(fc.features);
-  const features = utils.findClosestFeatures(indexData, {lng: 9.2442388, lat: 49.1373489}, 0.0005);
-  t.equals(features.length, 1);
-  t.end();
-});
-
-test("geohub - test close by points", {skip: true}, t => {
-  const points = [[9, 10], [9, 11], [10, 10], [10, 11], [10, 10]];
-  const pointIndex = kdbush(points);
-  const result = pointIndex.within(9.7, 10, 0.4);
-  console.log("result: ", result);
   t.end();
 });
 

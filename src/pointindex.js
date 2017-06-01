@@ -4,7 +4,6 @@ import cloneDeep from "clone-deep";
 import turf from "@turf/turf";
 
 module.exports = function (ctx) {
-  let indexData = null;
   let graphData = {};
   let originalData = null;
 
@@ -46,19 +45,13 @@ module.exports = function (ctx) {
     ];
     const filter = {layers: ["geohub-snaplayer", "geohub-line-cold", "geohub-line-hot"]};
     const features = ctx.map.queryRenderedFeatures(bbox, filter);
-    //console.log("bbox: ", bbox, " results: ", features);
-    const result = [];
-    features.forEach((feature) => {
-      const id = feature.properties.geoHubId;
-      result.push(indexData.featureById[id]);
-    });
-    return result;
+    return ctx.featureIndex.getFeaturesFromIndex(features);
   };
 
   return {
     addData: function (fc) {
       originalData = fc;
-      indexData = utils.createFeaturesIndex(fc.features);
+      ctx.featureIndex.addFeatures(fc.features);
       createDataGraph(utils.createSimpleMesh(fc.features));
       ctx.map.addSource('geohub-snaplayer', {
         type: 'geojson',
@@ -78,21 +71,17 @@ module.exports = function (ctx) {
     },
     recreateIndices: function (newFeatures) {
       const allFeatures = [...originalData.features, ...newFeatures];
-      indexData = utils.createFeaturesIndex(allFeatures);
+      ctx.featureIndex.reset();
+      ctx.featureIndex.addFeatures(allFeatures);
       createDataGraph(utils.createSimpleMesh(allFeatures));
     },
     addFeatureToIndex: function (newFeature) {
-      indexData.featureById[indexData.featureIdCounter] = newFeature;
-      utils.setProperty(newFeature, "geoHubId", indexData.featureIdCounter);
-      indexData.featureIdCounter++;
+      ctx.featureIndex.addFeatures([newFeature]);
       const allFeatures = [...originalData.features, newFeature];
       createDataGraph(utils.createSimpleMesh(allFeatures));
     },
     featuresAt: function (lnglat) {
-      if (indexData)
-        return queryMapFeatures(lnglat); //utils.findClosestFeatures(indexData, lnglat, 0.001);
-      else
-        return null;
+      return queryMapFeatures(lnglat); //utils.findClosestFeatures(indexData, lnglat, 0.001);
     },
     getRouteFromTo: function (fromPoint, toPoint) {
       const g = new Dijkstras();

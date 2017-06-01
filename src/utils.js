@@ -1,5 +1,4 @@
 import turf from "@turf/turf";
-import kdbush from "kdbush";
 
 /**
  * Returns the points that the given point matches with the given coordinates. The function
@@ -168,22 +167,6 @@ function addProperties(feature, newProps) {
   feature.properties = Object.assign(feature.properties || {}, newProps);
 }
 
-function createFeaturesIndex(features) {
-  const result = {pointFeatureMap: {}, featureById: {}, featureIdCounter: 0};
-  const allPoints = [];
-  features.forEach((feature) => {
-    result.featureById[result.featureIdCounter] = feature;
-    setProperty(feature, "geoHubId", result.featureIdCounter);
-    turf.coordEach(feature, (coord) => {
-      allPoints.push(coord);
-      result.pointFeatureMap[allPoints.length - 1] = result.featureIdCounter;
-    });
-    result.featureIdCounter++;
-  });
-  result.pointIndex = kdbush(allPoints);
-  return result;
-}
-
 function findClosestFeatures(indexData, point, radius) {
   const featureIdsWithin = indexData.pointIndex.within(point.lng, point.lat, radius);
   const assertUniqueFeatures = {};
@@ -200,6 +183,6 @@ function findClosestFeatures(indexData, point, radius) {
 
 module.exports = {
   pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
-  createMesh, createFeaturesIndex, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
+  createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
   addProperties
 };
