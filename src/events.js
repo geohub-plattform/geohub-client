@@ -1,6 +1,7 @@
 import Constants from "./constants";
 import turf from "@turf/turf";
 import cheapRuler from "cheap-ruler";
+import doubleClickZoom from "./double_click_zoom";
 
 
 function closestPoints(ruler, coordinates, evtCoords) {
@@ -163,12 +164,16 @@ module.exports = function (ctx) {
     if (ctx.closestPoint) {
       ctx.lastPoint = ctx.closestPoint;
     } else {
+      doubleClickZoom.disable(ctx);
       const evtCoords = [event.lngLat.lng, event.lngLat.lat];
       ctx.lastPoint = {coords: evtCoords};
     }
     console.log("mouseClick, last point: ", ctx.lastPoint, "closestPoint: ", ctx.closestPoint);
     if (ctx.lastClick) {
       if (ctx.lastClick.coords[0] === ctx.lastPoint.coords[0] && ctx.lastClick.coords[1] === ctx.lastPoint.coords[1]) {
+        console.log("stop");
+        doubleClickZoom.enable(ctx);
+
         // finish draw
         console.log("Finish draw");
         ctx.snapFeature = null;
