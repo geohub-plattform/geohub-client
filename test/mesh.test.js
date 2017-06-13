@@ -44,21 +44,23 @@ const MeshIndex = function (originalData) {
   function checkForIntersections(knownSegments, newSegments) {
     const segmentsWithCutPoints = {};
     const checkedSegments = {};
-    knownSegments.forEach((segmentFeature1, idx1) => {
-      newSegments.forEach((segmentFeature2, idx2) => {
+    knownSegments.forEach((segmentFeature1) => {
+      const idx1 = segmentFeature1.properties.geoHubId;
+      newSegments.forEach((segmentFeature2) => {
+        const idx2 = segmentFeature2.properties.geoHubId;
         const forwardDir = `${idx1}:${idx2}`;
         const backDir = `${idx2}:${idx1}`;
         if (segmentFeature1 !== segmentFeature2 && checkedSegments[backDir] === undefined) {
           checkedSegments[forwardDir] = true;
-          const fc = turf.lineIntersect(segmentFeature1, segmentFeature2);
-          turf.featureEach(fc, (point) => {
+          const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2);
+          turf.featureEach(intersectionPoints, (point) => {
             const pointCoords = point.geometry.coordinates;
             const seg1Coords = segmentFeature1.geometry.coordinates;
             const seg2Coords = segmentFeature2.geometry.coordinates;
             if ((!isPointEqual(pointCoords, seg1Coords[0])) && (!isPointEqual(pointCoords, seg1Coords[1])) &&
               (!isPointEqual(pointCoords, seg2Coords[0])) && (!isPointEqual(pointCoords, seg2Coords[1]))) {
-              appendCutFeatures(segmentsWithCutPoints, segmentFeature1, fc.features);
-              appendCutFeatures(segmentsWithCutPoints, segmentFeature2, fc.features);
+              appendCutFeatures(segmentsWithCutPoints, segmentFeature1, intersectionPoints.features);
+              appendCutFeatures(segmentsWithCutPoints, segmentFeature2, intersectionPoints.features);
             }
           });
         }
@@ -89,8 +91,12 @@ const MeshIndex = function (originalData) {
   }
 
   this.addNewFeatures = function (newFeatures) {
-    const newSegments = splitIntoTwoPointSegmentsAndAddIds(newFeatures);
-    const segmentsWithCutPoints = checkForIntersections(allSegments, newSegments);
+    const newFeaturesSegments = splitIntoTwoPointSegmentsAndAddIds(newFeatures);
+    const newFeaturesWithCutPoints = checkForIntersections(newFeaturesSegments, newFeaturesSegments);
+    const allNewFeatures = cutSegments(newFeaturesSegments, newFeaturesWithCutPoints);
+
+    const newSegments = splitIntoTwoPointSegmentsAndAddIds(allNewFeatures);
+    const segmentsWithCutPoints = checkForIntersections(newSegments, allSegments);
     allSegments = [...cutSegments(allSegments, segmentsWithCutPoints),
       ...cutSegments(newSegments, segmentsWithCutPoints)];
   };
@@ -108,12 +114,20 @@ const MeshIndex = function (originalData) {
 test("geohub - mesh with intersections", {skip: false}, t => {
   const fc = JSON.parse(fs.readFileSync("./test/testdata.json"));
 
-  const features = fc.features;
-  const features2 = [turf.lineString([[9.214, 49.133], [9.232, 49.133]]),
+  const features2 = fc.features;
+  const features = [turf.lineString([[9.214, 49.133], [9.232, 49.133]]),
     turf.lineString([[9.214, 49.136], [9.231, 49.127]]), turf.lineString([[9.213, 49.126], [9.231, 49.136]])];
 
   const extraLine = turf.lineString([[9.22877311706543, 49.1359291911374],
     [9.228966236114502, 49.126213223144774]]);
+
+  const selfCrossingLine = turf.lineString([
+    [9.218752384185791, 49.13483413389217],
+    [9.215641021728516, 49.13041154120394],
+    [9.219911098480225, 49.131436494632105],
+    [9.213967323303223, 49.13386540924051]
+  ]);
+
 
   console.time("Meshing");
   const meshIndex = new MeshIndex(features);
@@ -131,10 +145,14 @@ test("geohub - mesh with intersections", {skip: false}, t => {
   const result2 = meshIndex.getMesh();
   t.equals(result2.length, 16);
 
-  //t.equals(JSON.stringify(result), '[{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.214,49.133],[9.219666666666667,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.219666666666667,49.133],[9.225600000000002,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.225600000000002,49.133],[9.232,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.214,49.136],[9.219666666666667,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.219666666666667,49.133],[9.22270481927711,49.13139156626506]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.22270481927711,49.13139156626506],[9.231,49.127]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.213,49.126],[9.22270481927711,49.13139156626506]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.22270481927711,49.13139156626506],[9.225600000000002,49.133]]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.225600000000002,49.133],[9.231,49.136]]}}]');
+  console.time("Add self crossing line");
+  meshIndex.addNewFeatures([selfCrossingLine]);
+  console.timeEnd("Add self crossing line");
 
+  const result3 = meshIndex.getMesh();
+  t.equals(result3.length, 27);
 
-  //console.log(JSON.stringify(turf.featureCollection(result2)));
+  console.log(JSON.stringify(turf.featureCollection(result3)));
 
   t.end();
 });
