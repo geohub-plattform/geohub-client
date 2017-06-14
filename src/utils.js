@@ -1,4 +1,4 @@
-import turf from "@turf/turf";
+const turf = require("@turf/turf");
 
 /**
  * Returns the points that the given point matches with the given coordinates. The function
@@ -18,7 +18,6 @@ function pointInCoordinates(lineString, pointCoords) {
   });
   return result;
 }
-
 
 function sameBorders(fromBorders, toBorders) {
   if (fromBorders && toBorders) {
@@ -181,8 +180,14 @@ function findClosestFeatures(indexData, point, radius) {
   return featureResult;
 }
 
+function isPointEqual(coords1, coords2) {
+  return coords1[0] === coords2[0] && coords1[1] === coords2[1];
+}
+
+
+
 module.exports = {
   pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
   createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
-  addProperties
+  addProperties, isPointEqual
 };

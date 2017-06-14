@@ -104,53 +104,66 @@ function findClosestPoint(uniqueFeatures, evtCoords) {
 module.exports = function (ctx) {
 
   const mouseMove = function (event) {
-
+//    console.log("crtl: ", event.originalEvent.ctrlKey, " shift: ", event.originalEvent.shiftKey, " alt: "+event.originalEvent.altKey);
     const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
     //console.log("move: button:  ", button, " event: ", event);
     if (button === 1) {
       return;
     }
 
-    const evtCoords = [event.lngLat.lng, event.lngLat.lat];
-    const nearFeatures = ctx.api.featuresAt(event.lngLat);
-    let snapFeature = null;
-    if (nearFeatures) {
-      //console.log("near features found: ", nearFeatures.length);
-      const closestPoint = findClosestPoint(nearFeatures, evtCoords);
-      //console.log("closestPoint: ", closestPoint);
-
-      if (closestPoint) {
-        ctx.closestPoint = closestPoint;
-        if (ctx.lastPoint) {
-          const fromPoint = ctx.lastPoint;
-          const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
-          if (route) {
-            snapFeature = turf.lineString(route);
-          } else {
-            snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
-          }
-        } else {
-          snapFeature = turf.point(closestPoint.coords);
-        }
-      } else {
-        ctx.closestPoint = null;
-        if (ctx.lastPoint) {
-          snapFeature = turf.lineString([ctx.lastPoint.coords, evtCoords]);
-        }
-      }
-      /*const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
-       if (button === 1) {
-       return events.mousedrag(event);
-       }
-       const target = getFeaturesAndSetCursor(event, ctx);
-       event.featureTarget = target;
-       currentMode.mousemove(event);*/
-
-    } else {
+    const createLineToCurrentMouseMove = function (evtCoords) {
       ctx.closestPoint = null;
       if (ctx.lastPoint) {
-        snapFeature = turf.lineString([ctx.lastPoint.coords, evtCoords]);
+        return turf.lineString([ctx.lastPoint.coords, evtCoords]);
+      } else {
+        return null;
       }
+    };
+
+    const calculateRoute = !event.originalEvent.altKey;
+    const snapToPoint = !event.originalEvent.ctrlKey;
+    const evtCoords = [event.lngLat.lng, event.lngLat.lat];
+    let snapFeature = null;
+    if (snapToPoint) {
+      const nearFeatures = ctx.api.featuresAt(event.lngLat);
+      if (nearFeatures) {
+        //console.log("near features found: ", nearFeatures.length);
+        const closestPoint = findClosestPoint(nearFeatures, evtCoords);
+        //console.log("closestPoint: ", closestPoint);
+
+        if (closestPoint) {
+          ctx.closestPoint = closestPoint;
+          if (ctx.lastPoint) {
+            const fromPoint = ctx.lastPoint;
+            if (calculateRoute) {
+              const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
+              if (route) {
+                snapFeature = turf.lineString(route);
+              } else {
+                snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
+              }
+            } else {
+              snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
+            }
+          } else {
+            snapFeature = turf.point(closestPoint.coords);
+          }
+        } else {
+          snapFeature = createLineToCurrentMouseMove(evtCoords);
+        }
+        /*const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
+         if (button === 1) {
+         return events.mousedrag(event);
+         }
+         const target = getFeaturesAndSetCursor(event, ctx);
+         event.featureTarget = target;
+         currentMode.mousemove(event);*/
+
+      } else {
+        snapFeature = createLineToCurrentMouseMove(evtCoords);
+      }
+    } else {
+      snapFeature = createLineToCurrentMouseMove(evtCoords);
     }
     ctx.snapFeature = snapFeature;
     if (snapFeature) {
@@ -182,7 +195,7 @@ module.exports = function (ctx) {
         if (ctx.hotFeature) {
           ctx.coldFeatures.push(ctx.hotFeature);
           ctx.hotFeature = null;
-          ctx.api.recreateIndices(ctx.coldFeatures);
+          //ctx.api.recreateIndices(ctx.coldFeatures);
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
           ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
           ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
@@ -194,6 +207,7 @@ module.exports = function (ctx) {
     if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
       const snapCoords = ctx.snapFeature.geometry.coordinates;
       if (snapCoords.length > 1) {
+        ctx.api.addFeatureToMesh(ctx.snapFeature);
         if (hotFeature) {
           const hotCoords = hotFeature.geometry.coordinates;
           hotCoords.splice(-1, 1, ...snapCoords);

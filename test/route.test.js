@@ -3,6 +3,7 @@ import turf from "@turf/turf";
 import fs from "fs";
 import utils from "../src/utils";
 import Dijkstras from "../src/dijkstras";
+import MeshRouting from "../src/mesh_routing";
 
 
 test("geohub - find point on lineString coordinates", t => {
@@ -104,56 +105,25 @@ test("geohub - dijkstras", {}, t => {
   t.end();
 });
 
-test("geohub - dijkstras with mesh", {skip: false}, t => {
+test("geohub - meshRouting", {skip: false}, t => {
   const fc = JSON.parse(fs.readFileSync("./test/testdata.json"));
   const features = fc.features;
   console.time("Meshing");
   const mesh = utils.createMesh(features);
   console.timeEnd("Meshing");
 
+  console.log("mesh count old: ", mesh.length);
+
   console.time("Vertexing");
-  const graphData = {};
-
-  const addVertex = function (startPoint, endPoint, length) {
-    let startData = graphData[startPoint];
-    if (!startData) {
-      startData = {};
-      graphData[startPoint] = startData;
-    }
-    if (!startData[endPoint]) {
-      startData[endPoint] = length;
-    }
-  };
-
-  mesh.forEach((vertex) => {
-    const coords = vertex.geometry.coordinates;
-    const startPoint = coords[0].join("#");
-    const endPoint = coords[coords.length - 1].join("#");
-    const length = vertex.properties.length;
-    addVertex(startPoint, endPoint, length);
-    addVertex(endPoint, startPoint, length);
-  });
-
+  const meshRouting = new MeshRouting(mesh);
   console.timeEnd("Vertexing");
 
   console.time("Routing");
-
-  const g = new Dijkstras();
-  g.setVertices(graphData);
-
-
   const fromPoint = [9.2385927, 49.1371923];
   const toPoint = [9.2352176, 49.1356715];
-
-  const path = g.shortestPath(fromPoint.join("#"), toPoint.join("#")).concat([fromPoint.join("#")]).reverse();
-
+  const coords = meshRouting.getRouteFromTo({coords: fromPoint}, {coords: toPoint});
   console.timeEnd("Routing");
-  const coords = [];
-  path.forEach((point) => {
-    const pair = point.split("#");
-    coords.push([Number(pair[0]), Number(pair[1])]);
-  });
-
+  t.equals(JSON.stringify(coords), "[[9.2385927,49.1371923],[9.2377742,49.1372279],[9.2369915,49.1372548],[9.2369466,49.1368506],[9.2361759,49.1368891],[9.2353881,49.1369284],[9.2353262,49.1365135],[9.2352591,49.1360636],[9.2352176,49.1356715]]")
   t.end();
 });
 

@@ -87,8 +87,8 @@ const setupGeoHub = function (options = {}, api) {
   api.addData = ctx.pointindex.addData;
   api.featuresAt = ctx.pointindex.featuresAt;
   api.getRouteFromTo = ctx.pointindex.getRouteFromTo;
-  api.recreateIndices = ctx.pointindex.recreateIndices;
   api.addFeatureToIndex = ctx.pointindex.addFeatureToIndex;
+  api.addFeatureToMesh = ctx.pointindex.addFeatureToMesh;
   api.options = options;
 
   return api;

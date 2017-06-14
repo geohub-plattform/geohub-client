@@ -1,5 +1,9 @@
 import utils from "./utils";
 
+/**
+ *
+ * @type {module.exports}
+ */
 const FeatureIndex = module.exports = function () {
   this.featureById = {};
   this.featureIdCounter = 0;

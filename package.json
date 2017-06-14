@@ -11,7 +11,8 @@
     ]
   },
   "scripts": {
-    "active-test": "tape -r babel-register test/mesh.test.js",
+    "debug-test": "node $NODE_DEBUG_OPTION test/mesh_routing.test.js",
+    "active-test": "tape -r babel-register test/mesh_index.test.js",
     "geohub-test": "tape -r babel-register test/*.test.js",
     "test": "npm run lint && npm run tape",
     "lint": "eslint --no-eslintrc -c .eslintrc index.js src test",
