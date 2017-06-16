@@ -6,8 +6,7 @@ module.exports = function (ctx) {
   let meshIndex = null;
   let meshRouting = null;
 
-  const queryMapFeatures = function (lngLat) {
-    const radius = 0.001;
+  const queryMapFeatures = function (lngLat, radius) {
     const bbox = [
       ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
       ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
@@ -42,11 +41,12 @@ module.exports = function (ctx) {
       ctx.featureIndex.addFeatures([newFeature]);
     },
     addFeatureToMesh: function (newFeature) {
+      console.log("addFeatureToMesh: ", JSON.stringify(newFeature));
       meshIndex.addNewFeatures([newFeature]);
       meshRouting = new MeshRouting(meshIndex.getMesh());
     },
-    featuresAt: function (lnglat) {
-      return queryMapFeatures(lnglat); //utils.findClosestFeatures(indexData, lnglat, 0.001);
+    featuresAt: function (lnglat, radius) {
+      return queryMapFeatures(lnglat, radius);
     },
     getRouteFromTo: function (fromPoint, toPoint) {
       return meshRouting.getRouteFromTo(fromPoint, toPoint);

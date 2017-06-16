@@ -51,9 +51,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "living_street",
         "name": "Lerchenstraße"
       },
@@ -81,9 +79,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "lit": "yes",
@@ -118,9 +114,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -144,9 +138,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "living_street",
         "name": "Daucherweg"
       },
@@ -186,9 +178,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "yes",
         "highway": "footway",
         "name": "Diedenhofer Weg"
@@ -217,9 +207,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "lit": "yes",
@@ -302,9 +290,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps"
       },
       "geometry": {
@@ -347,9 +333,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "yes",
         "highway": "footway",
         "name": "Wollhausstraße"
@@ -378,9 +362,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -532,9 +514,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30",
         "motor_vehicle": "destination",
@@ -568,9 +548,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "maxspeed": "30",
@@ -620,9 +598,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "maxspeed": "30",
         "motor_vehicle": "destination",
@@ -667,9 +643,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -725,9 +699,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -779,9 +751,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -836,9 +806,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -877,9 +845,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -914,9 +880,10 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
+        "stroke": "#ff3127",
+        "stroke-width": 3,
+        "stroke-opacity": 1,
         "bicycle": "no",
         "highway": "footway"
       },
@@ -952,9 +919,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -998,9 +963,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1080,9 +1043,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1102,9 +1063,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1124,9 +1083,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1162,9 +1119,10 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
+        "stroke": "#ff3127",
+        "stroke-width": 3,
+        "stroke-opacity": 1,
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1200,9 +1158,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1318,9 +1274,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1344,9 +1298,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1382,9 +1334,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1412,9 +1362,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1434,9 +1382,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1476,9 +1422,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1498,9 +1442,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1520,9 +1462,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1542,9 +1482,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1580,9 +1518,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "steps"
       },
@@ -1602,9 +1538,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1692,9 +1626,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "incline": "down",
@@ -1725,9 +1657,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps",
         "name": "Diedenhofer Weg"
       },
@@ -1755,9 +1685,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30",
         "motor_vehicle": "destination",
@@ -1784,9 +1712,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1806,9 +1732,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1828,9 +1752,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1850,9 +1772,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1872,9 +1792,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1894,9 +1812,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -1940,9 +1856,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2018,9 +1932,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2060,9 +1972,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2082,9 +1992,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2120,9 +2028,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2150,9 +2056,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2180,9 +2084,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2222,9 +2124,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2244,9 +2144,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2266,9 +2164,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2312,9 +2208,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2334,9 +2228,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2416,9 +2308,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30",
         "service": "driveway"
@@ -2439,9 +2329,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30",
         "service": "driveway"
@@ -2462,9 +2350,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30",
         "service": "driveway"
@@ -2489,9 +2375,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps"
       },
       "geometry": {
@@ -2510,9 +2394,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "foot": "yes",
         "highway": "footway"
       },
@@ -2536,9 +2418,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "foot": "yes",
         "highway": "footway"
       },
@@ -2558,9 +2438,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "yes",
         "highway": "footway"
       },
@@ -2584,9 +2462,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "no",
         "highway": "footway"
       },
@@ -2610,9 +2486,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -2632,9 +2506,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -2674,9 +2546,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -2704,9 +2574,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -2732,9 +2600,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -2780,9 +2646,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps"
       },
       "geometry": {
@@ -2805,9 +2669,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30"
       },
@@ -2839,9 +2701,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service"
       },
       "geometry": {
@@ -2864,9 +2724,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "service"
       },
@@ -2886,9 +2744,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -2960,9 +2816,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "noexit": "yes",
         "service": "driveway"
@@ -2983,9 +2837,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "noexit": "yes",
         "service": "driveway"
@@ -3006,9 +2858,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -3091,9 +2941,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -3112,9 +2960,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -3133,9 +2979,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -3154,9 +2998,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps"
       },
       "geometry": {
@@ -3175,9 +3017,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -3196,9 +3036,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -3221,9 +3059,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps"
       },
       "geometry": {
@@ -3242,9 +3078,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "steps"
       },
       "geometry": {
@@ -3267,9 +3101,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3301,9 +3133,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3343,9 +3173,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "maxspeed": "30",
         "name": "Im Wannental",
@@ -3371,9 +3199,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "name": "Paracelsusstraße",
         "service": "driveway"
@@ -3414,9 +3240,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3444,9 +3268,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3474,9 +3296,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3504,9 +3324,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service"
       },
       "geometry": {
@@ -3533,9 +3351,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "service",
         "service": "driveway"
@@ -3576,9 +3392,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3606,9 +3420,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "yes",
         "highway": "footway"
       },
@@ -3632,9 +3444,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "name": "Erlachweg"
       },
@@ -3662,9 +3472,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "track",
         "tracktype": "grade2"
       },
@@ -3700,9 +3508,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3766,9 +3572,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3800,9 +3604,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service"
       },
       "geometry": {
@@ -3853,9 +3655,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "footway"
       },
@@ -3895,9 +3695,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -3941,9 +3739,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "footway"
       },
@@ -3963,9 +3759,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "noexit": "yes"
       },
@@ -3989,9 +3783,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service"
       },
       "geometry": {
@@ -4018,9 +3810,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -4064,9 +3854,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -4106,9 +3894,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service"
       },
       "geometry": {
@@ -4143,9 +3929,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -4185,9 +3969,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "footway"
       },
@@ -4223,9 +4005,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -4245,9 +4025,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "name": "Bismarckstraße"
       },
@@ -4283,9 +4061,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "footway",
         "noexit": "yes"
@@ -4354,9 +4130,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service"
       },
       "geometry": {
@@ -4411,9 +4185,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -4444,9 +4216,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "service",
         "service": "driveway"
@@ -4499,9 +4269,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway",
         "noexit": "yes"
       },
@@ -4525,9 +4293,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "noexit": "yes",
         "surface": "cobblestone"
@@ -4552,9 +4318,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -4604,9 +4368,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway",
         "noexit": "yes"
       },
@@ -4642,9 +4404,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -4664,9 +4424,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -4698,9 +4456,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -4750,9 +4506,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "incline": "up",
@@ -4812,9 +4566,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "lit": "yes",
@@ -4845,9 +4597,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "footway": "sidewalk",
         "highway": "footway"
       },
@@ -4951,9 +4701,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "lit": "yes",
@@ -5007,9 +4755,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -5044,9 +4790,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -5140,9 +4884,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "residential",
         "lit": "yes",
         "maxspeed": "30",
@@ -5277,9 +5019,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "incline": "up",
@@ -5311,9 +5051,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "incline": "up",
@@ -5348,9 +5086,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "name": "Wollhausstraße"
       },
@@ -5370,9 +5106,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "bicycle": "yes",
         "highway": "footway"
       },
@@ -5408,9 +5142,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "service",
         "noexit": "yes"
@@ -5431,9 +5163,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway"
       },
       "geometry": {
@@ -5452,9 +5182,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "service",
         "service": "driveway"
@@ -5483,9 +5211,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "tertiary",
         "lanes": "2",
         "lit": "yes",
@@ -5517,9 +5243,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "incline": "up",
@@ -5619,9 +5343,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "parking_aisle"
       },
@@ -5653,9 +5375,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "hgv": "destination",
         "highway": "residential",
         "maxspeed": "30",
@@ -5725,9 +5445,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "service",
         "service": "driveway"
       },
@@ -5759,9 +5477,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "highway": "footway",
         "name": "Erlachweg"
       },
@@ -5789,9 +5505,7 @@
     },
     {
       "type": "Feature",
-
       "properties": {
-
         "access": "private",
         "highway": "service",
         "noexit": "yes",
@@ -5811,6 +5525,22 @@
         ]
       }
     },
-    {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.237282773977249,49.13639068738651],[9.23770828881629,49.13660337062738]]}}
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            9.237282773977249,
+            49.13639068738651
+          ],
+          [
+            9.23770828881629,
+            49.13660337062738
+          ]
+        ]
+      }
+    }
   ]
 }

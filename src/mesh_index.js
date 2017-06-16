@@ -52,10 +52,11 @@ const MeshIndex = function (originalData) {
           turf.featureEach(intersectionPoints, (point) => {
             const pointCoords = point.geometry.coordinates;
             const seg1Coords = segmentFeature1.geometry.coordinates;
-            const seg2Coords = segmentFeature2.geometry.coordinates;
-            if ((!utils.isPointEqual(pointCoords, seg1Coords[0])) && (!utils.isPointEqual(pointCoords, seg1Coords[1])) &&
-              (!utils.isPointEqual(pointCoords, seg2Coords[0])) && (!utils.isPointEqual(pointCoords, seg2Coords[1]))) {
+            if (!utils.isPointEqual(pointCoords, seg1Coords[0]) && !utils.isPointEqual(pointCoords, seg1Coords[1])) {
               appendCutFeatures(segmentsWithCutPoints, segmentFeature1, intersectionPoints.features);
+            }
+            const seg2Coords = segmentFeature2.geometry.coordinates;
+            if (!utils.isPointEqual(pointCoords, seg2Coords[0]) && !utils.isPointEqual(pointCoords, seg2Coords[1])) {
               appendCutFeatures(segmentsWithCutPoints, segmentFeature2, intersectionPoints.features);
             }
           });
@@ -74,14 +75,24 @@ const MeshIndex = function (originalData) {
       if (cutPoints !== undefined) {
         const fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
         turf.featureEach(fc, (feature) => {
-          utils.addProperties(feature, utils.createRandomStroke());
-          utils.addProperties(feature, {length: turf.lineDistance(feature)});
-          utils.setProperty(feature, "geoHubId", segmentId++);
-          result.push(feature);
+          const length = turf.lineDistance(feature);
+          if (length > 0) {
+            utils.addProperties(feature, utils.createRandomStroke());
+            utils.addProperties(feature, {length: length});
+            utils.setProperty(feature, "geoHubId", segmentId++);
+            result.push(feature);
+          } else {
+            console.error("0 length feature: ", feature);
+          }
         });
       } else {
-        utils.addProperties(segment, {length: turf.lineDistance(segment)});
-        result.push(segment);
+        const length = turf.lineDistance(segment);
+        if (length > 0) {
+          utils.addProperties(segment, {length: length});
+          result.push(segment);
+        } else {
+          console.error("0 length feature: ", segment);
+        }
       }
     });
     return result;

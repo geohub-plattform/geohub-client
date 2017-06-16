@@ -30,7 +30,7 @@ function closestPoints(ruler, coordinates, evtCoords) {
 }
 
 
-function findClosestPoint(uniqueFeatures, evtCoords) {
+function findClosestPoint(uniqueFeatures, evtCoords, radius) {
 
   let closestDistance = null;
   let closestCoord = null;
@@ -67,8 +67,8 @@ function findClosestPoint(uniqueFeatures, evtCoords) {
         const dist = ruler.distance(singleCoords, evtCoords);
         //console.log("type: ", pointType.type, " dist: ", dist);
         if (dist !== null) {
-          if ((closestDistance === null || ((pointType.type === "vertex" && dist < 0.004) ||
-            (dist < closestDistance))) && dist < 0.008) {
+          if ((closestDistance === null || ((pointType.type === "vertex" && dist < (4 * radius)) ||
+            (dist < closestDistance))) && dist < (8 * radius)) {
             feature.distance = dist;
             closestCoord = singleCoords;
             closestDistance = dist;
@@ -90,11 +90,6 @@ function findClosestPoint(uniqueFeatures, evtCoords) {
   });
 
   if (closestDistance !== null) {
-    //evt.lngLat.lng = closestCoord[0];
-    //evt.lngLat.lat = closestCoord[1];
-    //evt.point = ctx.map.project(closestCoord);
-    //evt.snap = true;
-
     return {coords: closestCoord, borders: borders};
   } else {
     return null;
@@ -125,10 +120,15 @@ module.exports = function (ctx) {
     const evtCoords = [event.lngLat.lng, event.lngLat.lat];
     let snapFeature = null;
     if (snapToPoint) {
-      const nearFeatures = ctx.api.featuresAt(event.lngLat);
+      // 0.01 - 0.001
+      const calculatedRadius = 0.001; // + ((0.5 - 0.001) * (1 - (ctx.map.getZoom() / ctx.map.getMaxZoom())));
+
+      const radius = Math.min(0.5, calculatedRadius);
+      console.log("radius: ", radius);
+      const nearFeatures = ctx.api.featuresAt(event.lngLat, radius);
       if (nearFeatures) {
         //console.log("near features found: ", nearFeatures.length);
-        const closestPoint = findClosestPoint(nearFeatures, evtCoords);
+        const closestPoint = findClosestPoint(nearFeatures, evtCoords, radius);
         //console.log("closestPoint: ", closestPoint);
 
         if (closestPoint) {

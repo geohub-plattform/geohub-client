@@ -25,7 +25,6 @@ test("geohub - mesh with intersections", {skip: false}, t => {
 
   let lengthCount = 0;
   result.forEach((element) => {
-    console.log("length: ", element.properties.length);
     if (element.properties.length !== undefined) {
       lengthCount++;
     }
@@ -48,6 +47,90 @@ test("geohub - mesh with intersections", {skip: false}, t => {
 
   //console.log(JSON.stringify(turf.featureCollection(result3)));
 
+  t.end();
+});
+
+test("geohub - mesh with endpoints on line", {skip: false}, t => {
+  const features = [turf.lineString([[9, 49], [10, 49]]),
+    turf.lineString([[9.5, 49], [9.5, 50]])];
+
+  console.time("Meshing");
+  const meshIndex = new MeshIndex(features);
+  console.timeEnd("Meshing");
+
+  const result = meshIndex.getMesh();
+  t.equals(result.length, 3);
+
+  let lengthCount = 0;
+  result.forEach((element) => {
+    if (element.properties.length !== undefined) {
+      lengthCount++;
+    }
+  });
+  t.equals(lengthCount, 3);
+  t.end();
+});
+
+test("geohub - mesh with endpoints on line2", {skip: false}, t => {
+  const notWorkingLine = turf.lineString([[9.237282773977249, 49.13639068738651], [9.23770828881629, 49.13660337062738]]);
+  const ver4_3_1 = turf.lineString([[9.237330417927016, 49.136388646454634], [9.237705490884599, 49.13657689085556]]);
+  const features = [turf.lineString([[9.2368973, 49.1364072], [9.237684, 49.1363735]]),
+    turf.lineString([[9.2377299, 49.1368079], [9.237684, 49.1363735]]), notWorkingLine];
+
+  const meshIndex = new MeshIndex(features);
+
+  const result = meshIndex.getMesh();
+  t.equals(result.length, 5);
+  console.log(JSON.stringify(turf.featureCollection(result)));
+
+  t.end();
+});
+
+test("geohub - mesh with line on edges", {skip: false}, t => {
+  const features = [
+    turf.lineString([[9, 10], [10, 10]]),
+    turf.lineString([[10, 10], [11, 10]]),
+    turf.lineString([[10, 10], [10, 9]]),
+    turf.lineString([[10, 11], [10, 10]])
+  ];
+  const meshIndex = new MeshIndex(features);
+  const result = meshIndex.getMesh();
+  t.equals(result.length, 4);
+
+  meshIndex.addNewFeatures([turf.lineString([[9.5, 10], [10, 10.5]])]);
+
+  const result2 = meshIndex.getMesh();
+  t.equals(result2.length, 7);
+  t.end();
+});
+
+test("geohub - zoom dependant radius", {}, t => {
+  const calculatedRadius = 0.001 + ((0.1 - 0.001) * (1 - (22 / 22)));
+  t.equals(0.001, calculatedRadius);
+  t.end();
+});
+
+test("geohub - mesh with endpoints on line", {skip: false}, t => {
+  const segmentFeature1 = turf.lineString([[9, 49], [10, 49]]);
+  const segmentFeature2 = turf.lineString([[9.5, 49], [9.5, 50]]);
+  const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2);
+  t.equals(1, intersectionPoints.features.length);
+  t.end();
+});
+
+test("geohub - line split with points at the end", {skip: false}, t => {
+  const segment = turf.lineString([[9, 49], [10, 49]]);
+  const fc = turf.lineSplit(segment, turf.multiPoint([[9, 49], [10, 49]]));
+  // lineSplit returns a 0 length segment
+  t.equals(2, fc.features.length);
+  t.end();
+});
+
+test("geohub - line split with points in mixed order", {skip: false}, t => {
+  const segment = turf.lineString([[9, 49], [10, 49]]);
+  const fc = turf.lineSplit(segment, turf.multiPoint([[9.1, 49], [9.8, 49], [9.2, 49], [9.3, 49]]));
+  // lineSplit returns a 0 length segment
+  t.equals(5, fc.features.length);
   t.end();
 });
 
