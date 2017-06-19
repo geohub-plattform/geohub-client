@@ -3,18 +3,19 @@ import turf from "@turf/turf";
 import cheapRuler from "cheap-ruler";
 import doubleClickZoom from "./double_click_zoom";
 
-
 function closestPoints(ruler, coordinates, evtCoords) {
   const result = [];
-  const pointIndex = ruler.pointOnLine(coordinates, evtCoords);
-  if (pointIndex) {
-    const linePoint = {type: "linepoint", coords: pointIndex.point};
+  const pointOnLine = ruler.pointOnLine(coordinates, evtCoords);
+  if (pointOnLine) {
+    const pointCoords = pointOnLine.point;
+    const pointIndex = pointOnLine.index;
+    const linePoint = {type: "linepoint", coords: pointCoords};
     let vertex = null;
-    if (pointIndex.index === coordinates.length) {
-      vertex = coordinates[pointIndex.index];
+    if (pointIndex === coordinates.length) {
+      vertex = coordinates[pointIndex];
     } else {
-      const p1 = coordinates[pointIndex.index];
-      const p2 = coordinates[pointIndex.index + 1];
+      const p1 = coordinates[pointIndex];
+      const p2 = coordinates[pointIndex + 1];
       const distance1 = ruler.distance(p1, evtCoords);
       const distance2 = ruler.distance(p2, evtCoords);
       vertex = distance1 < distance2 ? p1 : p2;
@@ -26,6 +27,38 @@ function closestPoints(ruler, coordinates, evtCoords) {
     result.push(linePoint);
     result.push({type: "vertex", coords: vertex});
   }
+  return result;
+}
+
+function closestPointsTurf(coordinates, evtCoords) {
+  const result = [];
+  const evtPoint = turf.point(evtCoords);
+  const lineString = turf.lineString(coordinates);
+  const pointOnLine = turf.pointOnLine(lineString, evtPoint);
+  const pointCoords = pointOnLine.geometry.coordinates;
+  let pointIndex = pointOnLine.properties.index;
+  const pointLocation = pointOnLine.properties.location;
+
+  const linePoint = {type: "linepoint", coords: pointCoords};
+  let vertex = null;
+  if (pointLocation === 0) {
+    vertex = coordinates[pointIndex];
+  } else {
+    if (pointIndex === coordinates.length - 1) {
+      pointIndex--;
+    }
+    const p1 = coordinates[pointIndex];
+    const p2 = coordinates[pointIndex + 1];
+    const distance1 = turf.distance(turf.point(p1), evtPoint);
+    const distance2 = turf.distance(turf.point(p2), evtPoint);
+    vertex = distance1 < distance2 ? p1 : p2;
+    linePoint.border1 = p1;
+    linePoint.distance1 = distance1;
+    linePoint.border2 = p2;
+    linePoint.distance2 = distance2;
+  }
+  result.push(linePoint);
+  result.push({type: "vertex", coords: vertex});
   return result;
 }
 
@@ -43,7 +76,7 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
 
     if (type === "LineString") {
       if (feature.geometry.coordinates) {
-        closestPoints(ruler, feature.geometry.coordinates, evtCoords).forEach((pointType) => {
+        closestPointsTurf(feature.geometry.coordinates, evtCoords).forEach((pointType) => {
           coords.push(pointType);
         });
       } else {
@@ -124,7 +157,7 @@ module.exports = function (ctx) {
       const calculatedRadius = 0.001; // + ((0.5 - 0.001) * (1 - (ctx.map.getZoom() / ctx.map.getMaxZoom())));
 
       const radius = Math.min(0.5, calculatedRadius);
-      console.log("radius: ", radius);
+      //console.log("radius: ", radius);
       const nearFeatures = ctx.api.featuresAt(event.lngLat, radius);
       if (nearFeatures) {
         //console.log("near features found: ", nearFeatures.length);

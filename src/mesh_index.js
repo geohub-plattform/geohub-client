@@ -3,6 +3,7 @@
 import turf from "@turf/turf";
 import utils from "./utils";
 
+const MIN_SEGMENT_LENGTH = 0.0000001;
 
 const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeatures) {
   let segCutPoints = segmentsWithCutPoints[feature.properties.geoHubId];
@@ -76,7 +77,7 @@ const MeshIndex = function (originalData) {
         const fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
         turf.featureEach(fc, (feature) => {
           const length = turf.lineDistance(feature);
-          if (length > 0) {
+          if (length > MIN_SEGMENT_LENGTH) {
             utils.addProperties(feature, utils.createRandomStroke());
             utils.addProperties(feature, {length: length});
             utils.setProperty(feature, "geoHubId", segmentId++);
@@ -87,7 +88,7 @@ const MeshIndex = function (originalData) {
         });
       } else {
         const length = turf.lineDistance(segment);
-        if (length > 0) {
+        if (length > MIN_SEGMENT_LENGTH) {
           utils.addProperties(segment, {length: length});
           result.push(segment);
         } else {

@@ -74,8 +74,11 @@ test("geohub - mesh with endpoints on line", {skip: false}, t => {
 test("geohub - mesh with endpoints on line2", {skip: false}, t => {
   const notWorkingLine = turf.lineString([[9.237282773977249, 49.13639068738651], [9.23770828881629, 49.13660337062738]]);
   const ver4_3_1 = turf.lineString([[9.237330417927016, 49.136388646454634], [9.237705490884599, 49.13657689085556]]);
-  const features = [turf.lineString([[9.2368973, 49.1364072], [9.237684, 49.1363735]]),
-    turf.lineString([[9.2377299, 49.1368079], [9.237684, 49.1363735]]), notWorkingLine];
+  const onePointWorking = turf.lineString([[9.23711246024184, 49.13639798314459], [9.237718632934047, 49.13670126789871]]);
+
+  const southLine = turf.lineString([[9.2368973, 49.1364072], [9.237684, 49.1363735]]);
+  const eastLine = turf.lineString([[9.2377299, 49.1368079], [9.237684, 49.1363735]]);
+  const features = [southLine, eastLine, onePointWorking];
 
   const meshIndex = new MeshIndex(features);
 
