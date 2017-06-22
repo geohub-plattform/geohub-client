@@ -1,5 +1,7 @@
 import MeshIndex from "./mesh_index";
 import MeshRouting from "./mesh_routing";
+import turf from "@turf/turf";
+import Constants from "./constants";
 
 module.exports = function (ctx) {
 
@@ -11,7 +13,7 @@ module.exports = function (ctx) {
       ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
       ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
     ];
-    const filter = {layers: ["geohub-snaplayer", "geohub-line-cold", "geohub-line-hot"]};
+    const filter = {layers: [Constants.layers.BASE]}; //, "geohub-line-cold", "geohub-line-hot"
     const features = ctx.map.queryRenderedFeatures(bbox, filter);
     return ctx.featureIndex.getFeaturesFromIndex(features);
   };
@@ -19,31 +21,22 @@ module.exports = function (ctx) {
   return {
     addData: function (fc) {
       meshIndex = new MeshIndex(fc.features);
+      const meshedFeatures = turf.featureCollection(meshIndex.getMesh());
       meshRouting = new MeshRouting(meshIndex.getMesh());
-      ctx.featureIndex.addFeatures(fc.features);
-      ctx.map.addSource('geohub-snaplayer', {
-        type: 'geojson',
-        data: fc
-      });
-
-      ctx.map.addLayer({
-        id: "geohub-snaplayer",
-        source: "geohub-snaplayer",
-        type: "line",
-        paint: {
-          "line-color": "#888",
-          "line-width": 4,
-          "line-opacity": 0.3
-        }
-      });
+      ctx.featureIndex.addFeatures(meshedFeatures.features);
+      console.log("Adding source: ", Constants.sources.BASE);
+      ctx.map.getSource(Constants.sources.BASE).setData(meshedFeatures);
     },
     addFeatureToIndex: function (newFeature) {
-      ctx.featureIndex.addFeatures([newFeature]);
+      //ctx.featureIndex.addFeatures([newFeature]);
     },
-    addFeatureToMesh: function (newFeature) {
-      console.log("addFeatureToMesh: ", JSON.stringify(newFeature));
-      meshIndex.addNewFeatures([newFeature]);
+    addFeaturesToMesh: function (newFeatures) {
+      meshIndex.addNewFeatures(newFeatures);
       meshRouting = new MeshRouting(meshIndex.getMesh());
+      const meshedFeatures = turf.featureCollection(meshIndex.getMesh());
+      ctx.featureIndex.reset();
+      ctx.featureIndex.addFeatures(meshedFeatures.features);
+      ctx.map.getSource(Constants.sources.BASE).setData(meshedFeatures);
     },
     featuresAt: function (lnglat, radius) {
       return queryMapFeatures(lnglat, radius);

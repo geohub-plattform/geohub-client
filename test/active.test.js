@@ -53,7 +53,7 @@ test("geohub - mesh with endpoints on line2", {skip: true}, t => {
 //  const result = turf.pointOnLine(southLine, turf.point([9.23711246052352, 49.136397983132525]));
   const result = turf.pointOnLine(southLine, turf.point([9.2371124608052, 49.13639798312046]));
 
-  // const rulerResult = ruler.pointOnLine(southLine.geometry.coordinates, [9.23711246024184, 49.13639798314459]);
+  const rulerResult = ruler.pointOnLine(southLine.geometry.coordinates, [9.23711246024184, 49.13639798314459]);
 
 
   console.log(JSON.stringify(rulerResult, null, 1));
@@ -63,11 +63,37 @@ test("geohub - mesh with endpoints on line2", {skip: true}, t => {
 
 });
 
-test("geohub - turf issue report", {skip: true}, t => {
-  const southLine = turf.lineString([[9.2368973, 49.1364072], [9.237684, 49.1363735]]);
-  const result1 = turf.pointOnLine(southLine, turf.point([9.237267673015593, 49.136346850829064]));
-  console.log("result1: ", JSON.stringify(result1, null, 1));
-  const result2 = turf.pointOnLine(southLine, result1);
-  console.log("result2: ", JSON.stringify(result2, null, 1));
+test("geohub - routing issue", {skip: false}, t => {
+  const shortRoute = turf.lineString([[9.23711190230233, 49.13684158888254], [9.2377299, 49.1368079],
+    [9.237704381331193, 49.13656638998411], [9.237982697157868, 49.13639440432985]]);
+
+  console.log("Length: ", turf.lineDistance(shortRoute));
+
+
+  t.end();
+});
+
+test("geohub - split line", {skip: false}, t => {
+  const shortRoute = turf.lineString([
+    [
+      9.237230122089386,
+      49.136564453643736
+    ],
+    [
+      9.238061606884003,
+      49.13651005302963
+    ]
+  ]);
+
+
+  const result = turf.lineSplit(shortRoute, turf.point([
+    9.237653911113739,
+    49.13656269878615
+  ]));
+
+
+  console.log("result: ", JSON.stringify(result));
+
+
   t.end();
 });

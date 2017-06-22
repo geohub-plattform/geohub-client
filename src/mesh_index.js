@@ -5,6 +5,7 @@ import utils from "./utils";
 
 const MIN_SEGMENT_LENGTH = 0.0000001;
 
+
 const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeatures) {
   let segCutPoints = segmentsWithCutPoints[feature.properties.geoHubId];
   if (segCutPoints === undefined) {
@@ -12,7 +13,7 @@ const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeat
     segmentsWithCutPoints[feature.properties.geoHubId] = segCutPoints;
   }
   cutPointFeatures.forEach((feature) => {
-    segCutPoints.push(feature.geometry.coordinates);
+    segCutPoints.push(utils.reducePrecision(feature.geometry.coordinates));
   });
 };
 
@@ -83,7 +84,7 @@ const MeshIndex = function (originalData) {
             utils.setProperty(feature, "geoHubId", segmentId++);
             result.push(feature);
           } else {
-            console.error("0 length feature: ", feature);
+            console.error("0 length feature: ", JSON.stringify(feature));
           }
         });
       } else {
@@ -92,7 +93,7 @@ const MeshIndex = function (originalData) {
           utils.addProperties(segment, {length: length});
           result.push(segment);
         } else {
-          console.error("0 length feature: ", segment);
+          console.error("0 length feature: ", JSON.stringify(segment));
         }
       }
     });

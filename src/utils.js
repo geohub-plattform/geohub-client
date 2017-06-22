@@ -184,10 +184,22 @@ function isPointEqual(coords1, coords2) {
   return coords1[0] === coords2[0] && coords1[1] === coords2[1];
 }
 
+function createLineWithLength(coords) {
+  const line = turf.lineString(coords);
+  const length = turf.lineDistance(line);
+  addProperties(line, {length: length});
+  return line;
+}
+
+function reducePrecision(coords) {
+  coords[0] = Number(Number(coords[0]).toFixed(7));
+  coords[1] = Number(Number(coords[1]).toFixed(7));
+  return coords;
+}
 
 
 module.exports = {
   pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
   createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
-  addProperties, isPointEqual
+  addProperties, isPointEqual, createLineWithLength, reducePrecision
 };

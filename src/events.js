@@ -2,6 +2,7 @@ import Constants from "./constants";
 import turf from "@turf/turf";
 import cheapRuler from "cheap-ruler";
 import doubleClickZoom from "./double_click_zoom";
+import utils from "./utils";
 
 function closestPoints(ruler, coordinates, evtCoords) {
   const result = [];
@@ -30,97 +31,84 @@ function closestPoints(ruler, coordinates, evtCoords) {
   return result;
 }
 
-function closestPointsTurf(coordinates, evtCoords) {
-  const result = [];
-  const evtPoint = turf.point(evtCoords);
-  const lineString = turf.lineString(coordinates);
-  const pointOnLine = turf.pointOnLine(lineString, evtPoint);
-  const pointCoords = pointOnLine.geometry.coordinates;
-  let pointIndex = pointOnLine.properties.index;
-  const pointLocation = pointOnLine.properties.location;
+function calculatePointsOnLine(uniqueFeatures, evtCoords) {
+  const coords = [];
+  const knownIds = {};
 
-  const linePoint = {type: "linepoint", coords: pointCoords};
-  let vertex = null;
-  if (pointLocation === 0) {
-    vertex = coordinates[pointIndex];
-  } else {
-    if (pointIndex === coordinates.length - 1) {
-      pointIndex--;
+  uniqueFeatures.forEach((feature) => {
+    const geoHubId = feature.properties.geoHubId;
+    if (knownIds[geoHubId] === undefined) {
+      knownIds[geoHubId] = true;
+      const type = feature.geometry.type;
+      const ruler = cheapRuler(feature.geometry.coordinates[0][1]);
+      if (type === "LineString") {
+        if (feature.geometry.coordinates) {
+          closestPoints(ruler, feature.geometry.coordinates, evtCoords).forEach((pointType) => {
+            pointType.geoHubId = geoHubId;
+            pointType.dist = ruler.distance(pointType.coords, evtCoords);
+            coords.push(pointType);
+          });
+        } else {
+          console.log("no coordinates: ", feature);
+        }
+      } else if (type === "Point") {
+        const pointType = {type: "vertex", coords: feature.geometry.coordinates};
+        pointType.dist = ruler.distance(pointType.coords, evtCoords);
+        coords.push(pointType);
+      }
     }
-    const p1 = coordinates[pointIndex];
-    const p2 = coordinates[pointIndex + 1];
-    const distance1 = turf.distance(turf.point(p1), evtPoint);
-    const distance2 = turf.distance(turf.point(p2), evtPoint);
-    vertex = distance1 < distance2 ? p1 : p2;
-    linePoint.border1 = p1;
-    linePoint.distance1 = distance1;
-    linePoint.border2 = p2;
-    linePoint.distance2 = distance2;
-  }
-  result.push(linePoint);
-  result.push({type: "vertex", coords: vertex});
-  return result;
+  });
+  return coords;
 }
 
-
 function findClosestPoint(uniqueFeatures, evtCoords, radius) {
-
+  const coords = calculatePointsOnLine(uniqueFeatures, evtCoords);
   let closestDistance = null;
   let closestCoord = null;
   let borders;
+  let closestPointType = null;
 
-  uniqueFeatures.forEach((feature) => {
-    const type = feature.geometry.type;
-    const coords = [];
-    const ruler = cheapRuler(feature.geometry.coordinates[0][1]);
-
-    if (type === "LineString") {
-      if (feature.geometry.coordinates) {
-        closestPointsTurf(feature.geometry.coordinates, evtCoords).forEach((pointType) => {
-          coords.push(pointType);
-        });
-      } else {
-        console.log("no coordinates: ", feature);
+  coords.forEach((pointType) => {
+    const singleCoords = pointType.coords;
+    let dist = pointType.dist;
+    if (dist !== null) {
+      if (pointType.type === "vertex") {
+        dist = dist / 4;
       }
-    } else if (type === "Point") {
-      coords.push({type: "vertex", coords: feature.geometry.coordinates});
-    } else if (type === "MultiLineString" || type === "Polygon") {
-      feature.geometry.coordinates.forEach((coordinates) => {
-        closestPoints(ruler, coordinates, evtCoords).forEach((pointType) => {
-          coords.push(pointType);
-        });
-      });
-    }
-
-    if (coords.length === 0) {
-      console.log("coords empty for feature: ", feature);
-    } else {
-      coords.forEach((pointType) => {
-        const singleCoords = pointType.coords;
-        const dist = ruler.distance(singleCoords, evtCoords);
-        //console.log("type: ", pointType.type, " dist: ", dist);
-        if (dist !== null) {
-          if ((closestDistance === null || ((pointType.type === "vertex" && dist < (4 * radius)) ||
-            (dist < closestDistance))) && dist < (8 * radius)) {
-            feature.distance = dist;
-            closestCoord = singleCoords;
-            closestDistance = dist;
-            if (pointType.border1 && pointType.border2) {
-              borders = {
-                border1: pointType.border1,
-                border2: pointType.border2,
-                distance1: pointType.distance1,
-                distance2: pointType.distance2
-              };
-            } else {
-              borders = null;
+      if (dist < radius) {
+        if (dist === closestDistance && closestPointType.geoHubId !== pointType.geoHubId) {
+          console.log("second feature with same distance: ", dist, " other point type: ", closestPointType, " this: ", pointType);
+          // dies ist für den fall, dass zwei linien übereinander liegen.
+          // finde dann die linie, deren endpunkte am nächsten liegen
+          if (closestPointType.type === "linepoint") {
+            if ((pointType.distance1 <= closestPointType.distance1 && pointType.distance2 <= closestPointType.distance2) ||
+              (pointType.distance2 <= closestPointType.distance1 && pointType.distance1 <= closestPointType.distance2)) {
+              console.log("switch closest points");
+              closestCoord = singleCoords;
+              closestDistance = dist;
+              closestPointType = pointType;
             }
-            //console.log("clostest type: ", pointType.type, " dist: ", dist);
           }
         }
-      });
+        if (closestDistance === null || dist < closestDistance) {
+          closestCoord = singleCoords;
+          closestDistance = dist;
+          closestPointType = pointType;
+          if (pointType.border1 && pointType.border2) {
+            borders = {
+              border1: pointType.border1,
+              border2: pointType.border2,
+              distance1: pointType.distance1,
+              distance2: pointType.distance2
+            };
+          } else {
+            borders = null;
+          }
+        }
+      }
     }
   });
+
 
   if (closestDistance !== null) {
     return {coords: closestCoord, borders: borders};
@@ -152,26 +140,34 @@ module.exports = function (ctx) {
     const snapToPoint = !event.originalEvent.ctrlKey;
     const evtCoords = [event.lngLat.lng, event.lngLat.lat];
     let snapFeature = null;
+    const debugFeatures = [];
     if (snapToPoint) {
       // 0.01 - 0.001
-      const calculatedRadius = 0.001; // + ((0.5 - 0.001) * (1 - (ctx.map.getZoom() / ctx.map.getMaxZoom())));
+      const calculatedRadius = 0.005; // + ((0.5 - 0.001) * (1 - (ctx.map.getZoom() / ctx.map.getMaxZoom())));
 
       const radius = Math.min(0.5, calculatedRadius);
-      //console.log("radius: ", radius);
       const nearFeatures = ctx.api.featuresAt(event.lngLat, radius);
       if (nearFeatures) {
-        //console.log("near features found: ", nearFeatures.length);
         const closestPoint = findClosestPoint(nearFeatures, evtCoords, radius);
-        //console.log("closestPoint: ", closestPoint);
-
         if (closestPoint) {
+          utils.reducePrecision(closestPoint.coords);
           ctx.closestPoint = closestPoint;
+          if (closestPoint.borders) {
+            debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border1]));
+            debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border2]));
+          }
           if (ctx.lastPoint) {
             const fromPoint = ctx.lastPoint;
             if (calculateRoute) {
               const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
               if (route) {
-                snapFeature = turf.lineString(route);
+                ctx.debug = {
+                  routeFrom: fromPoint.coords,
+                  routeTo: closestPoint.coords,
+                  length: route.length,
+                  route: route
+                };
+                snapFeature = turf.lineString(route.path);
               } else {
                 snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
               }
@@ -195,14 +191,34 @@ module.exports = function (ctx) {
       } else {
         snapFeature = createLineToCurrentMouseMove(evtCoords);
       }
-    } else {
+    }
+    else {
       snapFeature = createLineToCurrentMouseMove(evtCoords);
     }
+    //ctx.map.getSource(Constants.sources.DEBUG).setData(turf.featureCollection(debugFeatures));
     ctx.snapFeature = snapFeature;
     if (snapFeature) {
       ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([snapFeature]));
     } else {
       ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
+    }
+  };
+
+  const addClickSegementsToMesh = function () {
+    const meshFeatures = [];
+    if (ctx.closestPoint && ctx.closestPoint.borders) {
+      console.log("adding mesh features");
+      meshFeatures.push(utils.createLineWithLength([ctx.closestPoint.coords, ctx.closestPoint.borders.border1]));
+      meshFeatures.push(utils.createLineWithLength([ctx.closestPoint.coords, ctx.closestPoint.borders.border2]));
+    }
+    if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
+      meshFeatures.push(ctx.snapFeature);
+    } else {
+      console.log("known mesh feature: ", JSON.stringify(ctx.snapFeature));
+    }
+    console.log("meshFeatures: ", JSON.stringify(meshFeatures));
+    if (meshFeatures.length > 0) {
+      ctx.api.addFeaturesToMesh(meshFeatures);
     }
   };
 
@@ -214,21 +230,19 @@ module.exports = function (ctx) {
       const evtCoords = [event.lngLat.lng, event.lngLat.lat];
       ctx.lastPoint = {coords: evtCoords};
     }
+    addClickSegementsToMesh();
     console.log("mouseClick, last point: ", ctx.lastPoint, "closestPoint: ", ctx.closestPoint);
     if (ctx.lastClick) {
       if (ctx.lastClick.coords[0] === ctx.lastPoint.coords[0] && ctx.lastClick.coords[1] === ctx.lastPoint.coords[1]) {
-        console.log("stop");
-        doubleClickZoom.enable(ctx);
-
         // finish draw
         console.log("Finish draw");
+        doubleClickZoom.enable(ctx);
         ctx.snapFeature = null;
         ctx.closestPoint = null;
         ctx.lastPoint = null;
         if (ctx.hotFeature) {
           ctx.coldFeatures.push(ctx.hotFeature);
           ctx.hotFeature = null;
-          //ctx.api.recreateIndices(ctx.coldFeatures);
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
           ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
           ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
@@ -239,8 +253,8 @@ module.exports = function (ctx) {
     let hotFeature = ctx.hotFeature;
     if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
       const snapCoords = ctx.snapFeature.geometry.coordinates;
+      console.log("current snap: ", snapCoords);
       if (snapCoords.length > 1) {
-        ctx.api.addFeatureToMesh(ctx.snapFeature);
         if (hotFeature) {
           const hotCoords = hotFeature.geometry.coordinates;
           hotCoords.splice(-1, 1, ...snapCoords);
@@ -257,15 +271,43 @@ module.exports = function (ctx) {
     ctx.lastClick = ctx.lastPoint;
   };
 
+  const KEY_D = 100;
+  const KEY_P = 112;
+
+  const keypress = function (event) {
+    console.log("keycode: ", event.keyCode);
+    switch (event.keyCode) {
+      case KEY_D : {
+        if (ctx.debug) {
+          console.log("Debug: ", JSON.stringify(ctx.debug));
+        }
+        break;
+      }
+      case KEY_P : {
+        if (ctx.coldFeatures) {
+          console.log("coldFeatures: ", JSON.stringify(ctx.coldFeatures));
+        }
+        break;
+      }
+    }
+  };
+
   return {
     addEventListeners: function (map) {
       map.on("mousemove", mouseMove);
       map.on('click', mouseClick);
+      const container = map.getContainer();
+      container.addEventListener('keypress', keypress);
+
     },
     removeEventListeners: function (map) {
       map.off("mousemove", mouseMove);
       map.off('click', mouseClick);
+      const container = map.getContainer();
+      container.removeEventListener('keypress', keypress);
+
     }
   };
 
-};
+}
+;

@@ -5810,9 +5810,6 @@
           ]
         ]
       }
-    },
-    {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.237282773977249,49.13639068738651],[9.23770828881629,49.13660337062738]]}},
-    {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.237313593451818,49.1363893671675],[9.237706255973897,49.13658413170068]]}},
-    {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.23711246024184,49.13639798314459],[9.237718632934047,49.13670126789871]]}}
+    }
   ]
 }

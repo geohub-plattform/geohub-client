@@ -40,10 +40,24 @@ const MeshRouting = module.exports = function (mesh) {
   });
 };
 
+MeshRouting.prototype.getRouteLength = function (route) {
+  let length = 0;
+  if (route.length > 1) {
+    for (let x = 1; x < route.length; x++) {
+      const prevNode = route[x - 1].join("#");
+      const thisNode = route[x].join("#");
+
+      length += this.graphData[prevNode][thisNode];
+    }
+  }
+  return length;
+};
+
 MeshRouting.prototype.getRouteFromTo = function (fromPoint, toPoint) {
   const g = new Dijkstras();
+  let graphDataCopy = this.graphData;
   if (fromPoint.borders || toPoint.borders) {
-    const graphDataCopy = cloneDeep(this.graphData);
+    graphDataCopy = cloneDeep(this.graphData);
     if (utils.sameBorders(fromPoint.borders, toPoint.borders)) {
       const border1 = fromPoint.borders.border1;
       const border2 = fromPoint.borders.border2;
@@ -74,20 +88,24 @@ MeshRouting.prototype.getRouteFromTo = function (fromPoint, toPoint) {
         addVertexPointTwoWay(borders.border2, point, borders.distance2, graphDataCopy);
       }
     }
-    g.setVertices(graphDataCopy);
-  } else {
-    g.setVertices(this.graphData);
   }
+  g.setVertices(graphDataCopy);
   const path = g.shortestPath(fromPoint.coords.join("#"), toPoint.coords.join("#")).concat([fromPoint.coords.join("#")]).reverse();
   if (path && path.length > 1) {
     const coords = [];
-    path.forEach((point) => {
-      const pair = point.split("#");
+    let length = 0;
+    let pair = path[0].split("#");
+    coords.push([Number(pair[0]), Number(pair[1])]);
+
+    for (let x = 1; x < path.length; x++) {
+      length += graphDataCopy[path[x - 1]][path[x]];
+      pair = path[x].split("#");
       coords.push([Number(pair[0]), Number(pair[1])]);
-    });
-    return coords;
+    }
+    return {path: coords, length: length};
   } else {
     return null;
   }
-};
+}
+;
 

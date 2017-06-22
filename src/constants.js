@@ -15,9 +15,14 @@ module.exports = {
     BOX_SELECT: 'mapbox-gl-draw_boxselect'
   },
   sources: {
+    DEBUG: 'geohub-draw-debug',
     SNAP: 'geohub-draw-snap',
     HOT: 'geohub-draw-hot',
-    COLD: 'geohub-draw-cold'
+    COLD: 'geohub-draw-cold',
+    BASE: 'geohub-snap-basis'
+  },
+  layers: {
+    BASE: 'geohub-snap-basis',
   },
   cursors: {
     ADD: 'add',
