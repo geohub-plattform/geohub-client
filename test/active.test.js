@@ -3,7 +3,7 @@ import turf from "@turf/turf";
 import MeshIndex from "../src/mesh_index";
 import cheapRuler from "cheap-ruler";
 
-test("geohub - mesh with endpoints on line2", {skip: true}, t => {
+test("geohub - mesh with endpoints on line2", {skip: false}, t => {
   const notWorkingLine = turf.lineString([[9.237282773977249, 49.13639068738651], [9.23770828881629, 49.13660337062738]]);
   const ver4_3_1 = turf.lineString([[9.237330417927016, 49.136388646454634], [9.237705490884599, 49.13657689085556]]);
   const onePointWorking = turf.lineString([[9.23711246024184, 49.13639798314459], [9.237718632934047, 49.13670126789871]]);
@@ -73,7 +73,7 @@ test("geohub - routing issue", {skip: false}, t => {
   t.end();
 });
 
-test("geohub - split line", {skip: false}, t => {
+test("geohub - split line", {skip: true}, t => {
   const shortRoute = turf.lineString([
     [
       9.237230122089386,
