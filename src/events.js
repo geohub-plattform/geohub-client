@@ -77,7 +77,7 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
       }
       if (dist < radius) {
         if (dist === closestDistance && closestPointType.geoHubId !== pointType.geoHubId) {
-          console.log("second feature with same distance: ", dist, " other point type: ", closestPointType, " this: ", pointType);
+          //console.log("second feature with same distance: ", dist, " other point type: ", closestPointType, " this: ", pointType);
           // dies ist für den fall, dass zwei linien übereinander liegen.
           // finde dann die linie, deren endpunkte am nächsten liegen
           if (closestPointType.type === "linepoint") {
@@ -157,22 +157,26 @@ module.exports = function (ctx) {
             debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border2]));
           }
           if (ctx.lastPoint) {
-            const fromPoint = ctx.lastPoint;
-            if (calculateRoute) {
-              const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
-              if (route) {
-                ctx.debug = {
-                  routeFrom: fromPoint.coords,
-                  routeTo: closestPoint.coords,
-                  length: route.length,
-                  route: route
-                };
-                snapFeature = turf.lineString(route.path);
+            if (utils.isPointEqual(ctx.lastPoint.coords, closestPoint.coords)) {
+              snapFeature = createLineToCurrentMouseMove(evtCoords);
+            } else {
+              const fromPoint = ctx.lastPoint;
+              if (calculateRoute) {
+                const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
+                if (route) {
+                  ctx.debug = {
+                    routeFrom: fromPoint.coords,
+                    routeTo: closestPoint.coords,
+                    length: route.length,
+                    route: route
+                  };
+                  snapFeature = turf.lineString(route.path);
+                } else {
+                  snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
+                }
               } else {
                 snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
               }
-            } else {
-              snapFeature = turf.lineString([fromPoint.coords, closestPoint.coords]);
             }
           } else {
             snapFeature = turf.point(closestPoint.coords);
@@ -180,19 +184,10 @@ module.exports = function (ctx) {
         } else {
           snapFeature = createLineToCurrentMouseMove(evtCoords);
         }
-        /*const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
-         if (button === 1) {
-         return events.mousedrag(event);
-         }
-         const target = getFeaturesAndSetCursor(event, ctx);
-         event.featureTarget = target;
-         currentMode.mousemove(event);*/
-
       } else {
         snapFeature = createLineToCurrentMouseMove(evtCoords);
       }
-    }
-    else {
+    } else {
       snapFeature = createLineToCurrentMouseMove(evtCoords);
     }
     //ctx.map.getSource(Constants.sources.DEBUG).setData(turf.featureCollection(debugFeatures));
@@ -308,6 +303,4 @@ module.exports = function (ctx) {
 
     }
   };
-
-}
-;
+};
