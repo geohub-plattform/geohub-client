@@ -1,6 +1,7 @@
 import test from "tape";
 import turf from "@turf/turf";
 import MeshIndex from "../src/mesh_index";
+const fs = require("fs");
 
 test("geohub - mesh with intersections", {skip: false}, t => {
   const features = [turf.lineString([[9.214, 49.133], [9.232, 49.133]]),
@@ -134,6 +135,53 @@ test("geohub - line split with points in mixed order", {skip: false}, t => {
   const fc = turf.lineSplit(segment, turf.multiPoint([[9.1, 49], [9.8, 49], [9.2, 49], [9.3, 49]]));
   // lineSplit returns a 0 length segment
   t.equals(5, fc.features.length);
+  t.end();
+});
+
+test("geohub - mesh with endpoints on line2", {skip: false}, t => {
+  const onePointWorking = turf.lineString([[9.23711246024184, 49.13639798314459], [9.237718632934047, 49.13670126789871]]);
+
+  const southLine = turf.lineString([[9.2368973, 49.1364072], [9.237684, 49.1363735]]);
+  const eastLine = turf.lineString([[9.2377299, 49.1368079], [9.237684, 49.1363735]]);
+  const features = [southLine, eastLine, onePointWorking];
+
+  const meshIndex = new MeshIndex(features);
+
+  const result = meshIndex.getMesh();
+  t.equals(result.length, 5);
+  result.forEach((element) => {
+    t.ok(element.properties.length > 0.01, `${element.properties.length} should be longer than 0.01`);
+
+  });
+  //console.log(JSON.stringify(turf.featureCollection(result)));
+  t.end();
+});
+
+test("geohub - mesh simple grid", {skip: false}, t => {
+  const fc = JSON.parse(fs.readFileSync("./test/simplegrid.geojson"));
+  const features = fc.features;
+  const meshIndex = new MeshIndex(features);
+  const result = meshIndex.getMesh();
+  t.equals(result.length, 17);
+  result.forEach((element) => {
+    t.ok(element.properties.length > 0.01, `${element.properties.length} should be longer than 0.01`);
+
+  });
+
+  t.end();
+});
+
+test("geohub - mesh simple-simple grid", {skip: false}, t => {
+  const fc = JSON.parse(fs.readFileSync("./test/simplegrid-simple.geojson"));
+  const features = fc.features;
+  const meshIndex = new MeshIndex(features);
+  const result = meshIndex.getMesh();
+  t.equals(result.length, 5);
+  result.forEach((element) => {
+    t.ok(element.properties.length > 0.01, `${element.properties.length} should be longer than 0.01`);
+
+  });
+
   t.end();
 });
 

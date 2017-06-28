@@ -15,28 +15,27 @@ module.exports = function (ctx) {
     ];
     const filter = {layers: [Constants.layers.BASE]}; //, "geohub-line-cold", "geohub-line-hot"
     const features = ctx.map.queryRenderedFeatures(bbox, filter);
-    return ctx.featureIndex.getFeaturesFromIndex(features);
+    return meshIndex.getFeaturesFromIndex(features);
+  };
+
+  const updateMeshData = function () {
+    meshRouting = new MeshRouting(meshIndex.getMesh());
+    const meshedFeatures = turf.featureCollection(meshIndex.getMesh());
+    ctx.map.getSource(Constants.sources.BASE).setData(meshedFeatures);
   };
 
   return {
     addData: function (fc) {
       meshIndex = new MeshIndex(fc.features);
-      const meshedFeatures = turf.featureCollection(meshIndex.getMesh());
-      meshRouting = new MeshRouting(meshIndex.getMesh());
-      ctx.featureIndex.addFeatures(meshedFeatures.features);
-      console.log("Adding source: ", Constants.sources.BASE);
-      ctx.map.getSource(Constants.sources.BASE).setData(meshedFeatures);
+      updateMeshData();
     },
-    addFeatureToIndex: function (newFeature) {
-      //ctx.featureIndex.addFeatures([newFeature]);
+    splitSegmentAtPoint: function (segmentId, pointCoords) {
+      meshIndex.splitSegmentAtPoint(segmentId, pointCoords);
+      updateMeshData();
     },
     addFeaturesToMesh: function (newFeatures) {
       meshIndex.addNewFeatures(newFeatures);
-      meshRouting = new MeshRouting(meshIndex.getMesh());
-      const meshedFeatures = turf.featureCollection(meshIndex.getMesh());
-      ctx.featureIndex.reset();
-      ctx.featureIndex.addFeatures(meshedFeatures.features);
-      ctx.map.getSource(Constants.sources.BASE).setData(meshedFeatures);
+      updateMeshData();
     },
     featuresAt: function (lnglat, radius) {
       return queryMapFeatures(lnglat, radius);

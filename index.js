@@ -1,7 +1,6 @@
 const events = require("./src/events");
 const pointindex = require("./src/pointindex");
 import Constants from "./src/constants";
-import FeatureIndex from "./src/feature_index";
 
 const setupGeoHub = function (options = {}, api) {
   const ctx = {
@@ -11,7 +10,6 @@ const setupGeoHub = function (options = {}, api) {
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
   ctx.coldFeatures = [];
-  ctx.featureIndex = new FeatureIndex();
 
   api.onAdd = function (map) {
     console.log("onAdd");
@@ -130,8 +128,8 @@ const setupGeoHub = function (options = {}, api) {
   api.featuresAt = ctx.pointindex.featuresAt;
   api.getRouteFromTo = ctx.pointindex.getRouteFromTo;
   api.getRouteLength = ctx.pointindex.getRouteLength;
-  api.addFeatureToIndex = ctx.pointindex.addFeatureToIndex;
   api.addFeaturesToMesh = ctx.pointindex.addFeaturesToMesh;
+  api.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
   api.options = options;
 
   return api;

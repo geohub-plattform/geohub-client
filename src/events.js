@@ -65,8 +65,8 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   const coords = calculatePointsOnLine(uniqueFeatures, evtCoords);
   let closestDistance = null;
   let closestCoord = null;
-  let borders;
   let closestPointType = null;
+  let borders;
 
   coords.forEach((pointType) => {
     const singleCoords = pointType.coords;
@@ -111,7 +111,7 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
 
 
   if (closestDistance !== null) {
-    return {coords: closestCoord, borders: borders};
+    return {coords: closestCoord, borders: borders, geoHubId: closestPointType.geoHubId};
   } else {
     return null;
   }
@@ -150,14 +150,15 @@ module.exports = function (ctx) {
       if (nearFeatures) {
         const closestPoint = findClosestPoint(nearFeatures, evtCoords, radius);
         if (closestPoint) {
-          utils.reducePrecision(closestPoint.coords);
+          //utils.reducePrecision(closestPoint.coords);
           ctx.closestPoint = closestPoint;
           if (closestPoint.borders) {
             debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border1]));
             debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border2]));
           }
           if (ctx.lastPoint) {
-            if (utils.isPointEqual(ctx.lastPoint.coords, closestPoint.coords)) {
+            const lastPointDistance = turf.distance(turf.point(evtCoords), turf.point(ctx.lastPoint.coords));
+            if (utils.isPointEqual(ctx.lastPoint.coords, closestPoint.coords) && lastPointDistance > 0.002) {
               snapFeature = createLineToCurrentMouseMove(evtCoords);
             } else {
               const fromPoint = ctx.lastPoint;
@@ -201,10 +202,9 @@ module.exports = function (ctx) {
 
   const addClickSegementsToMesh = function () {
     const meshFeatures = [];
-    if (ctx.closestPoint && ctx.closestPoint.borders) {
+    if (ctx.closestPoint && ctx.closestPoint.borders && ctx.closestPoint.geoHubId !== undefined) {
       console.log("adding mesh features");
-      meshFeatures.push(utils.createLineWithLength([ctx.closestPoint.coords, ctx.closestPoint.borders.border1]));
-      meshFeatures.push(utils.createLineWithLength([ctx.closestPoint.coords, ctx.closestPoint.borders.border2]));
+      ctx.api.splitSegmentAtPoint(ctx.closestPoint.geoHubId, ctx.closestPoint.coords);
     }
     if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
       meshFeatures.push(ctx.snapFeature);
@@ -233,7 +233,7 @@ module.exports = function (ctx) {
         console.log("Finish draw");
         doubleClickZoom.enable(ctx);
         ctx.snapFeature = null;
-        ctx.closestPoint = null;
+       // ctx.closestPoint = null;
         ctx.lastPoint = null;
         if (ctx.hotFeature) {
           ctx.coldFeatures.push(ctx.hotFeature);
@@ -256,7 +256,6 @@ module.exports = function (ctx) {
         } else {
           hotFeature = turf.lineString(snapCoords);
           ctx.hotFeature = hotFeature;
-          ctx.api.addFeatureToIndex(ctx.hotFeature);
         }
         ctx.snapFeature = null;
         ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));

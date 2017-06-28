@@ -1,5 +1,5 @@
 const turf = require("@turf/turf");
-
+const Constants  = require("./constants");
 /**
  * Returns the points that the given point matches with the given coordinates. The function
  * only tests for exact coordinates.
@@ -184,6 +184,17 @@ function isPointEqual(coords1, coords2) {
   return coords1[0] === coords2[0] && coords1[1] === coords2[1];
 }
 
+function isPointNotTooClose(coords1, coords2) {
+  const line = turf.lineString([coords1, coords2]);
+  const length = turf.lineDistance(line);
+
+  if (length >= Constants.MIN_DISTANCE) {
+    return !(coords1[0] === coords2[0] && coords1[1] === coords2[1]);
+  } else {
+    return false;
+  }
+}
+
 function createLineWithLength(coords) {
   const line = turf.lineString(coords);
   const length = turf.lineDistance(line);
@@ -201,5 +212,5 @@ function reducePrecision(coords) {
 module.exports = {
   pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
   createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
-  addProperties, isPointEqual, createLineWithLength, reducePrecision
+  addProperties, isPointEqual, createLineWithLength, reducePrecision, isPointNotTooClose
 };

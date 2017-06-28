@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            9.236114323139189,
+            49.136462671800935
+          ],
+          [
+            9.238466620445251,
+            49.13634509596377
+          ]
+        ]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            9.238533675670624,
+            49.13676801670233
+          ],
+          [
+            9.236170649528503,
+            49.13689612061235
+          ]
+        ]
+      }
+    },
+    {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[9.237244,49.136838],[9.238137,49.1363616]]}}
+  ]
+}

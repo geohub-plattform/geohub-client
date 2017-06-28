@@ -46,8 +46,9 @@
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v8',
-        center: [9.237205863630237, 49.13669396742608],
-        zoom: 18
+        center: [9.237244118404078,  49.136838115371575],
+        zoom: 18,
+        maxZoom: 30
     });
 
 
@@ -61,7 +62,7 @@
     map.on("load", function () {
         var geoHubClient = new GeoHubClient();
         map.addControl(geoHubClient);
-        $.getJSON("simplegrid.geojson", null, function (data) {
+        $.getJSON("export.geojson", null, function (data) {
             geoHubClient.addData(data);
         });
     });
