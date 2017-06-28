@@ -63,7 +63,6 @@ const MeshIndex = function (originalData) {
 
         const pointOnLine = turf.pointOnLine(feature2, closestEndpoint);
         if (pointOnLine.properties.dist < Constants.MIN_DISTANCE) {
-          console.log("adding cut point as edge");
           appendCutFeatures(segmentsWithCutPoints, feature2, [closestEndpoint]);
           closestPointAdded = true;
         } else {
@@ -156,7 +155,7 @@ const MeshIndex = function (originalData) {
             addFeatureToIndex(feature);
             result.push(feature);
           } else {
-            console.error("0 length feature (", length, "): ", JSON.stringify(feature));
+            console.error("0 length feature (", length, ") after line split: ", JSON.stringify(feature));
           }
         });
       } else {
@@ -165,7 +164,7 @@ const MeshIndex = function (originalData) {
           utils.addProperties(segment, {length: length});
           result.push(segment);
         } else {
-          console.error("0 length feature (", length, "): ", JSON.stringify(segment));
+          console.error("0 length feature (", length, ") existing segment: ", JSON.stringify(segment));
         }
       }
     });

@@ -92,7 +92,6 @@ MeshRouting.prototype.getRouteFromTo = function (fromPoint, toPoint) {
   g.setVertices(graphDataCopy);
   const routeFrom = fromPoint.coords.join("#");
   const routeTo = toPoint.coords.join("#");
-  console.log("route from ", routeFrom, " route to ", routeTo);
   const path = g.shortestPath(routeFrom, routeTo).concat([fromPoint.coords.join("#")]).reverse();
   if (path && path.length > 1) {
     const coords = [];
