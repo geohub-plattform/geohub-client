@@ -26,7 +26,9 @@ module.exports = function (ctx) {
 
   return {
     addData: function (fc) {
+      console.log("Adding data: ", fc.features.length, " features");
       meshIndex = new MeshIndex(fc.features);
+      console.log("Updating mesh");
       updateMeshData();
     },
     splitSegmentAtPoint: function (segmentId, pointCoords) {

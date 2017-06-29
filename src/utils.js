@@ -1,5 +1,5 @@
 const turf = require("@turf/turf");
-const Constants  = require("./constants");
+const Constants = require("./constants");
 /**
  * Returns the points that the given point matches with the given coordinates. The function
  * only tests for exact coordinates.
@@ -208,9 +208,46 @@ function reducePrecision(coords) {
   return coords;
 }
 
+function createBbox(coords) {
+  const bbox1 = {};
+  if (coords[0][0] < coords[1][0]) {
+    bbox1.west = coords[0][0];
+    bbox1.east = coords[1][0];
+  } else {
+    bbox1.west = coords[1][0];
+    bbox1.east = coords[0][0];
+  }
+  if (coords[0][1] < coords[1][1]) {
+    bbox1.south = coords[0][1];
+    bbox1.north = coords[1][1];
+  } else {
+    bbox1.south = coords[1][1];
+    bbox1.north = coords[0][1];
+  }
+  return bbox1;
+}
+
+
+function featuresOverlap(feature1, feature2) {
+  const coords1 = feature1.geometry.coordinates;
+  const coords2 = feature2.geometry.coordinates;
+  if (coords1.length === 2 && coords2.length === 2) {
+    const bbox1 = createBbox(coords1);
+    const bbox2 = createBbox(coords2);
+    if (bbox1.east < bbox2.west || bbox1.west > bbox2.east) {
+      return false;
+    } else if (bbox1.north < bbox2.south || bbox1.south > bbox2.north) {
+      return false;
+    }
+    return true;
+  } else {
+    throw new Error("wrong number of coordinates, expected 2");
+  }
+}
+
 
 module.exports = {
   pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
   createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
-  addProperties, isPointEqual, createLineWithLength, reducePrecision, isPointNotTooClose
+  addProperties, isPointEqual, createLineWithLength, reducePrecision, isPointNotTooClose, featuresOverlap
 };

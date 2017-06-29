@@ -25,20 +25,41 @@ const MeshIndex = function (originalData) {
     segmentId++;
   }
 
+  function coordinatesToLineStrings(coords, result) {
+    console.log("coords to split: ", coords.length);
+    let firstPoint = coords[0];
+    let secondPoint = null;
+    for (let index = 1; index < coords.length; index++) {
+      secondPoint = coords[index];
+      const line = turf.lineString([firstPoint, secondPoint]);
+      addFeatureToIndex(line);
+      result.push(line);
+      firstPoint = secondPoint;
+    }
+  }
+
   function splitIntoTwoPointSegmentsAndAddIds(features) {
     const result = [];
-    features.forEach((lineString) => {
-      const coords = lineString.geometry.coordinates;
-      let firstPoint = coords[0];
-      let secondPoint = null;
-      for (let index = 1; index < coords.length; index++) {
-        secondPoint = coords[index];
-        const line = turf.lineString([firstPoint, secondPoint]);
-        addFeatureToIndex(line);
-        result.push(line);
-        firstPoint = secondPoint;
+    console.log("features: ", features.length);
+    features.forEach((feature) => {
+      const type = feature.geometry.type;
+      console.log("feature type: ", type);
+      if (type === "MultiPolygon") {
+        feature.geometry.coordinates.forEach((coords) => {
+          coords.forEach((subCoords) => {
+            coordinatesToLineStrings(subCoords, result);
+          });
+        });
+      } else if (type === "Polygon" || type === "MultiLineString") {
+        feature.geometry.coordinates.forEach((coords) => {
+          coordinatesToLineStrings(coords, result);
+        });
+      } else {
+        coordinatesToLineStrings(feature.geometry.coordinates, result);
       }
+
     });
+    console.log("single segments: ", result.length);
     return result;
   }
 
@@ -104,35 +125,35 @@ const MeshIndex = function (originalData) {
         const backDir = `${idx2}:${idx1}`;
         if (segmentFeature1 !== segmentFeature2 && checkedSegments[backDir] === undefined) {
           checkedSegments[forwardDir] = true;
-          const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
-          if (intersectionPoints.length > 0) {
-            if (intersectionPoints.length > 1) {
-              console.error(`${intersectionPoints.length} intersection points received`);
-            }
-            const point = intersectionPoints[0];
-            processIntersectionPoint(point, segmentFeature1, segmentFeature2);
-          } else {
-            const seg1Coords = segmentFeature1.geometry.coordinates;
-            const seg2Coords = segmentFeature2.geometry.coordinates;
-            const pOL1Seg20 = turf.pointOnLine(segmentFeature1, turf.point(seg2Coords[0]));
-            if (pOL1Seg20.properties.dist < Constants.MIN_DISTANCE) {
-              appendCutFeatures(segmentsWithCutPoints, segmentFeature1, [pOL1Seg20]);
-            }
-            const pOL1Seg21 = turf.pointOnLine(segmentFeature1, turf.point(seg2Coords[1]));
-            if (pOL1Seg21.properties.dist < Constants.MIN_DISTANCE) {
-              appendCutFeatures(segmentsWithCutPoints, segmentFeature1, [pOL1Seg21]);
-            }
-            const pOL2Seg10 = turf.pointOnLine(segmentFeature2, turf.point(seg1Coords[0]));
-            if (pOL2Seg10.properties.dist < Constants.MIN_DISTANCE) {
-              appendCutFeatures(segmentsWithCutPoints, segmentFeature2, [pOL2Seg10]);
-            }
-            const pOL2Seg11 = turf.pointOnLine(segmentFeature2, turf.point(seg1Coords[1]));
-            if (pOL2Seg11.properties.dist < Constants.MIN_DISTANCE) {
-              appendCutFeatures(segmentsWithCutPoints, segmentFeature2, [pOL2Seg11]);
+          if (utils.featuresOverlap(segmentFeature1, segmentFeature2)) {
+            const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
+            if (intersectionPoints.length > 0) {
+              if (intersectionPoints.length > 1) {
+                console.error(`${intersectionPoints.length} intersection points received`);
+              }
+              const point = intersectionPoints[0];
+              processIntersectionPoint(point, segmentFeature1, segmentFeature2);
+            } else {
+              const seg1Coords = segmentFeature1.geometry.coordinates;
+              const seg2Coords = segmentFeature2.geometry.coordinates;
+              const pOL1Seg20 = turf.pointOnLine(segmentFeature1, turf.point(seg2Coords[0]));
+              if (pOL1Seg20.properties.dist < Constants.MIN_DISTANCE) {
+                appendCutFeatures(segmentsWithCutPoints, segmentFeature1, [pOL1Seg20]);
+              }
+              const pOL1Seg21 = turf.pointOnLine(segmentFeature1, turf.point(seg2Coords[1]));
+              if (pOL1Seg21.properties.dist < Constants.MIN_DISTANCE) {
+                appendCutFeatures(segmentsWithCutPoints, segmentFeature1, [pOL1Seg21]);
+              }
+              const pOL2Seg10 = turf.pointOnLine(segmentFeature2, turf.point(seg1Coords[0]));
+              if (pOL2Seg10.properties.dist < Constants.MIN_DISTANCE) {
+                appendCutFeatures(segmentsWithCutPoints, segmentFeature2, [pOL2Seg10]);
+              }
+              const pOL2Seg11 = turf.pointOnLine(segmentFeature2, turf.point(seg1Coords[1]));
+              if (pOL2Seg11.properties.dist < Constants.MIN_DISTANCE) {
+                appendCutFeatures(segmentsWithCutPoints, segmentFeature2, [pOL2Seg11]);
+              }
             }
           }
-
-
         }
       });
     });
@@ -219,6 +240,7 @@ const MeshIndex = function (originalData) {
   };
 
   allSegments = splitAndCheckForIntersections(originalData);
+  console.log("all segments: ", allSegments.length);
 };
 
 module.exports = MeshIndex;

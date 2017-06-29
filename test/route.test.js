@@ -105,7 +105,7 @@ test("geohub - dijkstras", {}, t => {
   t.end();
 });
 
-test("geohub - meshRouting", {skip: false}, t => {
+test("geohub - meshRouting without intersections", {skip: false}, t => {
   const fc = JSON.parse(fs.readFileSync("./test/testdata.json"));
   const features = fc.features;
   console.time("Meshing");

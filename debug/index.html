@@ -62,7 +62,7 @@
     map.on("load", function () {
         var geoHubClient = new GeoHubClient();
         map.addControl(geoHubClient);
-        $.getJSON("export.geojson", null, function (data) {
+        $.getJSON("gemeinden_simplify0.json", null, function (data) {
             geoHubClient.addData(data);
         });
     });
