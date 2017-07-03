@@ -66,7 +66,7 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   const coords = calculatePointsOnLine(uniqueFeatures, evtCoords);
 
   let closestVertex = null;
-  let closestPointType = null;
+  let closestLinepoint = null;
   let borders;
 
   coords.forEach((pointType) => {
@@ -77,19 +77,19 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
           closestVertex = pointType;
         }
       } else if (dist < radius) {
-        if (closestPointType !== null && dist === closestPointType.dist && closestPointType.geoHubId !== pointType.geoHubId) {
+        if (closestLinepoint !== null && dist === closestLinepoint.dist && closestLinepoint.geoHubId !== pointType.geoHubId) {
           // dies ist für den fall, dass zwei linien übereinander liegen.
           // finde dann die linie, deren endpunkte am nächsten zum mauszeiger liegen
-          if (closestPointType.type === "linepoint") {
-            if ((pointType.distance1 <= closestPointType.distance1 && pointType.distance2 <= closestPointType.distance2) ||
-              (pointType.distance2 <= closestPointType.distance1 && pointType.distance1 <= closestPointType.distance2)) {
+          if (closestLinepoint.type === "linepoint") {
+            if ((pointType.distance1 <= closestLinepoint.distance1 && pointType.distance2 <= closestLinepoint.distance2) ||
+              (pointType.distance2 <= closestLinepoint.distance1 && pointType.distance1 <= closestLinepoint.distance2)) {
               console.log("switch closest points");
-              closestPointType = pointType;
+              closestLinepoint = pointType;
             }
           }
         }
-        if (closestPointType === null || dist < closestPointType.dist) {
-          closestPointType = pointType;
+        if (closestLinepoint === null || dist < closestLinepoint.dist) {
+          closestLinepoint = pointType;
           if (pointType.border1 && pointType.border2) {
             borders = {
               border1: pointType.border1,
@@ -106,17 +106,17 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   });
 
   if (closestVertex !== null) {
-    if (closestPointType !== null) {
+    if (closestLinepoint !== null) {
       if (closestVertex.dist < radius) {
-        return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId};
+        return {coords: closestVertex.coords, borders: null, geoHubId: null};
       } else {
-        return {coords: closestPointType.coords, borders: borders, geoHubId: closestPointType.geoHubId};
+        return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId};
       }
     } else {
-      return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId};
+      return {coords: closestVertex.coords, borders: null, geoHubId: null};
     }
-  } else if (closestPointType !== null) {
-    return {coords: closestPointType.coords, borders: borders, geoHubId: closestPointType.geoHubId};
+  } else if (closestLinepoint !== null) {
+    return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId};
   } else {
     return null;
   }
