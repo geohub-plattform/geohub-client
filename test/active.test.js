@@ -8,7 +8,7 @@ test("geohub - route to endpoint simple-simple grid", {skip: false}, t => {
   console.time("Meshing");
   const meshIndex = new MeshIndex(features);
   console.timeEnd("Meshing");
-  t.equals(meshIndex.getMesh().length, 1997);
+  t.equals(meshIndex.getMesh().length, 9894);
   t.end();
 });
 

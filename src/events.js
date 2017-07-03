@@ -148,10 +148,10 @@ module.exports = function (ctx) {
     const debugFeatures = [];
     if (snapToPoint) {
       const calculatedRadius = 0.005 * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()));
-      const radius = Math.max(0.005, calculatedRadius);
-      const nearFeatures = ctx.api.featuresAt(event.lngLat, radius);
+      const radiusInKm = Math.min(1.0, Math.max(0.005, calculatedRadius));
+      const nearFeatures = ctx.api.featuresAt(event.lngLat, radiusInKm);
       if (nearFeatures) {
-        const closestPoint = findClosestPoint(nearFeatures, evtCoords, radius);
+        const closestPoint = findClosestPoint(nearFeatures, evtCoords, radiusInKm);
         if (closestPoint) {
           //utils.reducePrecision(closestPoint.coords);
           ctx.closestPoint = closestPoint;

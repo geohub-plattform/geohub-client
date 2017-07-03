@@ -14,8 +14,6 @@ const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeat
         return (element[0] === newCutPoint[0] && element[1] === newCutPoint[1]);
       }) === -1) {
       segCutPoints.push(newCutPoint);
-    } else {
-      console.log("cut point already exists");
     }
   });
 };

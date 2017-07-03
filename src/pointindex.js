@@ -8,8 +8,9 @@ module.exports = function (ctx) {
   let meshIndex = null;
   let meshRouting = null;
 
-  const queryMapFeatures = function (lngLat, radius) {
+  const queryMapFeatures = function (lngLat, radiusInKm) {
     if (meshIndex) {
+      const radius = turf.distanceToDegrees(radiusInKm);
       const bbox = [
         ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
         ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
