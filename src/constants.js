@@ -1,7 +1,9 @@
 module.exports = {
   classes: {
-    CONTROL_BASE: 'mapboxgl-ctrl',
+    PREDEFINED_CONTROL_BASE: 'mapboxgl-ctrl',
+    PREDEFINED_CONTROL_GROUP: 'mapboxgl-ctrl-group',
     CONTROL_PREFIX: 'mapboxgl-ctrl-',
+    ACTION_BUTTON: 'geohub-action-btn',
     CONTROL_BUTTON: 'mapbox-gl-draw_ctrl-draw-btn',
     CONTROL_BUTTON_LINE: 'mapbox-gl-draw_line',
     CONTROL_BUTTON_POLYGON: 'mapbox-gl-draw_polygon',
@@ -10,7 +12,8 @@ module.exports = {
     CONTROL_BUTTON_COMBINE_FEATURES: 'mapbox-gl-draw_combine',
     CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',
     CONTROL_BUTTON_DOWNLOAD: 'geohub-download',
-    CONTROL_GROUP: 'mapboxgl-ctrl-group',
+    CONTROL_GROUP: 'geohub-ctrl-group',
+    ACTION_GROUP: 'geohub-action-group',
     ATTRIBUTION: 'mapboxgl-ctrl-attrib',
     ACTIVE_BUTTON: 'active',
     BOX_SELECT: 'mapbox-gl-draw_boxselect'

@@ -5,12 +5,12 @@ const ui = require("./src/ui");
 
 const defaultOptions = {
   controls: {
-    point: true,
-    line_string: true,
-    polygon: true,
-    trash: true,
-    combine_features: true,
-    uncombine_features: true
+    point: false,
+    line_string: false,
+    polygon: false,
+    trash: false,
+    combine_features: false,
+    uncombine_features: false
   }
 };
 
@@ -54,7 +54,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
       source: Constants.sources.BASE,
       'type': 'circle',
       'paint': {
-        'circle-radius': 5,
+        'circle-radius': 3,
         'circle-color': '#888'
       }
     });

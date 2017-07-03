@@ -74,6 +74,21 @@ module.exports = function (ctx) {
     return button;
   }
 
+  function createActionButton(id, options = {}) {
+    const button = document.createElement('button');
+    button.className = `${Constants.classes.ACTION_BUTTON} ${options.className}`;
+    button.setAttribute('title', options.title);
+    options.container.appendChild(button);
+
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      options.onAction();
+    }, true);
+
+    return button;
+  }
+
   function deactivateButtons() {
     if (!activeButton) return;
     activeButton.classList.remove(Constants.classes.ACTIVE_BUTTON);
@@ -94,16 +109,21 @@ module.exports = function (ctx) {
 
   function addButtons() {
     const controls = ctx.options.controls;
+    const containerGroup = document.createElement('div');
+    containerGroup.className = `${Constants.classes.PREDEFINED_CONTROL_BASE} ${Constants.classes.PREDEFINED_CONTROL_GROUP}`;
+    if (!controls) return containerGroup;
+    const actionGroup = document.createElement('div');
+    actionGroup.className = `${Constants.classes.ACTION_GROUP}`;
     const controlGroup = document.createElement('div');
-    controlGroup.className = `${Constants.classes.CONTROL_GROUP} ${Constants.classes.CONTROL_BASE}`;
+    controlGroup.className = `${Constants.classes.CONTROL_GROUP}`;
 
-    if (!controls) return controlGroup;
-
-    buttonElements["download"] = createControlButton("download", {
-      container: controlGroup,
+    containerGroup.appendChild(actionGroup);
+    //containerGroup.appendChild(controlGroup);
+    buttonElements["download"] = createActionButton("download", {
+      container: containerGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
       title: `Download snapping lines ${ctx.options.keybindings && '(d)'}`,
-      onActivate: () => ctx.events.handleDownloadButton()
+      onAction: () => ctx.events.handleDownloadButton()
     });
 
     if (controls[Constants.types.LINE]) {
@@ -166,7 +186,7 @@ module.exports = function (ctx) {
       });
     }
 
-    return controlGroup;
+    return containerGroup;
   }
 
   function removeButtons() {
