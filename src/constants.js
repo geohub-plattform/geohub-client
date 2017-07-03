@@ -9,6 +9,7 @@ module.exports = {
     CONTROL_BUTTON_TRASH: 'mapbox-gl-draw_trash',
     CONTROL_BUTTON_COMBINE_FEATURES: 'mapbox-gl-draw_combine',
     CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',
+    CONTROL_BUTTON_DOWNLOAD: 'geohub-download',
     CONTROL_GROUP: 'mapboxgl-ctrl-group',
     ATTRIBUTION: 'mapboxgl-ctrl-attrib',
     ACTIVE_BUTTON: 'active',

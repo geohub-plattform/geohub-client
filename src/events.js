@@ -3,6 +3,7 @@ import turf from "@turf/turf";
 import cheapRuler from "cheap-ruler";
 import doubleClickZoom from "./double_click_zoom";
 import utils from "./utils";
+const overpassApi = require("./overpass_api");
 
 function closestPoints(ruler, coordinates, evtCoords) {
   const result = [];
@@ -233,7 +234,7 @@ module.exports = function (ctx) {
         console.log("Finish draw");
         doubleClickZoom.enable(ctx);
         ctx.snapFeature = null;
-       // ctx.closestPoint = null;
+        // ctx.closestPoint = null;
         ctx.lastPoint = null;
         if (ctx.hotFeature) {
           ctx.coldFeatures.push(ctx.hotFeature);
@@ -286,6 +287,17 @@ module.exports = function (ctx) {
     }
   };
 
+  function handleDownloadButton() {
+    console.log("Downloading ", ctx.map.getBounds());
+
+    overpassApi.loadWays(ctx.map.getBounds(), (result) => {
+      console.log("Data downloaded");
+      const geojson = overpassApi.convertFromOverpassToGeojson(result);
+      console.log("Data adding to map");
+      ctx.api.addData(geojson);
+    });
+  }
+
   return {
     addEventListeners: function (map) {
       map.on("mousemove", mouseMove);
@@ -300,6 +312,7 @@ module.exports = function (ctx) {
       const container = map.getContainer();
       container.removeEventListener('keypress', keypress);
 
-    }
+    },
+    handleDownloadButton
   };
 };

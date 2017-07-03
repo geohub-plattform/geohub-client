@@ -9,13 +9,17 @@ module.exports = function (ctx) {
   let meshRouting = null;
 
   const queryMapFeatures = function (lngLat, radius) {
-    const bbox = [
-      ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
-      ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
-    ];
-    const filter = {layers: [Constants.layers.BASE]}; //, "geohub-line-cold", "geohub-line-hot"
-    const features = ctx.map.queryRenderedFeatures(bbox, filter);
-    return meshIndex.getFeaturesFromIndex(features);
+    if (meshIndex) {
+      const bbox = [
+        ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
+        ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
+      ];
+      const filter = {layers: [Constants.layers.BASE]}; //, "geohub-line-cold", "geohub-line-hot"
+      const features = ctx.map.queryRenderedFeatures(bbox, filter);
+      return meshIndex.getFeaturesFromIndex(features);
+    } else {
+      return null;
+    }
   };
 
   const updateMeshData = function () {

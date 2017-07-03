@@ -3,7 +3,7 @@ const Constants = require('./constants');
 
 const classTypes = ['mode', 'feature', 'mouse'];
 
-module.exports = function(ctx) {
+module.exports = function (ctx) {
 
 
   const buttonElements = {};
@@ -98,6 +98,13 @@ module.exports = function(ctx) {
     controlGroup.className = `${Constants.classes.CONTROL_GROUP} ${Constants.classes.CONTROL_BASE}`;
 
     if (!controls) return controlGroup;
+
+    buttonElements["download"] = createControlButton("download", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
+      title: `Download snapping lines ${ctx.options.keybindings && '(d)'}`,
+      onActivate: () => ctx.events.handleDownloadButton()
+    });
 
     if (controls[Constants.types.LINE]) {
       buttonElements[Constants.types.LINE] = createControlButton(Constants.types.LINE, {

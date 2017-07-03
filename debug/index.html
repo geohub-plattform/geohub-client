@@ -6,10 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GeoHub Online Editor</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link href='http://localhost:9967/mapbox-gl.css' rel='stylesheet'/>
     <script src='http://localhost:9967/mapbox-gl.js'></script>
     <!--    <script src='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />-->
+    <link href='http://localhost:9967/dist/geohub-client.css' rel='stylesheet'/>
     <script src='http://localhost:9967/geohub-client.js'></script>
     <script src='https://code.jquery.com/jquery-3.2.1.js'></script>
     <style>
@@ -62,7 +65,7 @@
     map.on("load", function () {
         var geoHubClient = new GeoHubClient();
         map.addControl(geoHubClient);
-        $.getJSON("gemeinden_simplify0.json", null, function (data) {
+        $.getJSON("overpass.geojson", null, function (data) {
             geoHubClient.addData(data);
         });
     });

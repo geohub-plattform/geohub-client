@@ -1,12 +1,25 @@
 const events = require("./src/events");
 const pointindex = require("./src/pointindex");
-import Constants from "./src/constants";
+const Constants = require("./src/constants");
+const ui = require("./src/ui");
 
-const setupGeoHub = function (options = {}, api) {
+const defaultOptions = {
+  controls: {
+    point: true,
+    line_string: true,
+    polygon: true,
+    trash: true,
+    combine_features: true,
+    uncombine_features: true
+  }
+};
+
+const setupGeoHub = function (options = defaultOptions, api) {
   const ctx = {
     options: options
   };
   ctx.api = api;
+  ctx.ui = ui(ctx);
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
   ctx.coldFeatures = [];
@@ -115,7 +128,7 @@ const setupGeoHub = function (options = {}, api) {
         'line-width': 2
       }
     });
-    return document.createElement('div');
+    return ctx.ui.addButtons();
   };
   api.onRemove = function () {
     console.log("onRemove");
