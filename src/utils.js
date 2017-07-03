@@ -184,6 +184,12 @@ function isPointEqual(coords1, coords2) {
   return coords1[0] === coords2[0] && coords1[1] === coords2[1];
 }
 
+function isPointAtVertex(geometryCoords, pointCoords) {
+  const firstPoint = geometryCoords[0];
+  const lastPoint = geometryCoords[geometryCoords.length - 1];
+  return isPointEqual(firstPoint, pointCoords) || isPointEqual(lastPoint, pointCoords);
+}
+
 function isPointNotTooClose(coords1, coords2) {
   const line = turf.lineString([coords1, coords2]);
   const length = turf.lineDistance(line);
@@ -249,5 +255,5 @@ function featuresOverlap(feature1, feature2) {
 module.exports = {
   pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
   createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
-  addProperties, isPointEqual, createLineWithLength, reducePrecision, isPointNotTooClose, featuresOverlap
+  addProperties, isPointEqual, createLineWithLength, reducePrecision, isPointNotTooClose, featuresOverlap, isPointAtVertex
 };

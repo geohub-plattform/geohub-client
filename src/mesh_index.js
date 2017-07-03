@@ -2,7 +2,6 @@ const turf = require("@turf/turf");
 const utils = require("./utils");
 const Constants = require("./constants");
 
-
 const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeatures) {
   let segCutPoints = segmentsWithCutPoints[feature.properties.geoHubId];
   if (segCutPoints === undefined) {
@@ -10,7 +9,14 @@ const appendCutFeatures = function (segmentsWithCutPoints, feature, cutPointFeat
     segmentsWithCutPoints[feature.properties.geoHubId] = segCutPoints;
   }
   cutPointFeatures.forEach((feature) => {
-    segCutPoints.push(utils.reducePrecision(feature.geometry.coordinates));
+    const newCutPoint = utils.reducePrecision(feature.geometry.coordinates);
+    if (segCutPoints.findIndex((element) => {
+        return (element[0] === newCutPoint[0] && element[1] === newCutPoint[1]);
+      }) === -1) {
+      segCutPoints.push(newCutPoint);
+    } else {
+      console.log("cut point already exists");
+    }
   });
 };
 
@@ -26,7 +32,6 @@ const MeshIndex = function (originalData) {
   }
 
   function coordinatesToLineStrings(coords, result) {
-    console.log("coords to split: ", coords.length);
     let firstPoint = coords[0];
     let secondPoint = null;
     for (let index = 1; index < coords.length; index++) {
@@ -43,7 +48,6 @@ const MeshIndex = function (originalData) {
     console.log("features: ", features.length);
     features.forEach((feature) => {
       const type = feature.geometry.type;
-      console.log("feature type: ", type);
       if (type === "MultiPolygon") {
         feature.geometry.coordinates.forEach((coords) => {
           coords.forEach((subCoords) => {
@@ -117,6 +121,15 @@ const MeshIndex = function (originalData) {
       }
     };
 
+    const checkIfPointInCloseRange = function (feature, coords) {
+      const pointOnline = turf.pointOnLine(feature, turf.point(coords));
+      if (pointOnline.properties.dist < Constants.MIN_DISTANCE) {
+        if (!utils.isPointAtVertex(feature.geometry.coordinates, coords)) {
+          appendCutFeatures(segmentsWithCutPoints, feature, [pointOnline]);
+        }
+      }
+    };
+
     knownSegments.forEach((segmentFeature1) => {
       const idx1 = segmentFeature1.properties.geoHubId;
       newSegments.forEach((segmentFeature2) => {
@@ -136,22 +149,10 @@ const MeshIndex = function (originalData) {
             } else {
               const seg1Coords = segmentFeature1.geometry.coordinates;
               const seg2Coords = segmentFeature2.geometry.coordinates;
-              const pOL1Seg20 = turf.pointOnLine(segmentFeature1, turf.point(seg2Coords[0]));
-              if (pOL1Seg20.properties.dist < Constants.MIN_DISTANCE) {
-                appendCutFeatures(segmentsWithCutPoints, segmentFeature1, [pOL1Seg20]);
-              }
-              const pOL1Seg21 = turf.pointOnLine(segmentFeature1, turf.point(seg2Coords[1]));
-              if (pOL1Seg21.properties.dist < Constants.MIN_DISTANCE) {
-                appendCutFeatures(segmentsWithCutPoints, segmentFeature1, [pOL1Seg21]);
-              }
-              const pOL2Seg10 = turf.pointOnLine(segmentFeature2, turf.point(seg1Coords[0]));
-              if (pOL2Seg10.properties.dist < Constants.MIN_DISTANCE) {
-                appendCutFeatures(segmentsWithCutPoints, segmentFeature2, [pOL2Seg10]);
-              }
-              const pOL2Seg11 = turf.pointOnLine(segmentFeature2, turf.point(seg1Coords[1]));
-              if (pOL2Seg11.properties.dist < Constants.MIN_DISTANCE) {
-                appendCutFeatures(segmentsWithCutPoints, segmentFeature2, [pOL2Seg11]);
-              }
+              checkIfPointInCloseRange(segmentFeature1, seg2Coords[0]);
+              checkIfPointInCloseRange(segmentFeature1, seg2Coords[1]);
+              checkIfPointInCloseRange(segmentFeature2, seg1Coords[0]);
+              checkIfPointInCloseRange(segmentFeature2, seg1Coords[1]);
             }
           }
         }
