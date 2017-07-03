@@ -130,34 +130,30 @@ const MeshIndex = function (originalData) {
       }
     };
 
-    knownSegments.forEach((segmentFeature1) => {
-      const idx1 = segmentFeature1.properties.geoHubId;
-      newSegments.forEach((segmentFeature2) => {
-        const idx2 = segmentFeature2.properties.geoHubId;
-        const forwardDir = `${idx1}:${idx2}`;
-        const backDir = `${idx2}:${idx1}`;
-        if (segmentFeature1 !== segmentFeature2 && checkedSegments[backDir] === undefined) {
-          checkedSegments[forwardDir] = true;
-          if (utils.featuresOverlap(segmentFeature1, segmentFeature2)) {
-            const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
-            if (intersectionPoints.length > 0) {
-              if (intersectionPoints.length > 1) {
-                console.error(`${intersectionPoints.length} intersection points received`);
-              }
-              const point = intersectionPoints[0];
-              processIntersectionPoint(point, segmentFeature1, segmentFeature2);
-            } else {
-              const seg1Coords = segmentFeature1.geometry.coordinates;
-              const seg2Coords = segmentFeature2.geometry.coordinates;
-              checkIfPointInCloseRange(segmentFeature1, seg2Coords[0]);
-              checkIfPointInCloseRange(segmentFeature1, seg2Coords[1]);
-              checkIfPointInCloseRange(segmentFeature2, seg1Coords[0]);
-              checkIfPointInCloseRange(segmentFeature2, seg1Coords[1]);
+    for (let knownIndex = 0; knownIndex < knownSegments.length; knownIndex++) {
+      const segmentFeature1 = knownSegments[knownIndex];
+      for (let newIndex = 0; newIndex < newSegments.length; newIndex++) {
+        const segmentFeature2 = newSegments[newIndex];
+        if (utils.featuresOverlap(segmentFeature1, segmentFeature2)) {
+          const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
+          if (intersectionPoints.length > 0) {
+            if (intersectionPoints.length > 1) {
+              console.error(`${intersectionPoints.length} intersection points received`);
             }
+            const point = intersectionPoints[0];
+            processIntersectionPoint(point, segmentFeature1, segmentFeature2);
+          } else {
+            const seg1Coords = segmentFeature1.geometry.coordinates;
+            const seg2Coords = segmentFeature2.geometry.coordinates;
+            checkIfPointInCloseRange(segmentFeature1, seg2Coords[0]);
+            checkIfPointInCloseRange(segmentFeature1, seg2Coords[1]);
+            checkIfPointInCloseRange(segmentFeature2, seg1Coords[0]);
+            checkIfPointInCloseRange(segmentFeature2, seg1Coords[1]);
           }
         }
-      });
-    });
+      }
+    }
+
     return segmentsWithCutPoints;
   }
 
