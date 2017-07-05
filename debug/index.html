@@ -53,8 +53,8 @@
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v8',
-        center: [9.237244118404078, 49.136838115371575],
-        zoom: 18,
+        center: [9.26183, 49.10275],
+        zoom: 16,
         maxZoom: 30
     });
 
@@ -73,7 +73,7 @@
         map.addControl(new mapboxgl.GeolocateControl());
         map.addControl(new mapboxgl.ScaleControl());
         map.addControl(new mapboxgl.FullscreenControl());
-        $.getJSON("gemeinden_simplify0.geojson", null, function (data) {
+        $.getJSON("overpass.geojson", null, function (data) {
             geoHubClient.addData(data);
         });
     });
