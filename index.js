@@ -30,6 +30,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
       map.addImage("location", image);
     });
     ctx.map = map;
+    ctx.mode = Constants.modes.DIRECT_SELECT;
     ctx.container = map.getContainer();
     ctx.container.classList.add("mouse-add");
     ctx.events.addEventListeners(map);
@@ -163,6 +164,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   };
   api.addData = ctx.pointindex.addData;
   api.featuresAt = ctx.pointindex.featuresAt;
+  api.userFeaturesAt = ctx.pointindex.userFeaturesAt;
   api.getRouteFromTo = ctx.pointindex.getRouteFromTo;
   api.getRouteLength = ctx.pointindex.getRouteLength;
   api.addFeaturesToMesh = ctx.pointindex.addFeaturesToMesh;

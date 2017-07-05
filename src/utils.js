@@ -184,6 +184,14 @@ function isPointEqual(coords1, coords2) {
   return coords1[0] === coords2[0] && coords1[1] === coords2[1];
 }
 
+function isPolygon(feature) {
+  const coords = feature.geometry.coordinates;
+  const firstCoords = coords[0];
+  const lastCoords = coords[coords.length - 1];
+  return isPointEqual(firstCoords, lastCoords);
+};
+
+
 function isPointAtVertex(geometryCoords, pointCoords) {
   const firstPoint = geometryCoords[0];
   const lastPoint = geometryCoords[geometryCoords.length - 1];
@@ -253,7 +261,22 @@ function featuresOverlap(feature1, feature2) {
 
 
 module.exports = {
-  pointInCoordinates, lineSplit, splitLines, createSimpleMesh, createLineAndSaveLength,
-  createMesh, findClosestFeatures, sameBorders, setProperty, createRandomStroke,
-  addProperties, isPointEqual, createLineWithLength, reducePrecision, isPointNotTooClose, featuresOverlap, isPointAtVertex
+  pointInCoordinates,
+  lineSplit,
+  splitLines,
+  createSimpleMesh,
+  createLineAndSaveLength,
+  createMesh,
+  findClosestFeatures,
+  sameBorders,
+  setProperty,
+  createRandomStroke,
+  addProperties,
+  isPointEqual,
+  createLineWithLength,
+  reducePrecision,
+  isPointNotTooClose,
+  featuresOverlap,
+  isPointAtVertex,
+  isPolygon
 };

@@ -117,19 +117,35 @@ module.exports = function (ctx) {
     const controlGroup = document.createElement('div');
     controlGroup.className = `${Constants.classes.CONTROL_GROUP}`;
 
+    const divider = document.createElement('div');
+    divider.className = `${Constants.classes.DIVIDER}`;
+
     containerGroup.appendChild(actionGroup);
-    //containerGroup.appendChild(controlGroup);
+    containerGroup.appendChild(divider);
+    containerGroup.appendChild(controlGroup);
     buttonElements["download"] = createActionButton("download", {
-      container: containerGroup,
+      container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
       title: `Download snapping lines ${ctx.options.keybindings && '(d)'}`,
       onAction: () => ctx.events.handleDownloadButton()
     });
+    buttonElements["select"] = createControlButton("select", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_SELECT,
+      title: `Select ${ctx.options.keybindings && '(s)'}`,
+      onActivate: () => ctx.events.changeMode(Constants.modes.SELECT)
+    });
     buttonElements["edit"] = createControlButton("edit", {
-      container: containerGroup,
+      container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_EDIT,
       title: `Edit ${ctx.options.keybindings && '(e)'}`,
       onActivate: () => ctx.events.changeMode(Constants.modes.DRAW)
+    });
+    buttonElements["cut"] = createControlButton("cut", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_CUT,
+      title: `Cut ${ctx.options.keybindings && '(e)'}`,
+      onActivate: () => ctx.events.changeMode(Constants.modes.CUT)
     });
 
     if (controls.trash) {

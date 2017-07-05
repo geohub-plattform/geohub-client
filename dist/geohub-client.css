@@ -87,6 +87,42 @@
     background-repeat: no-repeat;
 }
 
+.geohub-select {
+    background-image: url(./svg/ic_add_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.geohub-action-group > button, .geohub-ctrl-group > button {
+    width: 30px;
+    height: 30px;
+    display: block;
+    padding: 0;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+}
+/* https://bugzilla.mozilla.org/show_bug.cgi?id=140562 */
+.geohub-action-group > button::-moz-focus-inner, .geohub-ctrl-group > button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+.geohub-action-group > button:last-child, .geohub-ctrl-group > button:last-child {
+    border-bottom: 0;
+}
+.geohub-action-group > button:hover, .geohub-ctrl-group > button:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.mapboxgl-ctrl-top-right .geohub-divider {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #dddddd;
+}
+
 .mapboxgl-map.mouse-pointer .mapboxgl-canvas-container.mapboxgl-interactive {
     cursor: pointer;
 }

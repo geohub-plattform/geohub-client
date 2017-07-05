@@ -13,8 +13,11 @@ module.exports = {
     CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',
     CONTROL_BUTTON_DOWNLOAD: 'geohub-download',
     CONTROL_BUTTON_EDIT: 'geohub-edit',
+    CONTROL_BUTTON_CUT: 'geohub-cut',
+    CONTROL_BUTTON_SELECT: 'geohub-select',
     CONTROL_BUTTON_DOWNLOAD_DATA: 'geohub-download-data',
     CONTROL_GROUP: 'geohub-ctrl-group',
+    DIVIDER: 'geohub-divider',
     ACTION_GROUP: 'geohub-action-group',
     ATTRIBUTION: 'mapboxgl-ctrl-attrib',
     ACTIVE_BUTTON: 'active',
@@ -55,12 +58,9 @@ module.exports = {
   },
   modes: {
     DRAW: 'draw',
-    DRAW_LINE_STRING: 'draw_line_string',
-    DRAW_POLYGON: 'draw_polygon',
-    DRAW_POINT: 'draw_point',
-    SIMPLE_SELECT: 'simple_select',
-    DIRECT_SELECT: 'direct_select',
-    STATIC: 'static'
+    CUT: 'cut',
+    SELECT: 'select',
+    DELETE: 'select'
   },
   events: {
     CREATE: 'draw.create',
@@ -92,6 +92,6 @@ module.exports = {
   LAT_RENDERED_MAX: 85,
   LNG_MIN: -270,
   LNG_MAX: 270,
-  MIN_SEGMENT_LENGTH : 0.000001,
-  MIN_DISTANCE : 0.00001 // 0.000001
+  MIN_SEGMENT_LENGTH: 0.000001,
+  MIN_DISTANCE: 0.00001 // 0.000001
 };
