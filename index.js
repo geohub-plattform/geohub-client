@@ -26,6 +26,9 @@ const setupGeoHub = function (options = defaultOptions, api) {
 
   api.onAdd = function (map) {
     console.log("onAdd");
+    map.loadImage("../dist/ic_edit_location_black_24dp_1x.png", (error, image) => {
+      map.addImage("location", image);
+    });
     ctx.map = map;
     ctx.container = map.getContainer();
     ctx.container.classList.add("mouse-add");
@@ -69,6 +72,27 @@ const setupGeoHub = function (options = defaultOptions, api) {
       'paint': {
         'line-color': '#ff0015',
         'line-width': 2
+      }
+    });
+    ctx.map.addLayer({
+      'source': Constants.sources.COLD,
+      'id': 'geohub-fill-cold',
+      'type': 'fill',
+      'layout': {},
+      'filter': ["==", "$type", "Polygon"],
+      'paint': {
+        'fill-color': '#ff0015',
+        'fill-opacity': 0.4
+      }
+    });
+    ctx.map.addLayer({
+      'source': Constants.sources.COLD,
+      'id': 'geohub-point-cold',
+      'type': 'symbol',
+      'filter': ["==", "$type", "Point"],
+      'layout': {
+        'icon-image': 'location',
+        'icon-offset' : [0, -12]
       }
     });
     ctx.map.addLayer({

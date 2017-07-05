@@ -12,6 +12,8 @@ module.exports = {
     CONTROL_BUTTON_COMBINE_FEATURES: 'mapbox-gl-draw_combine',
     CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',
     CONTROL_BUTTON_DOWNLOAD: 'geohub-download',
+    CONTROL_BUTTON_EDIT: 'geohub-edit',
+    CONTROL_BUTTON_DOWNLOAD_DATA: 'geohub-download-data',
     CONTROL_GROUP: 'geohub-ctrl-group',
     ACTION_GROUP: 'geohub-action-group',
     ATTRIBUTION: 'mapboxgl-ctrl-attrib',
@@ -52,6 +54,7 @@ module.exports = {
     MULTI_POLYGON: 'MultiPolygon'
   },
   modes: {
+    DRAW: 'draw',
     DRAW_LINE_STRING: 'draw_line_string',
     DRAW_POLYGON: 'draw_polygon',
     DRAW_POINT: 'draw_point',

@@ -67,7 +67,6 @@ const MeshIndex = function (originalData) {
 
   function checkForIntersections(knownSegments, newSegments) {
     const segmentsWithCutPoints = {};
-    const checkedSegments = {};
     const processIntersectionPoint = function (point, feature1, feature2) {
       const pointCoords = point.geometry.coordinates;
       const seg1Coords = feature1.geometry.coordinates;

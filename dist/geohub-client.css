@@ -69,6 +69,24 @@
     background-repeat: no-repeat;
 }
 
+.geohub-edit {
+    background-image: url(./svg/ic_mode_edit_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.geohub-download-data {
+    background-image: url(./svg/ic_file_download_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.geohub-cut {
+    background-image: url(./svg/ic_content_cut_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .mapboxgl-map.mouse-pointer .mapboxgl-canvas-container.mapboxgl-interactive {
     cursor: pointer;
 }

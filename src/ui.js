@@ -125,33 +125,12 @@ module.exports = function (ctx) {
       title: `Download snapping lines ${ctx.options.keybindings && '(d)'}`,
       onAction: () => ctx.events.handleDownloadButton()
     });
-
-    if (controls[Constants.types.LINE]) {
-      buttonElements[Constants.types.LINE] = createControlButton(Constants.types.LINE, {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_LINE,
-        title: `LineString tool ${ctx.options.keybindings && '(l)'}`,
-        onActivate: () => ctx.events.changeMode(Constants.modes.DRAW_LINE_STRING)
-      });
-    }
-
-    if (controls[Constants.types.POLYGON]) {
-      buttonElements[Constants.types.POLYGON] = createControlButton(Constants.types.POLYGON, {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_POLYGON,
-        title: `Polygon tool ${ctx.options.keybindings && '(p)'}`,
-        onActivate: () => ctx.events.changeMode(Constants.modes.DRAW_POLYGON)
-      });
-    }
-
-    if (controls[Constants.types.POINT]) {
-      buttonElements[Constants.types.POINT] = createControlButton(Constants.types.POINT, {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_POINT,
-        title: `Marker tool ${ctx.options.keybindings && '(m)'}`,
-        onActivate: () => ctx.events.changeMode(Constants.modes.DRAW_POINT)
-      });
-    }
+    buttonElements["edit"] = createControlButton("edit", {
+      container: containerGroup,
+      className: Constants.classes.CONTROL_BUTTON_EDIT,
+      title: `Edit ${ctx.options.keybindings && '(e)'}`,
+      onActivate: () => ctx.events.changeMode(Constants.modes.DRAW)
+    });
 
     if (controls.trash) {
       buttonElements.trash = createControlButton('trash', {
