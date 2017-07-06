@@ -36,9 +36,9 @@ function calculatePointsOnLine(uniqueFeatures, evtCoords) {
     if (knownIds[geoHubId] === undefined) {
       knownIds[geoHubId] = true;
       const type = feature.geometry.type;
-      const ruler = cheapRuler(feature.geometry.coordinates[0][1]);
       if (type === "LineString") {
         if (feature.geometry.coordinates) {
+          const ruler = cheapRuler(feature.geometry.coordinates[0][1]);
           closestPoints(ruler, feature.geometry.coordinates, evtCoords).forEach((pointType) => {
             pointType.geoHubId = geoHubId;
             pointType.dist = ruler.distance(pointType.coords, evtCoords);
@@ -48,6 +48,7 @@ function calculatePointsOnLine(uniqueFeatures, evtCoords) {
           console.log("no coordinates: ", feature);
         }
       } else if (type === "Point") {
+        const ruler = cheapRuler(feature.geometry.coordinates[1]);
         const pointType = {type: "vertex", coords: feature.geometry.coordinates};
         pointType.dist = ruler.distance(pointType.coords, evtCoords);
         coords.push(pointType);

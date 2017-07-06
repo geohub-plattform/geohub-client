@@ -27,15 +27,18 @@ const MeshRouting = module.exports = function (mesh) {
 
   const that = this;
   mesh.forEach((vertex) => {
-    const coords = vertex.geometry.coordinates;
-    const startPoint = coords[0].join("#");
-    const endPoint = coords[coords.length - 1].join("#");
-    const length = vertex.properties.length;
-    if (length === undefined) {
-      throw new Error("Length is missing");
-    } else {
-      addVertex(startPoint, endPoint, length, that.graphData);
-      addVertex(endPoint, startPoint, length, that.graphData);
+    // for routing we can only use LineStrings
+    if (vertex.geometry.type === "LineString") {
+      const coords = vertex.geometry.coordinates;
+      const startPoint = coords[0].join("#");
+      const endPoint = coords[coords.length - 1].join("#");
+      const length = vertex.properties.length;
+      if (length === undefined) {
+        throw new Error("Length is missing");
+      } else {
+        addVertex(startPoint, endPoint, length, that.graphData);
+        addVertex(endPoint, startPoint, length, that.graphData);
+      }
     }
   });
 };

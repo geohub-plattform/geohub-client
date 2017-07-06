@@ -189,7 +189,19 @@ function isPolygon(feature) {
   const firstCoords = coords[0];
   const lastCoords = coords[coords.length - 1];
   return isPointEqual(firstCoords, lastCoords);
-};
+}
+
+function isEmptyLineString(feature) {
+  if (feature.geometry.type === "LineString") {
+    const coords = feature.geometry.coordinates;
+    if (coords.length === 2) {
+      const firstCoords = coords[0];
+      const lastCoords = coords[coords.length - 1];
+      return isPointEqual(firstCoords, lastCoords);
+    }
+  }
+  return false;
+}
 
 
 function isPointAtVertex(geometryCoords, pointCoords) {
@@ -278,5 +290,6 @@ module.exports = {
   isPointNotTooClose,
   featuresOverlap,
   isPointAtVertex,
-  isPolygon
+  isPolygon,
+  isEmptyLineString
 };

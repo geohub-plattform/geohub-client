@@ -9,15 +9,10 @@ module.exports = function (ctx) {
 
   const mouseMove = function (event) {
     if (ctx.mode === Constants.modes.DRAW) {
-
-
-//    console.log("crtl: ", event.originalEvent.ctrlKey, " shift: ", event.originalEvent.shiftKey, " alt: "+event.originalEvent.altKey);
       const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
-      //console.log("move: button:  ", button, " event: ", event);
       if (button === 1) {
         return;
       }
-
       const createLineToCurrentMouseMove = function (evtCoords) {
         ctx.closestPoint = null;
         if (ctx.lastPoint) {
@@ -26,7 +21,6 @@ module.exports = function (ctx) {
           return null;
         }
       };
-
       const calculateRoute = !event.originalEvent.altKey;
       const snapToPoint = !event.originalEvent.ctrlKey;
       const evtCoords = [event.lngLat.lng, event.lngLat.lat];
@@ -98,7 +92,9 @@ module.exports = function (ctx) {
       ctx.api.splitSegmentAtPoint(ctx.closestPoint.geoHubId, ctx.closestPoint.coords);
     }
     if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
-      meshFeatures.push(ctx.snapFeature);
+      if (!utils.isEmptyLineString(ctx.snapFeature)) {
+        meshFeatures.push(ctx.snapFeature);
+      }
     } else {
       console.log("known mesh feature: ", JSON.stringify(ctx.snapFeature));
     }
@@ -186,7 +182,7 @@ module.exports = function (ctx) {
       }
       case KEY_P : {
         if (ctx.coldFeatures) {
-          console.log("coldFeatures: ", JSON.stringify(ctx.coldFeatures));
+          console.log("coldFeatures: ", JSON.stringify(turf.featureCollection(ctx.coldFeatures)));
         }
         break;
       }

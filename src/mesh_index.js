@@ -43,7 +43,6 @@ const MeshIndex = function (originalData) {
 
   function splitIntoTwoPointSegmentsAndAddIds(features) {
     const result = [];
-    console.log("features: ", features.length);
     features.forEach((feature) => {
       const type = feature.geometry.type;
       if (type === "MultiPolygon") {
@@ -56,12 +55,14 @@ const MeshIndex = function (originalData) {
         feature.geometry.coordinates.forEach((coords) => {
           coordinatesToLineStrings(coords, result);
         });
-      } else {
+      } else if (type === "LineString") {
         coordinatesToLineStrings(feature.geometry.coordinates, result);
+      } else if (type === "Point") {
+        addFeatureToIndex(feature);
+        result.push(feature);
       }
-
     });
-    console.log("single segments: ", result.length);
+    console.log("original features ", features.length, " split into single segments: ", result.length);
     return result;
   }
 
@@ -123,29 +124,50 @@ const MeshIndex = function (originalData) {
       if (pointOnline.properties.dist < Constants.MIN_DISTANCE) {
         if (!utils.isPointAtVertex(feature.geometry.coordinates, coords)) {
           appendCutFeatures(segmentsWithCutPoints, feature, [pointOnline]);
+          return true;
         }
       }
+      return false;
     };
+
+    const sameSegments = knownSegments === newSegments;
+    console.log("sameSegments: ", sameSegments);
 
     for (let knownIndex = 0; knownIndex < knownSegments.length; knownIndex++) {
       const segmentFeature1 = knownSegments[knownIndex];
-      for (let newIndex = 0; newIndex < newSegments.length; newIndex++) {
+      const feature1Type = segmentFeature1.geometry.type;
+      for (let newIndex = sameSegments ? knownIndex + 1 : 0; newIndex < newSegments.length; newIndex++) {
         const segmentFeature2 = newSegments[newIndex];
-        if (utils.featuresOverlap(segmentFeature1, segmentFeature2)) {
-          const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
-          if (intersectionPoints.length > 0) {
-            if (intersectionPoints.length > 1) {
-              console.error(`${intersectionPoints.length} intersection points received`);
+        const feature2Type = segmentFeature2.geometry.type;
+        if (feature1Type === "LineString" && feature2Type === "LineString") {
+          if (utils.featuresOverlap(segmentFeature1, segmentFeature2)) {
+            const intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
+            if (intersectionPoints.length > 0) {
+              if (intersectionPoints.length > 1) {
+                console.error(`${intersectionPoints.length} intersection points received`);
+              }
+              const point = intersectionPoints[0];
+              processIntersectionPoint(point, segmentFeature1, segmentFeature2);
+            } else {
+              const seg1Coords = segmentFeature1.geometry.coordinates;
+              const seg2Coords = segmentFeature2.geometry.coordinates;
+              checkIfPointInCloseRange(segmentFeature1, seg2Coords[0]);
+              checkIfPointInCloseRange(segmentFeature1, seg2Coords[1]);
+              checkIfPointInCloseRange(segmentFeature2, seg1Coords[0]);
+              checkIfPointInCloseRange(segmentFeature2, seg1Coords[1]);
             }
-            const point = intersectionPoints[0];
-            processIntersectionPoint(point, segmentFeature1, segmentFeature2);
+          }
+        } else if (feature1Type === "Point" || feature2Type === "Point") {
+          if (feature2Type === "Point" && feature2Type === "Point") {
+            console.log("Point & Point");
+
           } else {
-            const seg1Coords = segmentFeature1.geometry.coordinates;
-            const seg2Coords = segmentFeature2.geometry.coordinates;
-            checkIfPointInCloseRange(segmentFeature1, seg2Coords[0]);
-            checkIfPointInCloseRange(segmentFeature1, seg2Coords[1]);
-            checkIfPointInCloseRange(segmentFeature2, seg1Coords[0]);
-            checkIfPointInCloseRange(segmentFeature2, seg1Coords[1]);
+            console.log("Point & LineString");
+            const point = feature1Type === "Point" ? segmentFeature1 : segmentFeature2;
+            const line = feature1Type === "LineString" ? segmentFeature1 : segmentFeature2;
+            if (checkIfPointInCloseRange(line, point.geometry.coordinates)) {
+              segmentsWithCutPoints[point.properties.geoHubId] = [];
+            }
           }
         }
       }
@@ -159,27 +181,36 @@ const MeshIndex = function (originalData) {
     // if a segment has cut point then replace it with the new sub segments
     const result = [];
     newSegments.forEach((segment) => {
-      const cutPoints = segmentsWithCutPoints[segment.properties.geoHubId];
-      if (cutPoints !== undefined) {
-        const fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
-        turf.featureEach(fc, (feature) => {
-          const length = turf.lineDistance(feature);
+      if (segment.geometry.type === "LineString") {
+        const cutPoints = segmentsWithCutPoints[segment.properties.geoHubId];
+        if (cutPoints !== undefined) {
+          const fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
+          turf.featureEach(fc, (feature) => {
+            const length = turf.lineDistance(feature);
+            if (length > Constants.MIN_SEGMENT_LENGTH) {
+              utils.addProperties(feature, utils.createRandomStroke());
+              utils.addProperties(feature, {length: length});
+              addFeatureToIndex(feature);
+              result.push(feature);
+            } else {
+              console.error("0 length feature (", length, ") after line split: ", JSON.stringify(feature));
+            }
+          });
+        } else {
+          const length = turf.lineDistance(segment);
           if (length > Constants.MIN_SEGMENT_LENGTH) {
-            utils.addProperties(feature, utils.createRandomStroke());
-            utils.addProperties(feature, {length: length});
-            addFeatureToIndex(feature);
-            result.push(feature);
+            utils.addProperties(segment, {length: length});
+            result.push(segment);
           } else {
-            console.error("0 length feature (", length, ") after line split: ", JSON.stringify(feature));
+            console.error("0 length feature (", length, ") existing segment: ", JSON.stringify(segment));
           }
-        });
+        }
       } else {
-        const length = turf.lineDistance(segment);
-        if (length > Constants.MIN_SEGMENT_LENGTH) {
-          utils.addProperties(segment, {length: length});
+        const cutPoints = segmentsWithCutPoints[segment.properties.geoHubId];
+        if (cutPoints === undefined) {
           result.push(segment);
         } else {
-          console.error("0 length feature (", length, ") existing segment: ", JSON.stringify(segment));
+          console.log("Removing point ", segment);
         }
       }
     });
@@ -234,7 +265,7 @@ const MeshIndex = function (originalData) {
   };
 
   allSegments = splitAndCheckForIntersections(originalData);
-  console.log("all segments: ", allSegments.length);
+  console.log("all segments after intersections: ", allSegments.length);
 };
 
 module.exports = MeshIndex;
