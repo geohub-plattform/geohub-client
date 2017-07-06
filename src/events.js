@@ -91,12 +91,16 @@ module.exports = function (ctx) {
       console.log("adding mesh features");
       ctx.api.splitSegmentAtPoint(ctx.closestPoint.geoHubId, ctx.closestPoint.coords);
     }
-    if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
-      if (!utils.isEmptyLineString(ctx.snapFeature)) {
+    if (ctx.snapFeature) {
+      if (ctx.snapFeature.geometry.type === "LineString") {
+        if (!utils.isEmptyLineString(ctx.snapFeature)) {
+          meshFeatures.push(ctx.snapFeature);
+        }
+      } else if (ctx.snapFeature.geometry.type === "Point") {
         meshFeatures.push(ctx.snapFeature);
+      } else {
+        console.log("known mesh feature: ", JSON.stringify(ctx.snapFeature));
       }
-    } else {
-      console.log("known mesh feature: ", JSON.stringify(ctx.snapFeature));
     }
     console.log("meshFeatures: ", JSON.stringify(meshFeatures));
     if (meshFeatures.length > 0) {
@@ -113,6 +117,10 @@ module.exports = function (ctx) {
         const evtCoords = [event.lngLat.lng, event.lngLat.lat];
         ctx.lastPoint = {coords: evtCoords};
       }
+      if (!ctx.snapFeature) {
+        ctx.snapFeature = turf.point(ctx.lastPoint.coords);
+      }
+
       addClickSegementsToMesh();
       console.log("mouseClick, last point: ", ctx.lastPoint, "closestPoint: ", ctx.closestPoint);
       if (ctx.lastClick) {
@@ -140,11 +148,11 @@ module.exports = function (ctx) {
         }
       }
 
-      let hotFeature = ctx.hotFeature;
       if (ctx.snapFeature && ctx.snapFeature.geometry.type === "LineString") {
         const snapCoords = ctx.snapFeature.geometry.coordinates;
         console.log("current snap: ", snapCoords);
         if (snapCoords.length > 1) {
+          let hotFeature = ctx.hotFeature;
           if (hotFeature) {
             const hotCoords = hotFeature.geometry.coordinates;
             hotCoords.splice(-1, 1, ...snapCoords);

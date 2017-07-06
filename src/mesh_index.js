@@ -160,7 +160,8 @@ const MeshIndex = function (originalData) {
         } else if (feature1Type === "Point" || feature2Type === "Point") {
           if (feature2Type === "Point" && feature2Type === "Point") {
             console.log("Point & Point");
-
+            // kann im moment ignoriert werden. falls zwei punkte so nah bei einander sind,
+            // dass sie einen punkt ergeben, könnte hier einer der punkte gelöscht werden
           } else {
             console.log("Point & LineString");
             const point = feature1Type === "Point" ? segmentFeature1 : segmentFeature2;
