@@ -163,9 +163,7 @@ module.exports = function (ctx) {
       }
       ctx.lastClick = ctx.lastPoint;
     } else if (ctx.mode === Constants.modes.SELECT) {
-      const calculatedRadius = 0.005 * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()));
-      const radiusInKm = Math.min(1.0, Math.max(0.005, calculatedRadius));
-      const nearFeatures = ctx.api.userFeaturesAt(event.lngLat, radiusInKm);
+      const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
       console.log("nearFeatures: ", nearFeatures.length);
       nearFeatures.forEach((feature) => {
         console.log("feature: ", feature.geometry.type);

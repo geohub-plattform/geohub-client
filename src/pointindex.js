@@ -23,14 +23,10 @@ module.exports = function (ctx) {
     }
   };
 
-  const queryUserFeatures = function (lngLat, radiusInKm) {
-    const radius = turf.distanceToDegrees(radiusInKm);
-    const bbox = [
-      ctx.map.project([lngLat.lng - radius, lngLat.lat - radius]),
-      ctx.map.project([lngLat.lng + radius, lngLat.lat + radius])
-    ];
-    const filter = {layers: ["geohub-line-cold", "geohub-line-hot"]};
-    return ctx.map.queryRenderedFeatures(bbox, filter);
+  const queryUserFeatures = function (lngLat) {
+    const filter = {layers: ["geohub-line-cold", "geohub-fill-cold", "geohub-point-cold"]};
+    const point = ctx.map.project([lngLat.lng, lngLat.lat]);
+    return ctx.map.queryRenderedFeatures(point, filter);
   };
 
   const updateMeshData = function () {
@@ -57,8 +53,8 @@ module.exports = function (ctx) {
     featuresAt: function (lnglat, radius) {
       return queryMapFeatures(lnglat, radius);
     },
-    userFeaturesAt: function (lnglat, radius) {
-      return queryUserFeatures(lnglat, radius);
+    userFeaturesAt: function (lnglat) {
+      return queryUserFeatures(lnglat);
     },
     getRouteFromTo: function (fromPoint, toPoint) {
       return meshRouting.getRouteFromTo(fromPoint, toPoint);
