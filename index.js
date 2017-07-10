@@ -19,6 +19,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
     options: options
   };
   ctx.api = api;
+  ctx.geoHubIdCounter = 1;
   ctx.ui = ui(ctx);
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
@@ -28,6 +29,9 @@ const setupGeoHub = function (options = defaultOptions, api) {
     console.log("onAdd");
     map.loadImage("../dist/ic_edit_location_black_24dp_1x.png", (error, image) => {
       map.addImage("location", image);
+    });
+    map.loadImage("../dist/arrow_color.png", (error, image) => {
+      map.addImage("arrow", image);
     });
     ctx.map = map;
     ctx.mode = Constants.modes.DIRECT_SELECT;
@@ -93,7 +97,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
       'filter': ["==", "$type", "Point"],
       'layout': {
         'icon-image': 'location',
-        'icon-offset' : [0, -12]
+        'icon-offset': [0, -12]
       }
     });
     ctx.map.addLayer({
@@ -132,17 +136,8 @@ const setupGeoHub = function (options = defaultOptions, api) {
       }
     });
     ctx.map.addLayer({
-      'source': Constants.sources.DEBUG,
-      'id': 'geohub-point-debug',
-      'type': 'circle',
-      'paint': {
-        'circle-radius': 5,
-        'circle-color': '#d0981f'
-      }
-    });
-    ctx.map.addLayer({
-      'source': Constants.sources.DEBUG,
-      'id': 'geohub-line-debug',
+      'source': Constants.sources.SELECT,
+      'id': 'geohub-line-select',
       'type': 'line',
       'layout': {
         'line-cap': 'round',
@@ -153,6 +148,40 @@ const setupGeoHub = function (options = defaultOptions, api) {
         'line-width': 2
       }
     });
+    ctx.map.addLayer({
+      'source': Constants.sources.SELECT,
+      'id': 'geohub-fill-select',
+      'type': 'fill',
+      'layout': {},
+      'filter': ["==", "$type", "Polygon"],
+      'paint': {
+        'fill-color': '#D0981F',
+        'fill-opacity': 0.4
+      }
+    });
+    ctx.map.addLayer({
+      'source': Constants.sources.SELECT,
+      'id': 'geohub-arrow-select',
+      'type': 'symbol',
+      'layout': {
+        'icon-image': 'arrow',
+        'symbol-placement': 'line',
+        'icon-rotate': 180,
+        'icon-offset': [0, 0]
+      }
+    });
+    ctx.map.addLayer({
+      'source': Constants.sources.SELECT_HELPER,
+      'id': 'geohub-point-select-helper',
+      'type': 'circle',
+      'paint': {
+        'circle-radius': 5,
+        'circle-color': '#fff',
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#d0981f'
+      }
+    });
+
     return ctx.ui.addButtons();
   };
   api.onRemove = function () {

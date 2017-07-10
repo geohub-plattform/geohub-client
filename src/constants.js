@@ -25,6 +25,8 @@ module.exports = {
   },
   sources: {
     DEBUG: 'geohub-draw-debug',
+    SELECT_HELPER: 'geohub-draw-select-helper',
+    SELECT: 'geohub-draw-select',
     SNAP: 'geohub-draw-snap',
     HOT: 'geohub-draw-hot',
     COLD: 'geohub-draw-cold',

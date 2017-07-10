@@ -24,7 +24,10 @@ module.exports = function (ctx) {
   };
 
   const queryUserFeatures = function (lngLat) {
-    const filter = {layers: ["geohub-line-cold", "geohub-fill-cold", "geohub-point-cold"]};
+    const filter = {
+      layers: ["geohub-line-cold", "geohub-fill-cold", "geohub-point-cold",
+        "geohub-point-select-helper", "geohub-fill-select", "geohub-line-select"]
+    };
     const point = ctx.map.project([lngLat.lng, lngLat.lat]);
     return ctx.map.queryRenderedFeatures(point, filter);
   };

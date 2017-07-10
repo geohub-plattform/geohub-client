@@ -136,10 +136,11 @@ module.exports = function (ctx) {
               ctx.hotFeature.geometry.type = "Polygon";
               ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
             }
+            ctx.hotFeature.properties.geoHubId = ctx.geoHubIdCounter++;
             ctx.coldFeatures.push(ctx.hotFeature);
             ctx.hotFeature = null;
           } else {
-            const hotFeature = turf.point(ctx.lastClick.coords);
+            const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
             ctx.coldFeatures.push(hotFeature);
           }
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
@@ -169,19 +170,53 @@ module.exports = function (ctx) {
     } else if (ctx.mode === Constants.modes.SELECT) {
       const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
       console.log("nearFeatures: ", nearFeatures.length);
-      nearFeatures.forEach((feature) => {
-        console.log("feature: ", feature.geometry.type);
-      });
 
+      const deselectCurrentFeature = function () {
+        if (ctx.selectedFeatures) {
+          ctx.coldFeatures.push(...ctx.selectedFeatures);
+          ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+          ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+          ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
+          ctx.selectedFeatures = null;
+        }
+      };
+
+      const selectFeature = function (selectedFeatureId) {
+        let selectedIdIndex = -1;
+        ctx.coldFeatures.forEach((element, index) => {
+          if (element.properties.geoHubId === selectedFeatureId) {
+            selectedIdIndex = index;
+          }
+        });
+        const points = [];
+        if (selectedIdIndex !== -1) {
+          ctx.selectedFeatures = ctx.coldFeatures.splice(selectedIdIndex, 1);
+          ctx.selectedFeatures.forEach((feature) => {
+            turf.coordEach(feature, (pointCoords) => {
+              points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
+            });
+          });
+        }
+        ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+        ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
+        ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(points));
+      };
+
+      if (nearFeatures.length > 0) {
+        deselectCurrentFeature();
+        selectFeature(nearFeatures[0].properties.geoHubId);
+      } else {
+        deselectCurrentFeature();
+      }
     }
   };
 
-  const KEY_D = 100;
-  const KEY_P = 112;
+  const KEY_D = "KeyD";
+  const KEY_P = "KeyP";
 
   const keypress = function (event) {
-    console.log("keycode: ", event.keyCode);
-    switch (event.keyCode) {
+    console.log("keycode: ", event.keyCode, " => ", event.key, " | Code: ", event.code);
+    switch (event.code) {
       case KEY_D : {
         if (ctx.debug) {
           console.log("Debug: ", JSON.stringify(ctx.debug));
@@ -194,12 +229,19 @@ module.exports = function (ctx) {
         }
         break;
       }
+      case "Delete" : {
+        if (ctx.selectedFeatures) {
+          ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+          ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
+          ctx.selectedFeatures = null;
+        }
+        break;
+      }
     }
   };
 
   function handleDownloadButton() {
     console.log("Downloading ", ctx.map.getBounds());
-
     overpassApi.loadWays(ctx.map.getBounds(), (result) => {
       console.log("Data downloaded");
       const geojson = overpassApi.convertFromOverpassToGeojson(result);
@@ -238,14 +280,14 @@ module.exports = function (ctx) {
       map.on("mousemove", mouseMove);
       map.on('click', mouseClick);
       const container = map.getContainer();
-      container.addEventListener('keypress', keypress);
+      container.addEventListener('keydown', keypress);
 
     },
     removeEventListeners: function (map) {
       map.off("mousemove", mouseMove);
       map.off('click', mouseClick);
       const container = map.getContainer();
-      container.removeEventListener('keypress', keypress);
+      container.removeEventListener('keydown', keypress);
 
     },
     handleDownloadButton,
