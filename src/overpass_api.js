@@ -29,42 +29,6 @@ function loadWays(bbox, success) {
   loadData(query, success);
 }
 
-/*
- {
- "type": "relation",
- "id": 1178538,
- "members": [
- {
- "type": "way",
- "ref": 37300305,
- "role": "outer"
- },
- {
- "type": "way",
- "ref": 77668743,
- "role": "inner"
- },
- {
- "type": "way",
- "ref": 77668748,
- "role": "inner"
- }
- ],
- "tags": {
- "amenity": "parking",
- "building": "yes",
- "capacity": "500",
- "fee": "yes",
- "maxheight": "2",
- "maxweight": "2.5",
- "name": "Parkhaus Experimenta",
- "parking": "multi-storey",
- "traffic_sign": "DE:265[2];DE:262[2.5];DE:274[10]",
- "type": "multipolygon"
- }
- },
- */
-
 function convertFromOverpassToGeojson(overpass) {
   const elementsById = {};
 
