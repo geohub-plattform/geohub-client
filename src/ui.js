@@ -156,19 +156,19 @@ module.exports = function (ctx) {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GIST,
       title: `Export as Gist`,
-      onAction: () => ctx.events.handleWaysSaveAsGistButton()
+      onAction: () => ctx.events.handleSaveAsGistButton()
     });
     buttonElements["saveAsGeojson"] = createActionButton("saveAsGeojson", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GEOJSON,
       title: `Export as Geojson`,
-      onAction: () => ctx.events.handleWaysSaveAsGeojsonButton()
+      onAction: () => ctx.events.handleSaveAsGeojsonButton()
     });
     buttonElements["saveAsKML"] = createActionButton("saveAsKML", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_KML,
       title: `Export as KML`,
-      onAction: () => ctx.events.handleWaysSaveAsKmlButton()
+      onAction: () => ctx.events.handleSaveAsKmlButton()
     });
     buttonElements["select"] = createControlButton("select", {
       container: controlGroup,

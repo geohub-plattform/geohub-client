@@ -352,6 +352,9 @@ module.exports = function (ctx) {
     handleWaysDownloadButton,
     handleBuildingsDownloadButton,
     handleSaveButton,
+    handleSaveAsGistButton,
+    handleSaveAsGeojsonButton,
+    handleSaveAsKmlButton,
     changeMode
   };
 };
