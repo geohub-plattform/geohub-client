@@ -4,6 +4,7 @@ import doubleClickZoom from "./double_click_zoom";
 import utils from "./utils";
 const overpassApi = require("./overpass_api");
 const closestPoints = require("./closest_points");
+const exportFile = require("./export_file");
 
 module.exports = function (ctx) {
 
@@ -118,7 +119,7 @@ module.exports = function (ctx) {
       } else {
         doubleClickZoom.disable(ctx);
         const evtCoords = [event.lngLat.lng, event.lngLat.lat];
-        lastPoint = {coords: evtCoords};
+        lastPoint = { coords: evtCoords };
       }
       if (!ctx.snapFeature) {
         ctx.snapFeature = turf.point(lastPoint.coords);
@@ -143,7 +144,7 @@ module.exports = function (ctx) {
             ctx.coldFeatures.push(ctx.hotFeature);
             ctx.hotFeature = null;
           } else {
-            const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
+            const hotFeature = turf.point(ctx.lastClick.coords, { geoHubId: ctx.geoHubIdCounter++ });
             ctx.coldFeatures.push(hotFeature);
           }
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
@@ -196,7 +197,7 @@ module.exports = function (ctx) {
           ctx.selectedFeatures = ctx.coldFeatures.splice(selectedIdIndex, 1);
           ctx.selectedFeatures.forEach((feature) => {
             turf.coordEach(feature, (pointCoords) => {
-              points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
+              points.push(turf.point(pointCoords, { geoHubId: feature.properties.geoHubId }));
             });
           });
         }
@@ -217,19 +218,19 @@ module.exports = function (ctx) {
   const keypress = function (event) {
     console.log("keycode: ", event.keyCode, " => ", event.key, " | Code: ", event.code);
     switch (event.code) {
-      case "KeyD" : {
+      case "KeyD": {
         if (ctx.debug) {
           console.log("Debug: ", JSON.stringify(ctx.debug));
         }
         break;
       }
-      case "KeyP" : {
+      case "KeyP": {
         if (ctx.coldFeatures) {
           console.log("coldFeatures: ", JSON.stringify(turf.featureCollection(ctx.coldFeatures)));
         }
         break;
       }
-      case "Delete" : {
+      case "Delete": {
         if (ctx.mode === Constants.modes.SELECT) {
           if (ctx.selectedFeatures) {
             ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
@@ -241,7 +242,7 @@ module.exports = function (ctx) {
             const coords = ctx.hotFeature.geometry.coordinates;
             if (coords.length > 1) {
               coords.splice(coords.length - 1, 1);
-              ctx.lastClick = {coords: coords[coords.length - 1]};
+              ctx.lastClick = { coords: coords[coords.length - 1] };
               if (coords.length > 0) {
                 ctx.snapFeature = turf.point(coords[coords.length - 1]);
               } else {
@@ -287,6 +288,26 @@ module.exports = function (ctx) {
       ctx.api.addData(geojson);
     });
   }
+  function handleSaveButton() {
+    const dropdownGroup = $('.geohub-dropdown-group');
+    if(dropdownGroup.css('display') == 'none'){
+      dropdownGroup.show();
+    } else{
+      dropdownGroup.hide();
+    }
+  }
+  function handleSaveAsGistButton(){
+    var file = turf.featureCollection(ctx.coldFeatures);
+    exportFile.asGist(file);
+  }  
+  function handleSaveAsGeojsonButton(){
+    var file = turf.featureCollection(ctx.coldFeatures);
+    exportFile.asGeojson(file);
+  }  
+  function handleSaveAsKmlButton(){
+    var file = turf.featureCollection(ctx.coldFeatures);
+    exportFile.asKml(file);
+  }
 
   function changeMode(newMode) {
     // TODO finish current mode
@@ -330,6 +351,7 @@ module.exports = function (ctx) {
     },
     handleWaysDownloadButton,
     handleBuildingsDownloadButton,
+    handleSaveButton,
     changeMode
   };
 };
