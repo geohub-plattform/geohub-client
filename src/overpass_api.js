@@ -1,8 +1,7 @@
 const turf = require("@turf/turf");
 
-function loadWays(bbox, success) {
+function loadData(query, success) {
   const xhr = new XMLHttpRequest();
-  const query = '[out:json][timeout:25];(way["highway"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + '););out body;>;out skel qt;';
   console.log("Query data: ", query);
   xhr.open('GET', "http://overpass-api.de/api/interpreter?data=" + query, true);
   xhr.onreadystatechange = function (e) {
@@ -17,6 +16,55 @@ function loadWays(bbox, success) {
   xhr.send();
 }
 
+function loadBuildings(bbox, success) {
+  const query = '[out:json][timeout:25];' +
+    '(way["building"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + ');' +
+    'relation["building"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + '););' +
+    'out body;>;out skel qt;';
+  loadData(query, success);
+}
+
+function loadWays(bbox, success) {
+  const query = '[out:json][timeout:25];(way["highway"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + '););out body;>;out skel qt;';
+  loadData(query, success);
+}
+
+/*
+ {
+ "type": "relation",
+ "id": 1178538,
+ "members": [
+ {
+ "type": "way",
+ "ref": 37300305,
+ "role": "outer"
+ },
+ {
+ "type": "way",
+ "ref": 77668743,
+ "role": "inner"
+ },
+ {
+ "type": "way",
+ "ref": 77668748,
+ "role": "inner"
+ }
+ ],
+ "tags": {
+ "amenity": "parking",
+ "building": "yes",
+ "capacity": "500",
+ "fee": "yes",
+ "maxheight": "2",
+ "maxweight": "2.5",
+ "name": "Parkhaus Experimenta",
+ "parking": "multi-storey",
+ "traffic_sign": "DE:265[2];DE:262[2.5];DE:274[10]",
+ "type": "multipolygon"
+ }
+ },
+ */
+
 function convertFromOverpassToGeojson(overpass) {
   const elementsById = {};
 
@@ -25,25 +73,42 @@ function convertFromOverpassToGeojson(overpass) {
     elementsById[key] = element;
   });
 
+  const wayToPoints = function (way) {
+    const line = [];
+    way.nodes.forEach((nodeId) => {
+      const key = `node-${nodeId}`;
+      const nodeElement = elementsById[key];
+      if (nodeElement) {
+        line.push([nodeElement.lon, nodeElement.lat]);
+      } else {
+        console.error("Node ", key, " missing");
+      }
+    });
+    return line;
+  };
+
   const lineStrings = [];
   overpass.elements.forEach((element) => {
     if (element.type === "way") {
-      const line = [];
-      element.nodes.forEach((nodeId) => {
-        const key = `node-${nodeId}`;
-        const nodeElement = elementsById[key];
-        if (nodeElement) {
-          line.push([nodeElement.lon, nodeElement.lat]);
-        } else {
-          console.error("Node ", key, " missing");
-        }
-      });
+      const line = wayToPoints(element);
       if (line.length > 1) {
         lineStrings.push(turf.lineString(line, element.tags));
       }
+    } else if (element.type === "relation") {
+      element.members.forEach((member) => {
+        const memberType = member.type;
+        if (memberType === "way") {
+          const key = `way-${member.ref}`;
+          const way = elementsById[key];
+          const line = wayToPoints(way);
+          if (line.length > 1) {
+            lineStrings.push(turf.lineString(line, element.tags));
+          }
+        }
+      });
     }
   });
   return turf.featureCollection(lineStrings);
 }
 
-module.exports = {convertFromOverpassToGeojson, loadWays};
+module.exports = {convertFromOverpassToGeojson, loadWays, loadBuildings};

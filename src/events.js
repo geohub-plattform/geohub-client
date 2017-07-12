@@ -240,9 +240,19 @@ module.exports = function (ctx) {
     }
   };
 
-  function handleDownloadButton() {
+  function handleWaysDownloadButton() {
     console.log("Downloading ", ctx.map.getBounds());
     overpassApi.loadWays(ctx.map.getBounds(), (result) => {
+      console.log("Data downloaded");
+      const geojson = overpassApi.convertFromOverpassToGeojson(result);
+      console.log("Data adding to map");
+      ctx.api.addData(geojson);
+    });
+  }
+
+  function handleBuildingsDownloadButton() {
+    console.log("Downloading ", ctx.map.getBounds());
+    overpassApi.loadBuildings(ctx.map.getBounds(), (result) => {
       console.log("Data downloaded");
       const geojson = overpassApi.convertFromOverpassToGeojson(result);
       console.log("Data adding to map");
@@ -290,7 +300,8 @@ module.exports = function (ctx) {
       container.removeEventListener('keydown', keypress);
 
     },
-    handleDownloadButton,
+    handleWaysDownloadButton,
+    handleBuildingsDownloadButton,
     changeMode
   };
 };

@@ -123,11 +123,17 @@ module.exports = function (ctx) {
     containerGroup.appendChild(actionGroup);
     containerGroup.appendChild(divider);
     containerGroup.appendChild(controlGroup);
-    buttonElements["download"] = createActionButton("download", {
+    buttonElements["downloadWays"] = createActionButton("downloadWays", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
-      title: `Download snapping lines ${ctx.options.keybindings && '(d)'}`,
-      onAction: () => ctx.events.handleDownloadButton()
+      title: `Download way lines ${ctx.options.keybindings && '(d)'}`,
+      onAction: () => ctx.events.handleWaysDownloadButton()
+    });
+    buttonElements["downloadBuildings"] = createActionButton("downloadBuildings", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
+      title: `Download building lines ${ctx.options.keybindings && '(d)'}`,
+      onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
     buttonElements["select"] = createControlButton("select", {
       container: controlGroup,
