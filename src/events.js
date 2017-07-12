@@ -8,6 +8,7 @@ const closestPoints = require("./closest_points");
 module.exports = function (ctx) {
 
   const mouseMove = function (event) {
+    ctx.lastMouseEvent = event;
     if (ctx.mode === Constants.modes.DRAW) {
       const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
       if (button === 1) {
@@ -15,8 +16,8 @@ module.exports = function (ctx) {
       }
       const createLineToCurrentMouseMove = function (evtCoords) {
         ctx.closestPoint = null;
-        if (ctx.lastPoint) {
-          return turf.lineString([ctx.lastPoint.coords, evtCoords]);
+        if (ctx.lastClick) {
+          return turf.lineString([ctx.lastClick.coords, evtCoords]);
         } else {
           return null;
         }
@@ -39,12 +40,12 @@ module.exports = function (ctx) {
               debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border1]));
               debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border2]));
             }
-            if (ctx.lastPoint) {
-              const lastPointDistance = turf.distance(turf.point(evtCoords), turf.point(ctx.lastPoint.coords));
-              if (utils.isPointEqual(ctx.lastPoint.coords, closestPoint.coords) && lastPointDistance > 0.002) {
+            if (ctx.lastClick) {
+              const lastClickDistance = turf.distance(turf.point(evtCoords), turf.point(ctx.lastClick.coords));
+              if (utils.isPointEqual(ctx.lastClick.coords, closestPoint.coords) && lastClickDistance > 0.002) {
                 snapFeature = createLineToCurrentMouseMove(evtCoords);
               } else {
-                const fromPoint = ctx.lastPoint;
+                const fromPoint = ctx.lastClick;
                 if (calculateRoute) {
                   const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
                   if (route) {
@@ -82,6 +83,7 @@ module.exports = function (ctx) {
         ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
       }
     } else if (ctx.mode === Constants.modes.SELECT) {
+      // highlight possible selects
     }
   };
 
@@ -110,26 +112,27 @@ module.exports = function (ctx) {
 
   const mouseClick = function (event) {
     if (ctx.mode === Constants.modes.DRAW) {
+      let lastPoint = null;
       if (ctx.closestPoint) {
-        ctx.lastPoint = ctx.closestPoint;
+        lastPoint = ctx.closestPoint;
       } else {
         doubleClickZoom.disable(ctx);
         const evtCoords = [event.lngLat.lng, event.lngLat.lat];
-        ctx.lastPoint = {coords: evtCoords};
+        lastPoint = {coords: evtCoords};
       }
       if (!ctx.snapFeature) {
-        ctx.snapFeature = turf.point(ctx.lastPoint.coords);
+        ctx.snapFeature = turf.point(lastPoint.coords);
       }
 
       addClickSegementsToMesh();
-      console.log("mouseClick, last point: ", ctx.lastPoint, "closestPoint: ", ctx.closestPoint);
+      console.log("mouseClick, last point: ", lastPoint, "closestPoint: ", ctx.closestPoint);
       if (ctx.lastClick) {
-        if (ctx.lastClick.coords[0] === ctx.lastPoint.coords[0] && ctx.lastClick.coords[1] === ctx.lastPoint.coords[1]) {
+        if (ctx.lastClick.coords[0] === lastPoint.coords[0] && ctx.lastClick.coords[1] === lastPoint.coords[1]) {
           // finish draw
           console.log("Finish draw");
           doubleClickZoom.enable(ctx);
           ctx.snapFeature = null;
-          ctx.lastPoint = null;
+          lastPoint = null;
           if (ctx.hotFeature) {
             if (utils.isPolygon(ctx.hotFeature)) {
               console.log("Convert to polygon");
@@ -166,7 +169,7 @@ module.exports = function (ctx) {
           ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([hotFeature]));
         }
       }
-      ctx.lastClick = ctx.lastPoint;
+      ctx.lastClick = lastPoint;
     } else if (ctx.mode === Constants.modes.SELECT) {
       const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
       console.log("nearFeatures: ", nearFeatures.length);
@@ -211,29 +214,54 @@ module.exports = function (ctx) {
     }
   };
 
-  const KEY_D = "KeyD";
-  const KEY_P = "KeyP";
-
   const keypress = function (event) {
     console.log("keycode: ", event.keyCode, " => ", event.key, " | Code: ", event.code);
     switch (event.code) {
-      case KEY_D : {
+      case "KeyD" : {
         if (ctx.debug) {
           console.log("Debug: ", JSON.stringify(ctx.debug));
         }
         break;
       }
-      case KEY_P : {
+      case "KeyP" : {
         if (ctx.coldFeatures) {
           console.log("coldFeatures: ", JSON.stringify(turf.featureCollection(ctx.coldFeatures)));
         }
         break;
       }
       case "Delete" : {
-        if (ctx.selectedFeatures) {
-          ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-          ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
-          ctx.selectedFeatures = null;
+        if (ctx.mode === Constants.modes.SELECT) {
+          if (ctx.selectedFeatures) {
+            ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+            ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
+            ctx.selectedFeatures = null;
+          }
+        } else if (ctx.mode === Constants.modes.DRAW) {
+          if (ctx.hotFeature) {
+            const coords = ctx.hotFeature.geometry.coordinates;
+            if (coords.length > 1) {
+              coords.splice(coords.length - 1, 1);
+              ctx.lastClick = {coords: coords[coords.length - 1]};
+              if (coords.length > 0) {
+                ctx.snapFeature = turf.point(coords[coords.length - 1]);
+              } else {
+                ctx.snapFeature = null;
+              }
+              if (coords.length > 1) {
+                ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+              } else {
+                ctx.hotFeature = null;
+                ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
+              }
+            }
+            if (ctx.lastMouseEvent) {
+              mouseMove(ctx.lastMouseEvent);
+            }
+          } else if (ctx.snapFeature) {
+            ctx.snapFeature = null;
+            ctx.lastClick = null;
+            ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
+          }
         }
         break;
       }
