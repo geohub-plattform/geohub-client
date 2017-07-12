@@ -4,6 +4,7 @@ import doubleClickZoom from "./double_click_zoom";
 import utils from "./utils";
 const overpassApi = require("./overpass_api");
 const closestPoints = require("./closest_points");
+const filesaver = require("./filesaver");
 
 module.exports = function (ctx) {
 
@@ -287,6 +288,11 @@ module.exports = function (ctx) {
       ctx.api.addData(geojson);
     });
   }
+  function handleSaveButton() {
+    console.log("Export as GeoJson");
+    var blob = new Blob([JSON.stringify(turf.featureCollection(ctx.coldFeatures))], {type: "application/json;charset=utf-8"});
+    filesaver.saveAs(blob, "export.geojson");
+  }
 
   function changeMode(newMode) {
     // TODO finish current mode
@@ -330,6 +336,7 @@ module.exports = function (ctx) {
     },
     handleWaysDownloadButton,
     handleBuildingsDownloadButton,
+    handleSaveButton,
     changeMode
   };
 };

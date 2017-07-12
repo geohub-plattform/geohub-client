@@ -16,6 +16,7 @@ module.exports = {
     CONTROL_BUTTON_CUT: 'geohub-cut',
     CONTROL_BUTTON_SELECT: 'geohub-select',
     CONTROL_BUTTON_DOWNLOAD_DATA: 'geohub-download-data',
+    CONTROL_BUTTON_SAVE: 'geohub-save',
     CONTROL_GROUP: 'geohub-ctrl-group',
     DIVIDER: 'geohub-divider',
     ACTION_GROUP: 'geohub-action-group',

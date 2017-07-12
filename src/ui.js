@@ -135,6 +135,12 @@ module.exports = function (ctx) {
       title: `Download building lines ${ctx.options.keybindings && '(d)'}`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
+    buttonElements["saveFile"] = createActionButton("saveFile", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_SAVE,
+      title: `Export as GeoJson`,
+      onAction: () => ctx.events.handleSaveButton()
+    });
     buttonElements["select"] = createControlButton("select", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_SELECT,

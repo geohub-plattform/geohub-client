@@ -93,6 +93,12 @@
     background-repeat: no-repeat;
 }
 
+.geohub-save {
+    background-image: url(./svg/ic_save_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button {
     width: 30px;
     height: 30px;
@@ -119,8 +125,8 @@
 
 .mapboxgl-ctrl-top-right .geohub-divider {
     padding-bottom: 8px;
-    margin-bottom: 8px;
     border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
 }
 
 .mapboxgl-map.mouse-pointer .mapboxgl-canvas-container.mapboxgl-interactive {
