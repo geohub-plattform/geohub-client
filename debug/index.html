@@ -75,7 +75,10 @@
         map.addControl(new mapboxgl.FullscreenControl());
         $.getJSON("overpass-experimenta.json", null, function (data) {
             geoHubClient.addOverpassData(data);
-            //geoHubClient.addData(data);
+            $.getJSON("anwohner-1-2-3-4.json", null, function (data) {
+                geoHubClient.addUserData(data);
+
+            });
         });
     });
 </script>

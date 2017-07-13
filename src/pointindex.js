@@ -30,7 +30,8 @@ module.exports = function (ctx) {
         "geohub-point-select-helper", "geohub-fill-select", "geohub-line-select"]
     };
     const point = ctx.map.project([lngLat.lng, lngLat.lat]);
-    return ctx.map.queryRenderedFeatures(point, filter);
+    const bbox = [[point.x - 5, point.y - 5], [point.x + 5, point.y + 5]];
+    return ctx.map.queryRenderedFeatures(bbox, filter);
   };
 
   const updateMeshData = function () {
@@ -50,6 +51,16 @@ module.exports = function (ctx) {
       const fc = overpassApi.convertFromOverpassToGeojson(data);
       meshIndex = new MeshIndex(fc.features);
       updateMeshData();
+    },
+    addUserData: function (data) {
+      console.log("user data: ", data);
+      meshIndex.addNewFeatures(data.features);
+      updateMeshData();
+      if (ctx.coldFeatures === undefined) {
+        ctx.coldFeatures = [];
+      }
+      ctx.coldFeatures.push(...data.features);
+      ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
     },
     splitSegmentAtPoint: function (segmentId, pointCoords) {
       meshIndex.splitSegmentAtPoint(segmentId, pointCoords);
