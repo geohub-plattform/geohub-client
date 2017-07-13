@@ -64,6 +64,7 @@
   "dependencies": {
     "@turf/turf": "^4.3.1",
     "cheap-ruler": "^2.5.0",
-    "clone-deep": "^0.3.0"
+    "clone-deep": "^0.3.0",
+    "strxml": "1.0.0"
   }
 }

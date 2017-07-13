@@ -4,6 +4,7 @@ import doubleClickZoom from "./double_click_zoom";
 import utils from "./utils";
 const overpassApi = require("./overpass_api");
 const closestPoints = require("./closest_points");
+const exportFile = require("./export_file");
 
 module.exports = function (ctx) {
 
@@ -326,6 +327,26 @@ module.exports = function (ctx) {
       ctx.api.addData(geojson);
     });
   }
+  function handleSaveButton() {
+    const dropdownGroup = $('.geohub-dropdown-group');
+    if(dropdownGroup.css('display') == 'none'){
+      dropdownGroup.show();
+    } else{
+      dropdownGroup.hide();
+    }
+  }
+  function handleSaveAsGistButton(){
+    var file = turf.featureCollection(ctx.coldFeatures);
+    exportFile.asGist(file);
+  }
+  function handleSaveAsGeojsonButton(){
+    var file = turf.featureCollection(ctx.coldFeatures);
+    exportFile.asGeojson(file);
+  }
+  function handleSaveAsKmlButton(){
+    var file = turf.featureCollection(ctx.coldFeatures);
+    exportFile.asKml(file);
+  }
 
   function changeMode(newMode) {
     // TODO finish current mode
@@ -384,6 +405,10 @@ module.exports = function (ctx) {
     handleWaysDownloadButton,
     handleBuildingsDownloadButton,
     changeMode,
-    combineFeatures
+    combineFeatures,
+    handleSaveButton,
+    handleSaveAsGistButton,
+    handleSaveAsGeojsonButton,
+    handleSaveAsKmlButton,
   };
 };

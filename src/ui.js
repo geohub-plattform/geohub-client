@@ -89,6 +89,11 @@ module.exports = function (ctx) {
     return button;
   }
 
+  function createButtonDropdown() {
+    const group = document.createElement('div');
+    return group;
+  }
+
   function deactivateButtons() {
     if (!activeButton) return;
     activeButton.classList.remove(Constants.classes.ACTIVE_BUTTON);
@@ -116,13 +121,19 @@ module.exports = function (ctx) {
     actionGroup.className = `${Constants.classes.ACTION_GROUP}`;
     const controlGroup = document.createElement('div');
     controlGroup.className = `${Constants.classes.CONTROL_GROUP}`;
+    const dropdownGroup = document.createElement('div');
+    dropdownGroup.className = `${Constants.classes.DROPDOWN_GROUP}`;
+    dropdownGroup.style.display = 'none';
 
     const divider = document.createElement('div');
     divider.className = `${Constants.classes.DIVIDER}`;
 
     containerGroup.appendChild(actionGroup);
+    containerGroup.appendChild(dropdownGroup);
     containerGroup.appendChild(divider);
     containerGroup.appendChild(controlGroup);
+
+
     buttonElements["downloadWays"] = createActionButton("downloadWays", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
@@ -134,6 +145,30 @@ module.exports = function (ctx) {
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
       title: `Download building lines ${ctx.options.keybindings && '(d)'}`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
+    });
+    buttonElements["saveFile"] = createActionButton("saveFile", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_SAVE,
+      title: `Export as Gist, GeoJson, KML`,
+      onAction: () => ctx.events.handleSaveButton()
+    });
+    buttonElements["saveAsGist"] = createActionButton("saveAsGist", {
+      container: dropdownGroup,
+      className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GIST,
+      title: `Export as Gist`,
+      onAction: () => ctx.events.handleSaveAsGistButton()
+    });
+    buttonElements["saveAsGeojson"] = createActionButton("saveAsGeojson", {
+      container: dropdownGroup,
+      className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GEOJSON,
+      title: `Export as Geojson`,
+      onAction: () => ctx.events.handleSaveAsGeojsonButton()
+    });
+    buttonElements["saveAsKML"] = createActionButton("saveAsKML", {
+      container: dropdownGroup,
+      className: Constants.classes.CONTROL_BUTTON_SAVE_AS_KML,
+      title: `Export as KML`,
+      onAction: () => ctx.events.handleSaveAsKmlButton()
     });
     buttonElements["select"] = createControlButton("select", {
       container: controlGroup,
@@ -159,6 +194,8 @@ module.exports = function (ctx) {
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.events.combineFeatures()
     });
+
+
 
     if (controls.trash) {
       buttonElements.trash = createControlButton('trash', {

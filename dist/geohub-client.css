@@ -93,7 +93,28 @@
     background-repeat: no-repeat;
 }
 
-.geohub-action-group > button, .geohub-ctrl-group > button {
+.geohub-save {
+    background-image: url(./svg/ic_save_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.geohub-save-as-gist {
+    background-image: url(./svg/ic_insert_drive_file_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.geohub-save-as-geojson {
+    background-image: url(./svg/ic_insert_drive_file_black_24px.svg);    
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.geohub-save-as-kml {
+    background-image: url(./svg/ic_insert_drive_file_black_24px.svg);    
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;
     display: block;
@@ -106,7 +127,7 @@
     cursor: pointer;
 }
 /* https://bugzilla.mozilla.org/show_bug.cgi?id=140562 */
-.geohub-action-group > button::-moz-focus-inner, .geohub-ctrl-group > button::-moz-focus-inner {
+.geohub-action-group > button::-moz-focus-inner, .geohub-ctrl-group > button::-moz-focus-inner, .geohub-dropdown-group > button::-moz-focus-inner {
     border: 0;
     padding: 0;
 }
@@ -117,10 +138,14 @@
     background-color: rgba(0,0,0,0.05);
 }
 
+.geohub-dropdown-group{
+    border-top: 1px solid #dddddd;    
+}
+
 .mapboxgl-ctrl-top-right .geohub-divider {
     padding-bottom: 8px;
-    margin-bottom: 8px;
     border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
 }
 
 .mapboxgl-map.mouse-pointer .mapboxgl-canvas-container.mapboxgl-interactive {
