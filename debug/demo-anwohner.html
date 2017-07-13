@@ -43,39 +43,56 @@
 </head>
 <body>
 <div id="map"></div>
-<div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
 
 <script>
-    var zoomContainer = document.getElementById('zoom');
-    var positionContainer = document.getElementById('position');
     mapboxgl.accessToken = 'pk.eyJ1Ijoibml0ZWdhdGUiLCJhIjoiY2l4ejFxc2d6MDA1aDJxbzc5bjZrMzI0ZyJ9.EEPEOLNhdFz9DVNx4TCvBw';
 
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v8',
-        center: [9.21295427, 49.1432579],
+        center: [9.2194585, 49.1444976],
         zoom: 17,
         maxZoom: 30
     });
 
-    map.on('zoom', function () {
-        zoomContainer.innerText = map.getZoom();
-    });
-    map.on('mousemove', function (event) {
-        positionContainer.innerText = event.lngLat.lng + ", " + event.lngLat.lat;
-    });
+    map.on("load", function() {
+        map.addLayer({
+            "id": "anwohner",
+            "type": "line",
+            "source": {
+                "type": "geojson",
+                "data": "anwohner-1-2-3-4.json"
+            },
+            "layout": {
+                "line-join": "round",
+                "line-cap": "round"
+            },
+            "paint": {
+                "line-color": "#ff001f",
+                "line-width": 5,
+                "line-opacity" : 0.5
+            }
+        });
+        // Create a popup, but don't add it to the map yet.
+        var popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
+        });
 
-    map.on("load", function () {
-        zoomContainer.innerText = map.getZoom();
+        map.on('mouseenter', 'anwohner', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
 
-        var geoHubClient = new GeoHubClient();
-        map.addControl(geoHubClient);
-        map.addControl(new mapboxgl.GeolocateControl());
-        map.addControl(new mapboxgl.ScaleControl());
-        map.addControl(new mapboxgl.FullscreenControl());
-        $.getJSON("overpass-experimenta.json", null, function (data) {
-            geoHubClient.addOverpassData(data);
-            //geoHubClient.addData(data);
+            const content = e.features[0].properties.description ? e.features[0].properties.description : e.features[0].properties.geoHubId;
+
+            popup.setLngLat(e.lngLat)
+                .setHTML(content)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', 'anwohner', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
         });
     });
 </script>

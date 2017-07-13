@@ -1,0 +1,4409 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API",
+  "osm3s": {
+    "timestamp_osm_base": "2017-07-12T11:39:02Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+    {
+      "type": "way",
+      "id": 34118435,
+      "nodes": [
+        1223716516,
+        3130993409,
+        412448881,
+        391092567,
+        3130993407,
+        391093010,
+        674353958,
+        391093009,
+        391093012,
+        3130993405,
+        3130993406,
+        1223716517,
+        435582010,
+        3130993411,
+        3130993413,
+        674353993,
+        3130993414,
+        3130993412,
+        435582013,
+        435582014,
+        1223716516
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "14",
+        "addr:postcode": "74072",
+        "addr:street": "Kranenstraße",
+        "building": "public",
+        "building:material": "glass",
+        "email": "info@experimenta-heilbronn.de",
+        "height": "25",
+        "name": "Experimenta-Science-Center",
+        "opening_hours": "Mo-Fr 09:00-18:00; Sa,Su,PH 10:00-18:00",
+        "phone": "07131-887950",
+        "tourism": "museum",
+        "website": "https://www.experimenta-heilbronn.de/",
+        "wheelchair": "yes",
+        "wikipedia": "de:Experimenta Heilbronn"
+      }
+    },
+    {
+      "type": "way",
+      "id": 34417568,
+      "nodes": [
+        395372279,
+        395372280,
+        395372281,
+        395372383,
+        1243658073,
+        1243658065,
+        1243658053,
+        395372279
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "2",
+        "addr:postcode": "74072",
+        "addr:street": "Kaiserstraße",
+        "building": "yes",
+        "name": "Marrahaus",
+        "website": "http://www.marrahaus.de/"
+      }
+    },
+    {
+      "type": "way",
+      "id": 35918208,
+      "nodes": [
+        419853071,
+        419853072,
+        3130993382,
+        419853073,
+        419853074,
+        3130993381,
+        3130993380,
+        419853075,
+        741475950,
+        419853076,
+        3130993378,
+        741475880,
+        419853077,
+        419853071
+      ],
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36866174,
+      "nodes": [
+        975267947,
+        249180961,
+        249180963,
+        249180964,
+        1147391054,
+        428634736,
+        428634737,
+        428634738,
+        428634739,
+        2244614579,
+        2244614557,
+        428634740,
+        2290328170,
+        428634730,
+        2244614585,
+        2244614588,
+        428634732,
+        428634734,
+        975267947
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "30",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "amenity": "public_building",
+        "building": "train_station",
+        "layer": "3",
+        "name": "Hauptbahnhof",
+        "opening_hours": "Mo-Su 04:00-01:15",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976385,
+      "nodes": [
+        429962392,
+        429962397,
+        429962398,
+        429962399,
+        429962392
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "22",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial",
+        "height": "25",
+        "name": "Ehemaliges Postamt",
+        "source": "own aerial image",
+        "start_date": "1906"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976386,
+      "nodes": [
+        429962401,
+        429962402,
+        429962403,
+        429962404,
+        429962405,
+        429962406,
+        429962407,
+        429962408,
+        429962401
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "20",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976394,
+      "nodes": [
+        429962430,
+        429962432,
+        429962433,
+        429962434,
+        429962435,
+        429962436,
+        429962430
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "33",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976395,
+      "nodes": [
+        429962437,
+        429962441,
+        429962442,
+        429962443,
+        429962444,
+        429962445,
+        429962447,
+        429962449,
+        429962437
+      ],
+      "tags": {
+        "building": "yes",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976397,
+      "nodes": [
+        429962455,
+        429962456,
+        429962458,
+        429962459,
+        429962461,
+        429962462,
+        429962455
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "2",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976398,
+      "nodes": [
+        975060994,
+        429962475,
+        429962476,
+        429962477,
+        429962463,
+        429962464,
+        429962465,
+        975060992,
+        975060994
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "23",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976400,
+      "nodes": [
+        429962478,
+        429962480,
+        429962481,
+        429962482,
+        429962478
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "25",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976401,
+      "nodes": [
+        429962483,
+        429962484,
+        429969117,
+        429969119,
+        429962487,
+        429962483
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "27",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976402,
+      "nodes": [
+        429962488,
+        429962489,
+        429962491,
+        429962493,
+        429962494,
+        429962495,
+        429962488
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "29",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36976403,
+      "nodes": [
+        429962496,
+        429962497,
+        429962499,
+        4607649961,
+        4607649959,
+        4607649960,
+        4607649962,
+        429962500,
+        429962496
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "31",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977030,
+      "nodes": [
+        429969106,
+        429969107,
+        429969108,
+        429969109,
+        429969106
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "29/1",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977031,
+      "nodes": [
+        429969110,
+        429969112,
+        429969113,
+        429969114,
+        429969115,
+        429969116,
+        429969117,
+        429969119,
+        429969120,
+        429969122,
+        429969123,
+        429969125,
+        429969110
+      ],
+      "tags": {
+        "building": "yes",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977032,
+      "nodes": [
+        429969127,
+        429969131,
+        429969136,
+        429969129,
+        429969130,
+        429969127
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "20",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "apartments",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977033,
+      "nodes": [
+        429969131,
+        429969132,
+        754476132,
+        429969133,
+        429969134,
+        429969135,
+        429969136,
+        429969131
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "18",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "yes",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977036,
+      "nodes": [
+        429969152,
+        429969154,
+        429969156,
+        975061023,
+        975060987,
+        429969157,
+        429969152
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "10",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977037,
+      "nodes": [
+        429969161,
+        975060997,
+        975061002,
+        429969160,
+        429969159,
+        975061020,
+        975060973,
+        429969158,
+        429969161
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "12",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977039,
+      "nodes": [
+        975061002,
+        975060997,
+        975060987,
+        975061023,
+        975061002
+      ],
+      "tags": {
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977040,
+      "nodes": [
+        975060973,
+        975061020,
+        975060960,
+        975060965,
+        975060973
+      ],
+      "tags": {
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 36977133,
+      "nodes": [
+        429970831,
+        429970832,
+        429970833,
+        429970834,
+        429970831
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "8/1",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37089745,
+      "nodes": [
+        431343378,
+        754476319,
+        431343376,
+        431343377,
+        1223643787,
+        1223643990,
+        1223643741,
+        1223643685,
+        431343378
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "5",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37298773,
+      "nodes": [
+        1223643713,
+        1223643739,
+        1223643679,
+        1223643746,
+        434647895,
+        434647892,
+        434647893,
+        434647894,
+        1223643713
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6/3",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299059,
+      "nodes": [
+        434650377,
+        1244814311,
+        1244814206,
+        1244814243,
+        1244814162,
+        434650381,
+        434650379,
+        434650377
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "7",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299060,
+      "nodes": [
+        434650385,
+        434650387,
+        434650389,
+        434650391,
+        434650393,
+        434650395,
+        434650398,
+        434650400,
+        434650402,
+        434650404,
+        434650406,
+        434650408,
+        434650410,
+        434650412,
+        434650414,
+        434650417,
+        434650385
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "9",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299062,
+      "nodes": [
+        434650419,
+        434650421,
+        434650424,
+        434650425,
+        434650419
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housename": "Villa Nestle",
+        "addr:housenumber": "11",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "amenity": "school",
+        "building": "yes",
+        "name": "Kolping Bildungskolleg - Schule für Gestaltung",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299619,
+      "nodes": [
+        434668867,
+        434668871,
+        434668872,
+        434668873,
+        434668867
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "9/1",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299620,
+      "nodes": [
+        434668875,
+        434668877,
+        434668879,
+        434668882,
+        434668884,
+        434668885,
+        434668875
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housename": "Heinrich-Fries-Haus",
+        "addr:housenumber": "13",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "yes",
+        "name": "Heinrich-Fries-Haus"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299621,
+      "nodes": [
+        434668887,
+        434668892,
+        434668894,
+        434668895,
+        434668887
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "9",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299622,
+      "nodes": [
+        434668905,
+        434668899,
+        434668897,
+        434668900,
+        434668905
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "9/1",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "yes",
+        "building:use": "residential"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299624,
+      "nodes": [
+        434668917,
+        434668919,
+        434668922,
+        434668924,
+        434668926,
+        434668927,
+        434668917
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "11",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37299628,
+      "nodes": [
+        434668956,
+        434668961,
+        434668959,
+        434668954,
+        434668956
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "18/1",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37300023,
+      "nodes": [
+        434683380,
+        434683382,
+        434683383,
+        434689307,
+        3276242775,
+        434683385,
+        434683386,
+        3276242774,
+        434683388,
+        434683390,
+        434683391,
+        434683380
+      ],
+      "tags": {
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37300132,
+      "nodes": [
+        434689307,
+        434683383,
+        434689312,
+        1147391046,
+        1147391066,
+        1147391098,
+        434689315,
+        434689320,
+        434689323,
+        434689327,
+        434689331,
+        434689338,
+        1147391059,
+        1147391092,
+        1147391101,
+        1147391052,
+        434689342,
+        434689345,
+        434689348,
+        434689352,
+        434689355,
+        3276242773,
+        1147391085,
+        1147391096,
+        434689358,
+        434689361,
+        434689363,
+        434689307
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "12",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37300301,
+      "nodes": [
+        434697136,
+        434697138,
+        434697140,
+        434697142,
+        434697136
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housename": "Alter Bahnhof",
+        "addr:housenumber": "8",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "amenity": "school",
+        "building": "yes",
+        "name": "Kolping-Bildungszentrum",
+        "start_date": "1848"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37300303,
+      "nodes": [
+        434697160,
+        434697162,
+        3276239123,
+        434697164,
+        434697149,
+        434697160
+      ],
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37348552,
+      "nodes": [
+        435582031,
+        435582050,
+        435582053,
+        435582056,
+        435582058,
+        435582068,
+        3130993401,
+        3130993400,
+        435582070,
+        3130993402,
+        3130993404,
+        435582074,
+        435582075,
+        435582078,
+        3130993399,
+        3130993398,
+        435582065,
+        823656329,
+        435582055,
+        3130993386,
+        3130993387,
+        3130993383,
+        3130993384,
+        435582033,
+        435582036,
+        435582037,
+        3154660686,
+        3154660690,
+        435582042,
+        435582031
+      ],
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 37348553,
+      "nodes": [
+        435582081,
+        435582084,
+        435582087,
+        435582088,
+        435582081
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:housenumber": "17",
+        "addr:postcode": "74072",
+        "addr:street": "Willy-Mayer-Brücke",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499735,
+      "nodes": [
+        431343381,
+        1223643788,
+        1223643920,
+        754476307,
+        431343380,
+        1223643977,
+        1223643699,
+        1223643963,
+        431343382,
+        431343383,
+        431343384,
+        431343385,
+        1223643826,
+        431343386,
+        431343387,
+        1223643997,
+        431343388,
+        431343381
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housename": "Neckarturm",
+        "addr:housenumber": "1",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial",
+        "building:material": "glass",
+        "levels": "11"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499744,
+      "nodes": [
+        754476388,
+        754476244,
+        754476142,
+        754476317,
+        754476388
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6c",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499746,
+      "nodes": [
+        754476163,
+        1250235158,
+        1250235191,
+        1250235150,
+        1250235127,
+        754476279,
+        1250235218,
+        1250235177,
+        1250235117,
+        1250235163,
+        754476194,
+        754476348,
+        754476163
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "3",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499751,
+      "nodes": [
+        754476336,
+        754476185,
+        754476330,
+        4607927814,
+        4607927815,
+        754476273,
+        754476336
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "5",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499757,
+      "nodes": [
+        754476244,
+        434697164,
+        754476176,
+        754476142,
+        754476244
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6b",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499758,
+      "nodes": [
+        754476264,
+        754476352,
+        754476285,
+        754476172,
+        754476264
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "24",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "yes",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499760,
+      "nodes": [
+        754476160,
+        754476259,
+        754476153,
+        754476331,
+        754476160
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "12",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499762,
+      "nodes": [
+        429969132,
+        754476132,
+        754476274,
+        754476186,
+        429969132
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "8",
+        "addr:postcode": "74072",
+        "addr:street": "Olgastraße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499768,
+      "nodes": [
+        431343381,
+        1223644027,
+        754476319,
+        431343378,
+        1223643918,
+        431343379,
+        754476307,
+        1223643920,
+        1223643788,
+        431343381
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "3",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499774,
+      "nodes": [
+        754476352,
+        754476202,
+        754476365,
+        754476285,
+        754476352
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "22",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "yes",
+        "source": "own aerial image"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499781,
+      "nodes": [
+        754476305,
+        754476388,
+        754476317,
+        754476227,
+        754476305
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "2",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 60499783,
+      "nodes": [
+        754476176,
+        434697164,
+        434697149,
+        434697150,
+        434697152,
+        434697154,
+        754476176
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6a",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 83717039,
+      "nodes": [
+        975060992,
+        429962467,
+        429962468,
+        429962470,
+        429962471,
+        429962472,
+        429962474,
+        975060994,
+        975060992
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "19",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "apartments"
+      }
+    },
+    {
+      "type": "way",
+      "id": 102823210,
+      "nodes": [
+        754476382,
+        1187381072,
+        3130993377,
+        1187381073,
+        1414473146,
+        3130993367,
+        3130993366,
+        1414473152,
+        3130993371,
+        3130993370,
+        3130993376,
+        3130993375,
+        3130993374,
+        3130993373,
+        754476316,
+        754476382
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "19",
+        "addr:postcode": "74072",
+        "addr:street": "Roßkampffstraße",
+        "building": "hotel",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "type": "way",
+      "id": 106314122,
+      "nodes": [
+        1223643704,
+        1223643758,
+        1223643975,
+        1223643695,
+        1223643743,
+        1223643858,
+        1223643682,
+        1223643782,
+        1223643825,
+        1223643960,
+        1223643750,
+        1223643884,
+        1223643704
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6/5",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 106314123,
+      "nodes": [
+        1223643672,
+        1223643718,
+        1223643749,
+        1223643883,
+        1223643690,
+        1223643819,
+        1223643843,
+        1223643969,
+        1223643930,
+        1223643672
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6/1",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 106314127,
+      "nodes": [
+        1223643922,
+        1223643978,
+        1223643744,
+        1223644032,
+        1223644018,
+        1223643922
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6/6",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 106314128,
+      "nodes": [
+        1223643771,
+        1223644029,
+        1223643898,
+        1223643832,
+        1223643771
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6/2",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 106314131,
+      "nodes": [
+        1223643672,
+        1223643881,
+        1223643980,
+        1223643813,
+        1223643925,
+        1223643966,
+        1223643718,
+        1223643672
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 106314136,
+      "nodes": [
+        1223643846,
+        1223643913,
+        1223643971,
+        1223643958,
+        1223643846
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "6/4",
+        "addr:postcode": "74072",
+        "addr:street": "Frankfurter Straße",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 206682614,
+      "nodes": [
+        2167230038,
+        2167230035,
+        2167230036,
+        2167230040,
+        2167230038
+      ],
+      "tags": {
+        "addr:city": "Heilbronn",
+        "addr:country": "DE",
+        "addr:housenumber": "20/1",
+        "addr:postcode": "74072",
+        "addr:street": "Bahnhofstraße",
+        "building": "commercial"
+      }
+    },
+    {
+      "type": "way",
+      "id": 307868159,
+      "nodes": [
+        3130993397,
+        3130993393,
+        3130993392,
+        3130993391,
+        3130993388,
+        3130993389,
+        3130993390,
+        3130993395,
+        3130993394,
+        3130993396,
+        3130993397
+      ],
+      "tags": {
+        "building": "yes",
+        "source": "LGL, www.lgl-bw.de"
+      }
+    },
+    {
+      "type": "way",
+      "id": 310103245,
+      "nodes": [
+        3154660681,
+        3154660680,
+        3154660684,
+        3154660685,
+        3154660686,
+        3154660690,
+        3154660689,
+        3154660688,
+        3154660683,
+        3154660682,
+        3154660679,
+        3154660677,
+        3154660681
+      ],
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 1178538,
+      "members": [
+        {
+          "type": "way",
+          "ref": 37300305,
+          "role": "outer"
+        },
+        {
+          "type": "way",
+          "ref": 77668743,
+          "role": "inner"
+        },
+        {
+          "type": "way",
+          "ref": 77668748,
+          "role": "inner"
+        }
+      ],
+      "tags": {
+        "amenity": "parking",
+        "building": "yes",
+        "capacity": "500",
+        "fee": "yes",
+        "maxheight": "2",
+        "maxweight": "2.5",
+        "name": "Parkhaus Experimenta",
+        "parking": "multi-storey",
+        "traffic_sign": "DE:265[2];DE:262[2.5];DE:274[10]",
+        "type": "multipolygon"
+      }
+    },
+    {
+      "type": "node",
+      "id": 429969127,
+      "lat": 49.1419825,
+      "lon": 9.2103147
+    },
+    {
+      "type": "node",
+      "id": 429969129,
+      "lat": 49.1419939,
+      "lon": 9.2099779
+    },
+    {
+      "type": "node",
+      "id": 429969130,
+      "lat": 49.1418858,
+      "lon": 9.2102088
+    },
+    {
+      "type": "node",
+      "id": 429969131,
+      "lat": 49.1420306,
+      "lon": 9.2102094
+    },
+    {
+      "type": "node",
+      "id": 429969132,
+      "lat": 49.1421336,
+      "lon": 9.2103157
+    },
+    {
+      "type": "node",
+      "id": 429969135,
+      "lat": 49.1421630,
+      "lon": 9.2101529
+    },
+    {
+      "type": "node",
+      "id": 429969136,
+      "lat": 49.1420905,
+      "lon": 9.2100834
+    },
+    {
+      "type": "node",
+      "id": 429969152,
+      "lat": 49.1421407,
+      "lon": 9.2111539
+    },
+    {
+      "type": "node",
+      "id": 429969154,
+      "lat": 49.1421381,
+      "lon": 9.2113400
+    },
+    {
+      "type": "node",
+      "id": 429969156,
+      "lat": 49.1420088,
+      "lon": 9.2113358
+    },
+    {
+      "type": "node",
+      "id": 429969157,
+      "lat": 49.1420114,
+      "lon": 9.2111497
+    },
+    {
+      "type": "node",
+      "id": 429969158,
+      "lat": 49.1418451,
+      "lon": 9.2111504
+    },
+    {
+      "type": "node",
+      "id": 429969159,
+      "lat": 49.1418425,
+      "lon": 9.2113364
+    },
+    {
+      "type": "node",
+      "id": 429969160,
+      "lat": 49.1419718,
+      "lon": 9.2113406
+    },
+    {
+      "type": "node",
+      "id": 429969161,
+      "lat": 49.1419744,
+      "lon": 9.2111546
+    },
+    {
+      "type": "node",
+      "id": 429970831,
+      "lat": 49.1418509,
+      "lon": 9.2109087
+    },
+    {
+      "type": "node",
+      "id": 429970832,
+      "lat": 49.1417653,
+      "lon": 9.2110907
+    },
+    {
+      "type": "node",
+      "id": 429970833,
+      "lat": 49.1417150,
+      "lon": 9.2110354
+    },
+    {
+      "type": "node",
+      "id": 429970834,
+      "lat": 49.1418006,
+      "lon": 9.2108534
+    },
+    {
+      "type": "node",
+      "id": 434647892,
+      "lat": 49.1421217,
+      "lon": 9.2129317
+    },
+    {
+      "type": "node",
+      "id": 434647893,
+      "lat": 49.1421154,
+      "lon": 9.2131945
+    },
+    {
+      "type": "node",
+      "id": 434647894,
+      "lat": 49.1420409,
+      "lon": 9.2131903
+    },
+    {
+      "type": "node",
+      "id": 434647895,
+      "lat": 49.1420469,
+      "lon": 9.2129275
+    },
+    {
+      "type": "node",
+      "id": 434668871,
+      "lat": 49.1421585,
+      "lon": 9.2123296
+    },
+    {
+      "type": "node",
+      "id": 434668887,
+      "lat": 49.1420961,
+      "lon": 9.2114837
+    },
+    {
+      "type": "node",
+      "id": 434668892,
+      "lat": 49.1420951,
+      "lon": 9.2116872
+    },
+    {
+      "type": "node",
+      "id": 434668894,
+      "lat": 49.1419812,
+      "lon": 9.2116860
+    },
+    {
+      "type": "node",
+      "id": 434668895,
+      "lat": 49.1419822,
+      "lon": 9.2114825
+    },
+    {
+      "type": "node",
+      "id": 434668897,
+      "lat": 49.1419878,
+      "lon": 9.2120366
+    },
+    {
+      "type": "node",
+      "id": 434668899,
+      "lat": 49.1421256,
+      "lon": 9.2120411
+    },
+    {
+      "type": "node",
+      "id": 434668900,
+      "lat": 49.1419896,
+      "lon": 9.2119054
+    },
+    {
+      "type": "node",
+      "id": 434668905,
+      "lat": 49.1421274,
+      "lon": 9.2119098
+    },
+    {
+      "type": "node",
+      "id": 434668917,
+      "lat": 49.1418494,
+      "lon": 9.2114757
+    },
+    {
+      "type": "node",
+      "id": 434668919,
+      "lat": 49.1418478,
+      "lon": 9.2118905
+    },
+    {
+      "type": "node",
+      "id": 434668922,
+      "lat": 49.1419577,
+      "lon": 9.2118915
+    },
+    {
+      "type": "node",
+      "id": 434668924,
+      "lat": 49.1419591,
+      "lon": 9.2115369
+    },
+    {
+      "type": "node",
+      "id": 434668926,
+      "lat": 49.1419109,
+      "lon": 9.2115365
+    },
+    {
+      "type": "node",
+      "id": 434668927,
+      "lat": 49.1419112,
+      "lon": 9.2114763
+    },
+    {
+      "type": "node",
+      "id": 434668954,
+      "lat": 49.1418590,
+      "lon": 9.2120564
+    },
+    {
+      "type": "node",
+      "id": 434668956,
+      "lat": 49.1418243,
+      "lon": 9.2122069
+    },
+    {
+      "type": "node",
+      "id": 434668959,
+      "lat": 49.1416042,
+      "lon": 9.2119196
+    },
+    {
+      "type": "node",
+      "id": 434668961,
+      "lat": 49.1415696,
+      "lon": 9.2120701
+    },
+    {
+      "type": "node",
+      "id": 754476153,
+      "lat": 49.1418024,
+      "lon": 9.2106853
+    },
+    {
+      "type": "node",
+      "id": 754476160,
+      "lat": 49.1418348,
+      "lon": 9.2102513
+    },
+    {
+      "type": "node",
+      "id": 754476163,
+      "lat": 49.1416585,
+      "lon": 9.2143038
+    },
+    {
+      "type": "node",
+      "id": 754476172,
+      "lat": 49.1421502,
+      "lon": 9.2096753
+    },
+    {
+      "type": "node",
+      "id": 754476185,
+      "lat": 49.1418485,
+      "lon": 9.2140003
+    },
+    {
+      "type": "node",
+      "id": 754476186,
+      "lat": 49.1421336,
+      "lon": 9.2110510
+    },
+    {
+      "type": "node",
+      "id": 754476202,
+      "lat": 49.1421289,
+      "lon": 9.2100194
+    },
+    {
+      "type": "node",
+      "id": 754476259,
+      "lat": 49.1419479,
+      "lon": 9.2103754
+    },
+    {
+      "type": "node",
+      "id": 754476273,
+      "lat": 49.1416822,
+      "lon": 9.2140279
+    },
+    {
+      "type": "node",
+      "id": 754476285,
+      "lat": 49.1420916,
+      "lon": 9.2097902
+    },
+    {
+      "type": "node",
+      "id": 754476316,
+      "lat": 49.1417537,
+      "lon": 9.2098505
+    },
+    {
+      "type": "node",
+      "id": 754476330,
+      "lat": 49.1417961,
+      "lon": 9.2141198
+    },
+    {
+      "type": "node",
+      "id": 754476331,
+      "lat": 49.1416893,
+      "lon": 9.2105613
+    },
+    {
+      "type": "node",
+      "id": 754476336,
+      "lat": 49.1417429,
+      "lon": 9.2138860
+    },
+    {
+      "type": "node",
+      "id": 754476365,
+      "lat": 49.1420330,
+      "lon": 9.2099051
+    },
+    {
+      "type": "node",
+      "id": 754476382,
+      "lat": 49.1418306,
+      "lon": 9.2099380
+    },
+    {
+      "type": "node",
+      "id": 975060960,
+      "lat": 49.1418033,
+      "lon": 9.2113098
+    },
+    {
+      "type": "node",
+      "id": 975060965,
+      "lat": 49.1418051,
+      "lon": 9.2111810
+    },
+    {
+      "type": "node",
+      "id": 975060973,
+      "lat": 49.1418446,
+      "lon": 9.2111823
+    },
+    {
+      "type": "node",
+      "id": 975060987,
+      "lat": 49.1420110,
+      "lon": 9.2111795
+    },
+    {
+      "type": "node",
+      "id": 975060997,
+      "lat": 49.1419740,
+      "lon": 9.2111783
+    },
+    {
+      "type": "node",
+      "id": 975061002,
+      "lat": 49.1419722,
+      "lon": 9.2113071
+    },
+    {
+      "type": "node",
+      "id": 975061020,
+      "lat": 49.1418428,
+      "lon": 9.2113111
+    },
+    {
+      "type": "node",
+      "id": 975061023,
+      "lat": 49.1420092,
+      "lon": 9.2113083
+    },
+    {
+      "type": "node",
+      "id": 1187381072,
+      "lat": 49.1419881,
+      "lon": 9.2096274
+    },
+    {
+      "type": "node",
+      "id": 1187381073,
+      "lat": 49.1418238,
+      "lon": 9.2095975
+    },
+    {
+      "type": "node",
+      "id": 1223643672,
+      "lat": 49.1420127,
+      "lon": 9.2137006
+    },
+    {
+      "type": "node",
+      "id": 1223643679,
+      "lat": 49.1420302,
+      "lon": 9.2130355
+    },
+    {
+      "type": "node",
+      "id": 1223643682,
+      "lat": 49.1418752,
+      "lon": 9.2132988
+    },
+    {
+      "type": "node",
+      "id": 1223643690,
+      "lat": 49.1419068,
+      "lon": 9.2135899
+    },
+    {
+      "type": "node",
+      "id": 1223643695,
+      "lat": 49.1418734,
+      "lon": 9.2133676
+    },
+    {
+      "type": "node",
+      "id": 1223643704,
+      "lat": 49.1419836,
+      "lon": 9.2131814
+    },
+    {
+      "type": "node",
+      "id": 1223643713,
+      "lat": 49.1420434,
+      "lon": 9.2130869
+    },
+    {
+      "type": "node",
+      "id": 1223643718,
+      "lat": 49.1419795,
+      "lon": 9.2138997
+    },
+    {
+      "type": "node",
+      "id": 1223643739,
+      "lat": 49.1420289,
+      "lon": 9.2130860
+    },
+    {
+      "type": "node",
+      "id": 1223643743,
+      "lat": 49.1418553,
+      "lon": 9.2133667
+    },
+    {
+      "type": "node",
+      "id": 1223643744,
+      "lat": 49.1421061,
+      "lon": 9.2133964
+    },
+    {
+      "type": "node",
+      "id": 1223643746,
+      "lat": 49.1420443,
+      "lon": 9.2130363
+    },
+    {
+      "type": "node",
+      "id": 1223643749,
+      "lat": 49.1419696,
+      "lon": 9.2138932
+    },
+    {
+      "type": "node",
+      "id": 1223643750,
+      "lat": 49.1419233,
+      "lon": 9.2131617
+    },
+    {
+      "type": "node",
+      "id": 1223643758,
+      "lat": 49.1419792,
+      "lon": 9.2133859
+    },
+    {
+      "type": "node",
+      "id": 1223643771,
+      "lat": 49.1420488,
+      "lon": 9.2134275
+    },
+    {
+      "type": "node",
+      "id": 1223643782,
+      "lat": 49.1418770,
+      "lon": 9.2132135
+    },
+    {
+      "type": "node",
+      "id": 1223643813,
+      "lat": 49.1420932,
+      "lon": 9.2136698
+    },
+    {
+      "type": "node",
+      "id": 1223643819,
+      "lat": 49.1419375,
+      "lon": 9.2136239
+    },
+    {
+      "type": "node",
+      "id": 1223643825,
+      "lat": 49.1418687,
+      "lon": 9.2132130
+    },
+    {
+      "type": "node",
+      "id": 1223643832,
+      "lat": 49.1420606,
+      "lon": 9.2135998
+    },
+    {
+      "type": "node",
+      "id": 1223643843,
+      "lat": 49.1419410,
+      "lon": 9.2136153
+    },
+    {
+      "type": "node",
+      "id": 1223643846,
+      "lat": 49.1421322,
+      "lon": 9.2126089
+    },
+    {
+      "type": "node",
+      "id": 1223643858,
+      "lat": 49.1418568,
+      "lon": 9.2132978
+    },
+    {
+      "type": "node",
+      "id": 1223643881,
+      "lat": 49.1420346,
+      "lon": 9.2136984
+    },
+    {
+      "type": "node",
+      "id": 1223643883,
+      "lat": 49.1418344,
+      "lon": 9.2137524
+    },
+    {
+      "type": "node",
+      "id": 1223643884,
+      "lat": 49.1419229,
+      "lon": 9.2131784
+    },
+    {
+      "type": "node",
+      "id": 1223643898,
+      "lat": 49.1421378,
+      "lon": 9.2135914
+    },
+    {
+      "type": "node",
+      "id": 1223643913,
+      "lat": 49.1421260,
+      "lon": 9.2128619
+    },
+    {
+      "type": "node",
+      "id": 1223643922,
+      "lat": 49.1421439,
+      "lon": 9.2132423
+    },
+    {
+      "type": "node",
+      "id": 1223643925,
+      "lat": 49.1421045,
+      "lon": 9.2138857
+    },
+    {
+      "type": "node",
+      "id": 1223643930,
+      "lat": 49.1419922,
+      "lon": 9.2136774
+    },
+    {
+      "type": "node",
+      "id": 1223643958,
+      "lat": 49.1420309,
+      "lon": 9.2126031
+    },
+    {
+      "type": "node",
+      "id": 1223643960,
+      "lat": 49.1418699,
+      "lon": 9.2131590
+    },
+    {
+      "type": "node",
+      "id": 1223643966,
+      "lat": 49.1419894,
+      "lon": 9.2139019
+    },
+    {
+      "type": "node",
+      "id": 1223643969,
+      "lat": 49.1419961,
+      "lon": 9.2136687
+    },
+    {
+      "type": "node",
+      "id": 1223643971,
+      "lat": 49.1420247,
+      "lon": 9.2128561
+    },
+    {
+      "type": "node",
+      "id": 1223643975,
+      "lat": 49.1418731,
+      "lon": 9.2133806
+    },
+    {
+      "type": "node",
+      "id": 1223643978,
+      "lat": 49.1421423,
+      "lon": 9.2133977
+    },
+    {
+      "type": "node",
+      "id": 1223643980,
+      "lat": 49.1420346,
+      "lon": 9.2136763
+    },
+    {
+      "type": "node",
+      "id": 1223644018,
+      "lat": 49.1420656,
+      "lon": 9.2132403
+    },
+    {
+      "type": "node",
+      "id": 1223644029,
+      "lat": 49.1421443,
+      "lon": 9.2134174
+    },
+    {
+      "type": "node",
+      "id": 1223644032,
+      "lat": 49.1420636,
+      "lon": 9.2134074
+    },
+    {
+      "type": "node",
+      "id": 1250235191,
+      "lat": 49.1417635,
+      "lon": 9.2143467
+    },
+    {
+      "type": "node",
+      "id": 1414473146,
+      "lat": 49.1415808,
+      "lon": 9.2095930
+    },
+    {
+      "type": "node",
+      "id": 1414473152,
+      "lat": 49.1415573,
+      "lon": 9.2097702
+    },
+    {
+      "type": "node",
+      "id": 3130993366,
+      "lat": 49.1415572,
+      "lon": 9.2096881
+    },
+    {
+      "type": "node",
+      "id": 3130993367,
+      "lat": 49.1415810,
+      "lon": 9.2096881
+    },
+    {
+      "type": "node",
+      "id": 3130993370,
+      "lat": 49.1417048,
+      "lon": 9.2097398
+    },
+    {
+      "type": "node",
+      "id": 3130993371,
+      "lat": 49.1417048,
+      "lon": 9.2097721
+    },
+    {
+      "type": "node",
+      "id": 3130993373,
+      "lat": 49.1417920,
+      "lon": 9.2097750
+    },
+    {
+      "type": "node",
+      "id": 3130993374,
+      "lat": 49.1418000,
+      "lon": 9.2097853
+    },
+    {
+      "type": "node",
+      "id": 3130993375,
+      "lat": 49.1418131,
+      "lon": 9.2097594
+    },
+    {
+      "type": "node",
+      "id": 3130993376,
+      "lat": 49.1418147,
+      "lon": 9.2097394
+    },
+    {
+      "type": "node",
+      "id": 3130993377,
+      "lat": 49.1419807,
+      "lon": 9.2096011
+    },
+    {
+      "type": "node",
+      "id": 4607927814,
+      "lat": 49.1417226,
+      "lon": 9.2140446
+    },
+    {
+      "type": "node",
+      "id": 4607927815,
+      "lat": 49.1417151,
+      "lon": 9.2140616
+    },
+    {
+      "type": "node",
+      "id": 395372280,
+      "lat": 49.1421196,
+      "lon": 9.2168611
+    },
+    {
+      "type": "node",
+      "id": 395372281,
+      "lat": 49.1419435,
+      "lon": 9.2168164
+    },
+    {
+      "type": "node",
+      "id": 395372383,
+      "lat": 49.1417230,
+      "lon": 9.2168583
+    },
+    {
+      "type": "node",
+      "id": 431343380,
+      "lat": 49.1420537,
+      "lon": 9.2145655
+    },
+    {
+      "type": "node",
+      "id": 431343382,
+      "lat": 49.1421739,
+      "lon": 9.2147779
+    },
+    {
+      "type": "node",
+      "id": 754476194,
+      "lat": 49.1418439,
+      "lon": 9.2146938
+    },
+    {
+      "type": "node",
+      "id": 754476279,
+      "lat": 49.1419088,
+      "lon": 9.2144689
+    },
+    {
+      "type": "node",
+      "id": 754476307,
+      "lat": 49.1421046,
+      "lon": 9.2143859
+    },
+    {
+      "type": "node",
+      "id": 754476348,
+      "lat": 49.1415950,
+      "lon": 9.2145317
+    },
+    {
+      "type": "node",
+      "id": 1223643699,
+      "lat": 49.1421417,
+      "lon": 9.2146744
+    },
+    {
+      "type": "node",
+      "id": 1223643963,
+      "lat": 49.1421536,
+      "lon": 9.2147283
+    },
+    {
+      "type": "node",
+      "id": 1223643977,
+      "lat": 49.1421346,
+      "lon": 9.2146103
+    },
+    {
+      "type": "node",
+      "id": 1243658053,
+      "lat": 49.1416655,
+      "lon": 9.2159661
+    },
+    {
+      "type": "node",
+      "id": 1243658065,
+      "lat": 49.1415400,
+      "lon": 9.2163894
+    },
+    {
+      "type": "node",
+      "id": 1243658073,
+      "lat": 49.1417204,
+      "lon": 9.2165068
+    },
+    {
+      "type": "node",
+      "id": 1250235117,
+      "lat": 49.1418835,
+      "lon": 9.2146762
+    },
+    {
+      "type": "node",
+      "id": 1250235127,
+      "lat": 49.1418180,
+      "lon": 9.2144098
+    },
+    {
+      "type": "node",
+      "id": 1250235150,
+      "lat": 49.1418245,
+      "lon": 9.2143864
+    },
+    {
+      "type": "node",
+      "id": 1250235158,
+      "lat": 49.1417575,
+      "lon": 9.2143682
+    },
+    {
+      "type": "node",
+      "id": 1250235163,
+      "lat": 49.1418541,
+      "lon": 9.2146571
+    },
+    {
+      "type": "node",
+      "id": 1250235177,
+      "lat": 49.1419203,
+      "lon": 9.2145440
+    },
+    {
+      "type": "node",
+      "id": 1250235218,
+      "lat": 49.1418928,
+      "lon": 9.2145261
+    },
+    {
+      "type": "node",
+      "id": 428634730,
+      "lat": 49.1427284,
+      "lon": 9.2074730
+    },
+    {
+      "type": "node",
+      "id": 428634740,
+      "lat": 49.1425542,
+      "lon": 9.2076006
+    },
+    {
+      "type": "node",
+      "id": 2290328170,
+      "lat": 49.1425766,
+      "lon": 9.2075842
+    },
+    {
+      "type": "node",
+      "id": 249180961,
+      "lat": 49.1433918,
+      "lon": 9.2096506
+    },
+    {
+      "type": "node",
+      "id": 249180963,
+      "lat": 49.1433080,
+      "lon": 9.2097120
+    },
+    {
+      "type": "node",
+      "id": 249180964,
+      "lat": 49.1431633,
+      "lon": 9.2092505
+    },
+    {
+      "type": "node",
+      "id": 428634732,
+      "lat": 49.1432543,
+      "lon": 9.2091504
+    },
+    {
+      "type": "node",
+      "id": 428634734,
+      "lat": 49.1432638,
+      "lon": 9.2091805
+    },
+    {
+      "type": "node",
+      "id": 428634736,
+      "lat": 49.1429973,
+      "lon": 9.2088193
+    },
+    {
+      "type": "node",
+      "id": 428634737,
+      "lat": 49.1429733,
+      "lon": 9.2088368
+    },
+    {
+      "type": "node",
+      "id": 428634738,
+      "lat": 49.1428900,
+      "lon": 9.2085710
+    },
+    {
+      "type": "node",
+      "id": 428634739,
+      "lat": 49.1428644,
+      "lon": 9.2085898
+    },
+    {
+      "type": "node",
+      "id": 429962392,
+      "lat": 49.1430139,
+      "lon": 9.2093445
+    },
+    {
+      "type": "node",
+      "id": 429962397,
+      "lat": 49.1430059,
+      "lon": 9.2099613
+    },
+    {
+      "type": "node",
+      "id": 429962398,
+      "lat": 49.1428737,
+      "lon": 9.2099671
+    },
+    {
+      "type": "node",
+      "id": 429962399,
+      "lat": 49.1428753,
+      "lon": 9.2093462
+    },
+    {
+      "type": "node",
+      "id": 429962401,
+      "lat": 49.1429838,
+      "lon": 9.2100813
+    },
+    {
+      "type": "node",
+      "id": 429962402,
+      "lat": 49.1429823,
+      "lon": 9.2101849
+    },
+    {
+      "type": "node",
+      "id": 429962403,
+      "lat": 49.1430048,
+      "lon": 9.2101857
+    },
+    {
+      "type": "node",
+      "id": 429962404,
+      "lat": 49.1430032,
+      "lon": 9.2102937
+    },
+    {
+      "type": "node",
+      "id": 429962405,
+      "lat": 49.1429439,
+      "lon": 9.2102917
+    },
+    {
+      "type": "node",
+      "id": 429962406,
+      "lat": 49.1429427,
+      "lon": 9.2103727
+    },
+    {
+      "type": "node",
+      "id": 429962407,
+      "lat": 49.1428686,
+      "lon": 9.2103702
+    },
+    {
+      "type": "node",
+      "id": 429962408,
+      "lat": 49.1428729,
+      "lon": 9.2100774
+    },
+    {
+      "type": "node",
+      "id": 429962430,
+      "lat": 49.1425537,
+      "lon": 9.2092371
+    },
+    {
+      "type": "node",
+      "id": 429962432,
+      "lat": 49.1425137,
+      "lon": 9.2091246
+    },
+    {
+      "type": "node",
+      "id": 429962433,
+      "lat": 49.1423742,
+      "lon": 9.2092658
+    },
+    {
+      "type": "node",
+      "id": 429962434,
+      "lat": 49.1422864,
+      "lon": 9.2094124
+    },
+    {
+      "type": "node",
+      "id": 429962435,
+      "lat": 49.1423505,
+      "lon": 9.2094886
+    },
+    {
+      "type": "node",
+      "id": 429962436,
+      "lat": 49.1424175,
+      "lon": 9.2093658
+    },
+    {
+      "type": "node",
+      "id": 429962437,
+      "lat": 49.1423385,
+      "lon": 9.2095401
+    },
+    {
+      "type": "node",
+      "id": 429962441,
+      "lat": 49.1423731,
+      "lon": 9.2095782
+    },
+    {
+      "type": "node",
+      "id": 429962442,
+      "lat": 49.1423480,
+      "lon": 9.2096224
+    },
+    {
+      "type": "node",
+      "id": 429962443,
+      "lat": 49.1422779,
+      "lon": 9.2096361
+    },
+    {
+      "type": "node",
+      "id": 429962444,
+      "lat": 49.1422194,
+      "lon": 9.2095649
+    },
+    {
+      "type": "node",
+      "id": 429962445,
+      "lat": 49.1422541,
+      "lon": 9.2095021
+    },
+    {
+      "type": "node",
+      "id": 429962447,
+      "lat": 49.1423082,
+      "lon": 9.2095683
+    },
+    {
+      "type": "node",
+      "id": 429962449,
+      "lat": 49.1423255,
+      "lon": 9.2095649
+    },
+    {
+      "type": "node",
+      "id": 429962455,
+      "lat": 49.1425851,
+      "lon": 9.2113473
+    },
+    {
+      "type": "node",
+      "id": 429962456,
+      "lat": 49.1425892,
+      "lon": 9.2111208
+    },
+    {
+      "type": "node",
+      "id": 429962458,
+      "lat": 49.1424862,
+      "lon": 9.2111164
+    },
+    {
+      "type": "node",
+      "id": 429962459,
+      "lat": 49.1424857,
+      "lon": 9.2111462
+    },
+    {
+      "type": "node",
+      "id": 429962461,
+      "lat": 49.1422884,
+      "lon": 9.2111379
+    },
+    {
+      "type": "node",
+      "id": 429962462,
+      "lat": 49.1422848,
+      "lon": 9.2113346
+    },
+    {
+      "type": "node",
+      "id": 429962463,
+      "lat": 49.1425888,
+      "lon": 9.2105392
+    },
+    {
+      "type": "node",
+      "id": 429962464,
+      "lat": 49.1425876,
+      "lon": 9.2107640
+    },
+    {
+      "type": "node",
+      "id": 429962465,
+      "lat": 49.1425662,
+      "lon": 9.2107638
+    },
+    {
+      "type": "node",
+      "id": 429962467,
+      "lat": 49.1425657,
+      "lon": 9.2108540
+    },
+    {
+      "type": "node",
+      "id": 429962468,
+      "lat": 49.1425896,
+      "lon": 9.2108543
+    },
+    {
+      "type": "node",
+      "id": 429962470,
+      "lat": 49.1425884,
+      "lon": 9.2110700
+    },
+    {
+      "type": "node",
+      "id": 429962471,
+      "lat": 49.1424373,
+      "lon": 9.2110681
+    },
+    {
+      "type": "node",
+      "id": 429962472,
+      "lat": 49.1424380,
+      "lon": 9.2109363
+    },
+    {
+      "type": "node",
+      "id": 429962474,
+      "lat": 49.1423657,
+      "lon": 9.2109354
+    },
+    {
+      "type": "node",
+      "id": 429962475,
+      "lat": 49.1423673,
+      "lon": 9.2106600
+    },
+    {
+      "type": "node",
+      "id": 429962476,
+      "lat": 49.1424356,
+      "lon": 9.2106609
+    },
+    {
+      "type": "node",
+      "id": 429962477,
+      "lat": 49.1424363,
+      "lon": 9.2105372
+    },
+    {
+      "type": "node",
+      "id": 429962478,
+      "lat": 49.1425962,
+      "lon": 9.2104544
+    },
+    {
+      "type": "node",
+      "id": 429962480,
+      "lat": 49.1425993,
+      "lon": 9.2102305
+    },
+    {
+      "type": "node",
+      "id": 429962481,
+      "lat": 49.1424062,
+      "lon": 9.2102241
+    },
+    {
+      "type": "node",
+      "id": 429962482,
+      "lat": 49.1424030,
+      "lon": 9.2104481
+    },
+    {
+      "type": "node",
+      "id": 429962483,
+      "lat": 49.1426040,
+      "lon": 9.2101845
+    },
+    {
+      "type": "node",
+      "id": 429962484,
+      "lat": 49.1426050,
+      "lon": 9.2099316
+    },
+    {
+      "type": "node",
+      "id": 429962487,
+      "lat": 49.1424780,
+      "lon": 9.2101834
+    },
+    {
+      "type": "node",
+      "id": 429962488,
+      "lat": 49.1426101,
+      "lon": 9.2096373
+    },
+    {
+      "type": "node",
+      "id": 429962489,
+      "lat": 49.1426078,
+      "lon": 9.2098987
+    },
+    {
+      "type": "node",
+      "id": 429962491,
+      "lat": 49.1424697,
+      "lon": 9.2098958
+    },
+    {
+      "type": "node",
+      "id": 429962493,
+      "lat": 49.1424706,
+      "lon": 9.2097873
+    },
+    {
+      "type": "node",
+      "id": 429962494,
+      "lat": 49.1424511,
+      "lon": 9.2097869
+    },
+    {
+      "type": "node",
+      "id": 429962495,
+      "lat": 49.1424525,
+      "lon": 9.2096340
+    },
+    {
+      "type": "node",
+      "id": 429962496,
+      "lat": 49.1426042,
+      "lon": 9.2093775
+    },
+    {
+      "type": "node",
+      "id": 429962497,
+      "lat": 49.1426033,
+      "lon": 9.2095878
+    },
+    {
+      "type": "node",
+      "id": 429962499,
+      "lat": 49.1424953,
+      "lon": 9.2095868
+    },
+    {
+      "type": "node",
+      "id": 429962500,
+      "lat": 49.1424992,
+      "lon": 9.2093765
+    },
+    {
+      "type": "node",
+      "id": 429969106,
+      "lat": 49.1424321,
+      "lon": 9.2097657
+    },
+    {
+      "type": "node",
+      "id": 429969107,
+      "lat": 49.1424318,
+      "lon": 9.2098955
+    },
+    {
+      "type": "node",
+      "id": 429969108,
+      "lat": 49.1423442,
+      "lon": 9.2098950
+    },
+    {
+      "type": "node",
+      "id": 429969109,
+      "lat": 49.1423445,
+      "lon": 9.2097652
+    },
+    {
+      "type": "node",
+      "id": 429969110,
+      "lat": 49.1423282,
+      "lon": 9.2102203
+    },
+    {
+      "type": "node",
+      "id": 429969112,
+      "lat": 49.1423281,
+      "lon": 9.2101294
+    },
+    {
+      "type": "node",
+      "id": 429969113,
+      "lat": 49.1423422,
+      "lon": 9.2101293
+    },
+    {
+      "type": "node",
+      "id": 429969114,
+      "lat": 49.1423421,
+      "lon": 9.2100524
+    },
+    {
+      "type": "node",
+      "id": 429969115,
+      "lat": 49.1423522,
+      "lon": 9.2100524
+    },
+    {
+      "type": "node",
+      "id": 429969116,
+      "lat": 49.1423520,
+      "lon": 9.2099311
+    },
+    {
+      "type": "node",
+      "id": 429969117,
+      "lat": 49.1424787,
+      "lon": 9.2099308
+    },
+    {
+      "type": "node",
+      "id": 429969119,
+      "lat": 49.1424788,
+      "lon": 9.2100172
+    },
+    {
+      "type": "node",
+      "id": 429969120,
+      "lat": 49.1424300,
+      "lon": 9.2100174
+    },
+    {
+      "type": "node",
+      "id": 429969122,
+      "lat": 49.1424302,
+      "lon": 9.2101855
+    },
+    {
+      "type": "node",
+      "id": 429969123,
+      "lat": 49.1423824,
+      "lon": 9.2101857
+    },
+    {
+      "type": "node",
+      "id": 429969125,
+      "lat": 49.1423825,
+      "lon": 9.2102202
+    },
+    {
+      "type": "node",
+      "id": 429969133,
+      "lat": 49.1422852,
+      "lon": 9.2103167
+    },
+    {
+      "type": "node",
+      "id": 429969134,
+      "lat": 49.1422842,
+      "lon": 9.2101678
+    },
+    {
+      "type": "node",
+      "id": 431343376,
+      "lat": 49.1425466,
+      "lon": 9.2130781
+    },
+    {
+      "type": "node",
+      "id": 431343377,
+      "lat": 49.1424094,
+      "lon": 9.2130818
+    },
+    {
+      "type": "node",
+      "id": 431343378,
+      "lat": 49.1423322,
+      "lon": 9.2136323
+    },
+    {
+      "type": "node",
+      "id": 431343379,
+      "lat": 49.1422956,
+      "lon": 9.2136539
+    },
+    {
+      "type": "node",
+      "id": 434650377,
+      "lat": 49.1425413,
+      "lon": 9.2126548
+    },
+    {
+      "type": "node",
+      "id": 434650379,
+      "lat": 49.1423223,
+      "lon": 9.2126513
+    },
+    {
+      "type": "node",
+      "id": 434650381,
+      "lat": 49.1423199,
+      "lon": 9.2130004
+    },
+    {
+      "type": "node",
+      "id": 434650385,
+      "lat": 49.1425863,
+      "lon": 9.2123132
+    },
+    {
+      "type": "node",
+      "id": 434650387,
+      "lat": 49.1425837,
+      "lon": 9.2125882
+    },
+    {
+      "type": "node",
+      "id": 434650389,
+      "lat": 49.1425335,
+      "lon": 9.2125871
+    },
+    {
+      "type": "node",
+      "id": 434650391,
+      "lat": 49.1425331,
+      "lon": 9.2126247
+    },
+    {
+      "type": "node",
+      "id": 434650393,
+      "lat": 49.1424922,
+      "lon": 9.2126238
+    },
+    {
+      "type": "node",
+      "id": 434650395,
+      "lat": 49.1424925,
+      "lon": 9.2125907
+    },
+    {
+      "type": "node",
+      "id": 434650398,
+      "lat": 49.1424148,
+      "lon": 9.2125889
+    },
+    {
+      "type": "node",
+      "id": 434650400,
+      "lat": 49.1424157,
+      "lon": 9.2124962
+    },
+    {
+      "type": "node",
+      "id": 434650402,
+      "lat": 49.1423983,
+      "lon": 9.2124958
+    },
+    {
+      "type": "node",
+      "id": 434650404,
+      "lat": 49.1423994,
+      "lon": 9.2123789
+    },
+    {
+      "type": "node",
+      "id": 434650406,
+      "lat": 49.1424148,
+      "lon": 9.2123792
+    },
+    {
+      "type": "node",
+      "id": 434650408,
+      "lat": 49.1424154,
+      "lon": 9.2123065
+    },
+    {
+      "type": "node",
+      "id": 434650410,
+      "lat": 49.1424555,
+      "lon": 9.2123074
+    },
+    {
+      "type": "node",
+      "id": 434650412,
+      "lat": 49.1424559,
+      "lon": 9.2122707
+    },
+    {
+      "type": "node",
+      "id": 434650414,
+      "lat": 49.1425119,
+      "lon": 9.2122720
+    },
+    {
+      "type": "node",
+      "id": 434650417,
+      "lat": 49.1425116,
+      "lon": 9.2123115
+    },
+    {
+      "type": "node",
+      "id": 434650419,
+      "lat": 49.1425862,
+      "lon": 9.2119240
+    },
+    {
+      "type": "node",
+      "id": 434650421,
+      "lat": 49.1425838,
+      "lon": 9.2122329
+    },
+    {
+      "type": "node",
+      "id": 434650424,
+      "lat": 49.1424427,
+      "lon": 9.2122288
+    },
+    {
+      "type": "node",
+      "id": 434650425,
+      "lat": 49.1424467,
+      "lon": 9.2119216
+    },
+    {
+      "type": "node",
+      "id": 434668867,
+      "lat": 49.1423088,
+      "lon": 9.2123929
+    },
+    {
+      "type": "node",
+      "id": 434668872,
+      "lat": 49.1421843,
+      "lon": 9.2121871
+    },
+    {
+      "type": "node",
+      "id": 434668873,
+      "lat": 49.1423345,
+      "lon": 9.2122504
+    },
+    {
+      "type": "node",
+      "id": 434668875,
+      "lat": 49.1425723,
+      "lon": 9.2118231
+    },
+    {
+      "type": "node",
+      "id": 434668877,
+      "lat": 49.1425754,
+      "lon": 9.2115009
+    },
+    {
+      "type": "node",
+      "id": 434668879,
+      "lat": 49.1421987,
+      "lon": 9.2114922
+    },
+    {
+      "type": "node",
+      "id": 434668882,
+      "lat": 49.1421968,
+      "lon": 9.2116938
+    },
+    {
+      "type": "node",
+      "id": 434668884,
+      "lat": 49.1422708,
+      "lon": 9.2116955
+    },
+    {
+      "type": "node",
+      "id": 434668885,
+      "lat": 49.1422696,
+      "lon": 9.2118161
+    },
+    {
+      "type": "node",
+      "id": 434683380,
+      "lat": 49.1435577,
+      "lon": 9.2107802
+    },
+    {
+      "type": "node",
+      "id": 434683382,
+      "lat": 49.1435400,
+      "lon": 9.2120690
+    },
+    {
+      "type": "node",
+      "id": 434683383,
+      "lat": 49.1432233,
+      "lon": 9.2120651
+    },
+    {
+      "type": "node",
+      "id": 434683385,
+      "lat": 49.1432324,
+      "lon": 9.2107947
+    },
+    {
+      "type": "node",
+      "id": 434683386,
+      "lat": 49.1431975,
+      "lon": 9.2107936
+    },
+    {
+      "type": "node",
+      "id": 434683388,
+      "lat": 49.1431990,
+      "lon": 9.2106828
+    },
+    {
+      "type": "node",
+      "id": 434683390,
+      "lat": 49.1434805,
+      "lon": 9.2106918
+    },
+    {
+      "type": "node",
+      "id": 434683391,
+      "lat": 49.1434794,
+      "lon": 9.2107777
+    },
+    {
+      "type": "node",
+      "id": 434689307,
+      "lat": 49.1432246,
+      "lon": 9.2116753
+    },
+    {
+      "type": "node",
+      "id": 434689312,
+      "lat": 49.1432126,
+      "lon": 9.2120650
+    },
+    {
+      "type": "node",
+      "id": 434689315,
+      "lat": 49.1431606,
+      "lon": 9.2120614
+    },
+    {
+      "type": "node",
+      "id": 434689320,
+      "lat": 49.1431600,
+      "lon": 9.2122375
+    },
+    {
+      "type": "node",
+      "id": 434689323,
+      "lat": 49.1430176,
+      "lon": 9.2122364
+    },
+    {
+      "type": "node",
+      "id": 434689327,
+      "lat": 49.1430186,
+      "lon": 9.2119284
+    },
+    {
+      "type": "node",
+      "id": 434689331,
+      "lat": 49.1428591,
+      "lon": 9.2119272
+    },
+    {
+      "type": "node",
+      "id": 434689338,
+      "lat": 49.1428631,
+      "lon": 9.2106847
+    },
+    {
+      "type": "node",
+      "id": 434689342,
+      "lat": 49.1429864,
+      "lon": 9.2106864
+    },
+    {
+      "type": "node",
+      "id": 434689345,
+      "lat": 49.1429860,
+      "lon": 9.2107909
+    },
+    {
+      "type": "node",
+      "id": 434689348,
+      "lat": 49.1429706,
+      "lon": 9.2107907
+    },
+    {
+      "type": "node",
+      "id": 434689352,
+      "lat": 49.1429680,
+      "lon": 9.2115784
+    },
+    {
+      "type": "node",
+      "id": 434689355,
+      "lat": 49.1429912,
+      "lon": 9.2115786
+    },
+    {
+      "type": "node",
+      "id": 434689358,
+      "lat": 49.1430234,
+      "lon": 9.2116248
+    },
+    {
+      "type": "node",
+      "id": 434689361,
+      "lat": 49.1431843,
+      "lon": 9.2116260
+    },
+    {
+      "type": "node",
+      "id": 434689363,
+      "lat": 49.1431841,
+      "lon": 9.2116750
+    },
+    {
+      "type": "node",
+      "id": 434697136,
+      "lat": 49.1430259,
+      "lon": 9.2129686
+    },
+    {
+      "type": "node",
+      "id": 434697138,
+      "lat": 49.1430861,
+      "lon": 9.2124739
+    },
+    {
+      "type": "node",
+      "id": 434697140,
+      "lat": 49.1429667,
+      "lon": 9.2124384
+    },
+    {
+      "type": "node",
+      "id": 434697142,
+      "lat": 49.1429039,
+      "lon": 9.2129366
+    },
+    {
+      "type": "node",
+      "id": 434697149,
+      "lat": 49.1429408,
+      "lon": 9.2135117
+    },
+    {
+      "type": "node",
+      "id": 434697150,
+      "lat": 49.1428209,
+      "lon": 9.2134848
+    },
+    {
+      "type": "node",
+      "id": 434697152,
+      "lat": 49.1428077,
+      "lon": 9.2136221
+    },
+    {
+      "type": "node",
+      "id": 434697154,
+      "lat": 49.1428186,
+      "lon": 9.2136246
+    },
+    {
+      "type": "node",
+      "id": 434697160,
+      "lat": 49.1430533,
+      "lon": 9.2135370
+    },
+    {
+      "type": "node",
+      "id": 434697162,
+      "lat": 49.1430351,
+      "lon": 9.2137270
+    },
+    {
+      "type": "node",
+      "id": 434697164,
+      "lat": 49.1429225,
+      "lon": 9.2137017
+    },
+    {
+      "type": "node",
+      "id": 434697166,
+      "lat": 49.1439270,
+      "lon": 9.2131506
+    },
+    {
+      "type": "node",
+      "id": 434697167,
+      "lat": 49.1439907,
+      "lon": 9.2133597
+    },
+    {
+      "type": "node",
+      "id": 434697172,
+      "lat": 49.1433607,
+      "lon": 9.2138140
+    },
+    {
+      "type": "node",
+      "id": 434697174,
+      "lat": 49.1432984,
+      "lon": 9.2136090
+    },
+    {
+      "type": "node",
+      "id": 434697175,
+      "lat": 49.1438084,
+      "lon": 9.2128769
+    },
+    {
+      "type": "node",
+      "id": 434697177,
+      "lat": 49.1432135,
+      "lon": 9.2134636
+    },
+    {
+      "type": "node",
+      "id": 434697179,
+      "lat": 49.1438656,
+      "lon": 9.2130976
+    },
+    {
+      "type": "node",
+      "id": 434697183,
+      "lat": 49.1431595,
+      "lon": 9.2132511
+    },
+    {
+      "type": "node",
+      "id": 754476132,
+      "lat": 49.1422685,
+      "lon": 9.2103157
+    },
+    {
+      "type": "node",
+      "id": 754476142,
+      "lat": 49.1427904,
+      "lon": 9.2139180
+    },
+    {
+      "type": "node",
+      "id": 754476176,
+      "lat": 49.1428135,
+      "lon": 9.2136773
+    },
+    {
+      "type": "node",
+      "id": 754476244,
+      "lat": 49.1428994,
+      "lon": 9.2139425
+    },
+    {
+      "type": "node",
+      "id": 754476264,
+      "lat": 49.1422461,
+      "lon": 9.2097897
+    },
+    {
+      "type": "node",
+      "id": 754476274,
+      "lat": 49.1422685,
+      "lon": 9.2110510
+    },
+    {
+      "type": "node",
+      "id": 754476317,
+      "lat": 49.1427646,
+      "lon": 9.2141870
+    },
+    {
+      "type": "node",
+      "id": 754476319,
+      "lat": 49.1424645,
+      "lon": 9.2136791
+    },
+    {
+      "type": "node",
+      "id": 754476352,
+      "lat": 49.1421875,
+      "lon": 9.2099046
+    },
+    {
+      "type": "node",
+      "id": 754476388,
+      "lat": 49.1428735,
+      "lon": 9.2142115
+    },
+    {
+      "type": "node",
+      "id": 796370432,
+      "lat": 49.1439618,
+      "lon": 9.2132685
+    },
+    {
+      "type": "node",
+      "id": 913673785,
+      "lat": 49.1433666,
+      "lon": 9.2133848
+    },
+    {
+      "type": "node",
+      "id": 913673809,
+      "lat": 49.1437228,
+      "lon": 9.2131812
+    },
+    {
+      "type": "node",
+      "id": 913673875,
+      "lat": 49.1434289,
+      "lon": 9.2133479
+    },
+    {
+      "type": "node",
+      "id": 913673890,
+      "lat": 49.1437911,
+      "lon": 9.2131466
+    },
+    {
+      "type": "node",
+      "id": 913673985,
+      "lat": 49.1435859,
+      "lon": 9.2133962
+    },
+    {
+      "type": "node",
+      "id": 913674083,
+      "lat": 49.1435491,
+      "lon": 9.2132787
+    },
+    {
+      "type": "node",
+      "id": 913674277,
+      "lat": 49.1434093,
+      "lon": 9.2135179
+    },
+    {
+      "type": "node",
+      "id": 913674286,
+      "lat": 49.1437513,
+      "lon": 9.2132662
+    },
+    {
+      "type": "node",
+      "id": 913674323,
+      "lat": 49.1436369,
+      "lon": 9.2133542
+    },
+    {
+      "type": "node",
+      "id": 913674429,
+      "lat": 49.1436051,
+      "lon": 9.2132487
+    },
+    {
+      "type": "node",
+      "id": 913674616,
+      "lat": 49.1434712,
+      "lon": 9.2134756
+    },
+    {
+      "type": "node",
+      "id": 913674622,
+      "lat": 49.1438159,
+      "lon": 9.2132252
+    },
+    {
+      "type": "node",
+      "id": 975060992,
+      "lat": 49.1425659,
+      "lon": 9.2108131
+    },
+    {
+      "type": "node",
+      "id": 975060994,
+      "lat": 49.1423664,
+      "lon": 9.2108106
+    },
+    {
+      "type": "node",
+      "id": 975267947,
+      "lat": 49.1432480,
+      "lon": 9.2091921
+    },
+    {
+      "type": "node",
+      "id": 1147391046,
+      "lat": 49.1432123,
+      "lon": 9.2121432
+    },
+    {
+      "type": "node",
+      "id": 1147391052,
+      "lat": 49.1429517,
+      "lon": 9.2106861
+    },
+    {
+      "type": "node",
+      "id": 1147391054,
+      "lat": 49.1431382,
+      "lon": 9.2092689
+    },
+    {
+      "type": "node",
+      "id": 1147391059,
+      "lat": 49.1429338,
+      "lon": 9.2106852
+    },
+    {
+      "type": "node",
+      "id": 1147391066,
+      "lat": 49.1431823,
+      "lon": 9.2121430
+    },
+    {
+      "type": "node",
+      "id": 1147391085,
+      "lat": 49.1429909,
+      "lon": 9.2116589
+    },
+    {
+      "type": "node",
+      "id": 1147391092,
+      "lat": 49.1429339,
+      "lon": 9.2106681
+    },
+    {
+      "type": "node",
+      "id": 1147391096,
+      "lat": 49.1430233,
+      "lon": 9.2116591
+    },
+    {
+      "type": "node",
+      "id": 1147391098,
+      "lat": 49.1431826,
+      "lon": 9.2120616
+    },
+    {
+      "type": "node",
+      "id": 1147391101,
+      "lat": 49.1429517,
+      "lon": 9.2106683
+    },
+    {
+      "type": "node",
+      "id": 1223643685,
+      "lat": 49.1423950,
+      "lon": 9.2131884
+    },
+    {
+      "type": "node",
+      "id": 1223643741,
+      "lat": 49.1423393,
+      "lon": 9.2131900
+    },
+    {
+      "type": "node",
+      "id": 1223643787,
+      "lat": 49.1424085,
+      "lon": 9.2130907
+    },
+    {
+      "type": "node",
+      "id": 1223643918,
+      "lat": 49.1423258,
+      "lon": 9.2136710
+    },
+    {
+      "type": "node",
+      "id": 1223643990,
+      "lat": 49.1423400,
+      "lon": 9.2130890
+    },
+    {
+      "type": "node",
+      "id": 1244814162,
+      "lat": 49.1425501,
+      "lon": 9.2130045
+    },
+    {
+      "type": "node",
+      "id": 1244814206,
+      "lat": 49.1425787,
+      "lon": 9.2127483
+    },
+    {
+      "type": "node",
+      "id": 1244814243,
+      "lat": 49.1425787,
+      "lon": 9.2127791
+    },
+    {
+      "type": "node",
+      "id": 1244814311,
+      "lat": 49.1425407,
+      "lon": 9.2127483
+    },
+    {
+      "type": "node",
+      "id": 2167230035,
+      "lat": 49.1430807,
+      "lon": 9.2103096
+    },
+    {
+      "type": "node",
+      "id": 2167230036,
+      "lat": 49.1430808,
+      "lon": 9.2103443
+    },
+    {
+      "type": "node",
+      "id": 2167230038,
+      "lat": 49.1431123,
+      "lon": 9.2103093
+    },
+    {
+      "type": "node",
+      "id": 2167230040,
+      "lat": 49.1431124,
+      "lon": 9.2103440
+    },
+    {
+      "type": "node",
+      "id": 2244614557,
+      "lat": 49.1426802,
+      "lon": 9.2080023
+    },
+    {
+      "type": "node",
+      "id": 2244614579,
+      "lat": 49.1428375,
+      "lon": 9.2085039
+    },
+    {
+      "type": "node",
+      "id": 2244614585,
+      "lat": 49.1428370,
+      "lon": 9.2078195
+    },
+    {
+      "type": "node",
+      "id": 2244614588,
+      "lat": 49.1428754,
+      "lon": 9.2079420
+    },
+    {
+      "type": "node",
+      "id": 3130993393,
+      "lat": 49.1429523,
+      "lon": 9.2142825
+    },
+    {
+      "type": "node",
+      "id": 3130993397,
+      "lat": 49.1430075,
+      "lon": 9.2142953
+    },
+    {
+      "type": "node",
+      "id": 3149687182,
+      "lat": 49.1439467,
+      "lon": 9.2132174
+    },
+    {
+      "type": "node",
+      "id": 3149687184,
+      "lat": 49.1439759,
+      "lon": 9.2133132
+    },
+    {
+      "type": "node",
+      "id": 3276239123,
+      "lat": 49.1430061,
+      "lon": 9.2137205
+    },
+    {
+      "type": "node",
+      "id": 3276242773,
+      "lat": 49.1429911,
+      "lon": 9.2116077
+    },
+    {
+      "type": "node",
+      "id": 3276242774,
+      "lat": 49.1431988,
+      "lon": 9.2106973
+    },
+    {
+      "type": "node",
+      "id": 3276242775,
+      "lat": 49.1432252,
+      "lon": 9.2116078
+    },
+    {
+      "type": "node",
+      "id": 4607649959,
+      "lat": 49.1424657,
+      "lon": 9.2095378
+    },
+    {
+      "type": "node",
+      "id": 4607649960,
+      "lat": 49.1424662,
+      "lon": 9.2094352
+    },
+    {
+      "type": "node",
+      "id": 4607649961,
+      "lat": 49.1424955,
+      "lon": 9.2095381
+    },
+    {
+      "type": "node",
+      "id": 4607649962,
+      "lat": 49.1424989,
+      "lon": 9.2094355
+    },
+    {
+      "type": "node",
+      "id": 391092567,
+      "lat": 49.1438806,
+      "lon": 9.2151664
+    },
+    {
+      "type": "node",
+      "id": 391093009,
+      "lat": 49.1436569,
+      "lon": 9.2148563
+    },
+    {
+      "type": "node",
+      "id": 391093010,
+      "lat": 49.1436871,
+      "lon": 9.2151298
+    },
+    {
+      "type": "node",
+      "id": 391093012,
+      "lat": 49.1438538,
+      "lon": 9.2147178
+    },
+    {
+      "type": "node",
+      "id": 395372279,
+      "lat": 49.1422244,
+      "lon": 9.2163507
+    },
+    {
+      "type": "node",
+      "id": 412448881,
+      "lat": 49.1439097,
+      "lon": 9.2151706
+    },
+    {
+      "type": "node",
+      "id": 419853071,
+      "lat": 49.1428590,
+      "lon": 9.2166647
+    },
+    {
+      "type": "node",
+      "id": 419853072,
+      "lat": 49.1428325,
+      "lon": 9.2167950
+    },
+    {
+      "type": "node",
+      "id": 419853073,
+      "lat": 49.1427339,
+      "lon": 9.2167543
+    },
+    {
+      "type": "node",
+      "id": 419853074,
+      "lat": 49.1425664,
+      "lon": 9.2167097
+    },
+    {
+      "type": "node",
+      "id": 419853075,
+      "lat": 49.1424837,
+      "lon": 9.2169160
+    },
+    {
+      "type": "node",
+      "id": 419853076,
+      "lat": 49.1423694,
+      "lon": 9.2168889
+    },
+    {
+      "type": "node",
+      "id": 419853077,
+      "lat": 49.1424185,
+      "lon": 9.2164525
+    },
+    {
+      "type": "node",
+      "id": 431343381,
+      "lat": 49.1423783,
+      "lon": 9.2144418
+    },
+    {
+      "type": "node",
+      "id": 431343383,
+      "lat": 49.1421923,
+      "lon": 9.2148097
+    },
+    {
+      "type": "node",
+      "id": 431343384,
+      "lat": 49.1422086,
+      "lon": 9.2148222
+    },
+    {
+      "type": "node",
+      "id": 431343385,
+      "lat": 49.1422302,
+      "lon": 9.2148303
+    },
+    {
+      "type": "node",
+      "id": 431343386,
+      "lat": 49.1422741,
+      "lon": 9.2148169
+    },
+    {
+      "type": "node",
+      "id": 431343387,
+      "lat": 49.1423022,
+      "lon": 9.2147900
+    },
+    {
+      "type": "node",
+      "id": 431343388,
+      "lat": 49.1423355,
+      "lon": 9.2147010
+    },
+    {
+      "type": "node",
+      "id": 435582010,
+      "lat": 49.1439862,
+      "lon": 9.2147157
+    },
+    {
+      "type": "node",
+      "id": 435582013,
+      "lat": 49.1440512,
+      "lon": 9.2152417
+    },
+    {
+      "type": "node",
+      "id": 435582014,
+      "lat": 49.1439382,
+      "lon": 9.2152750
+    },
+    {
+      "type": "node",
+      "id": 435582031,
+      "lat": 49.1427718,
+      "lon": 9.2153887
+    },
+    {
+      "type": "node",
+      "id": 435582033,
+      "lat": 49.1427374,
+      "lon": 9.2157670
+    },
+    {
+      "type": "node",
+      "id": 435582036,
+      "lat": 49.1427397,
+      "lon": 9.2157467
+    },
+    {
+      "type": "node",
+      "id": 435582037,
+      "lat": 49.1425169,
+      "lon": 9.2156874
+    },
+    {
+      "type": "node",
+      "id": 435582042,
+      "lat": 49.1425568,
+      "lon": 9.2153863
+    },
+    {
+      "type": "node",
+      "id": 435582050,
+      "lat": 49.1427723,
+      "lon": 9.2153559
+    },
+    {
+      "type": "node",
+      "id": 435582053,
+      "lat": 49.1429162,
+      "lon": 9.2153668
+    },
+    {
+      "type": "node",
+      "id": 435582055,
+      "lat": 49.1428980,
+      "lon": 9.2158777
+    },
+    {
+      "type": "node",
+      "id": 435582056,
+      "lat": 49.1429174,
+      "lon": 9.2153212
+    },
+    {
+      "type": "node",
+      "id": 435582058,
+      "lat": 49.1429565,
+      "lon": 9.2153254
+    },
+    {
+      "type": "node",
+      "id": 435582065,
+      "lat": 49.1429928,
+      "lon": 9.2158900
+    },
+    {
+      "type": "node",
+      "id": 435582068,
+      "lat": 49.1429456,
+      "lon": 9.2156170
+    },
+    {
+      "type": "node",
+      "id": 435582070,
+      "lat": 49.1432960,
+      "lon": 9.2156909
+    },
+    {
+      "type": "node",
+      "id": 435582074,
+      "lat": 49.1433089,
+      "lon": 9.2159534
+    },
+    {
+      "type": "node",
+      "id": 435582075,
+      "lat": 49.1431418,
+      "lon": 9.2159375
+    },
+    {
+      "type": "node",
+      "id": 435582078,
+      "lat": 49.1431428,
+      "lon": 9.2158949
+    },
+    {
+      "type": "node",
+      "id": 435582081,
+      "lat": 49.1432544,
+      "lon": 9.2153276
+    },
+    {
+      "type": "node",
+      "id": 435582084,
+      "lat": 49.1432543,
+      "lon": 9.2154559
+    },
+    {
+      "type": "node",
+      "id": 435582087,
+      "lat": 49.1431509,
+      "lon": 9.2154558
+    },
+    {
+      "type": "node",
+      "id": 435582088,
+      "lat": 49.1431510,
+      "lon": 9.2153275
+    },
+    {
+      "type": "node",
+      "id": 674353958,
+      "lat": 49.1436646,
+      "lon": 9.2149363
+    },
+    {
+      "type": "node",
+      "id": 674353993,
+      "lat": 49.1440296,
+      "lon": 9.2150082
+    },
+    {
+      "type": "node",
+      "id": 741475880,
+      "lat": 49.1424099,
+      "lon": 9.2165360
+    },
+    {
+      "type": "node",
+      "id": 741475950,
+      "lat": 49.1424576,
+      "lon": 9.2169130
+    },
+    {
+      "type": "node",
+      "id": 754476227,
+      "lat": 49.1427420,
+      "lon": 9.2144214
+    },
+    {
+      "type": "node",
+      "id": 754476305,
+      "lat": 49.1428510,
+      "lon": 9.2144459
+    },
+    {
+      "type": "node",
+      "id": 823656329,
+      "lat": 49.1429347,
+      "lon": 9.2158710
+    },
+    {
+      "type": "node",
+      "id": 1223643788,
+      "lat": 49.1421991,
+      "lon": 9.2144002
+    },
+    {
+      "type": "node",
+      "id": 1223643826,
+      "lat": 49.1422546,
+      "lon": 9.2148268
+    },
+    {
+      "type": "node",
+      "id": 1223643920,
+      "lat": 49.1421954,
+      "lon": 9.2144425
+    },
+    {
+      "type": "node",
+      "id": 1223643997,
+      "lat": 49.1423222,
+      "lon": 9.2147547
+    },
+    {
+      "type": "node",
+      "id": 1223644027,
+      "lat": 49.1423641,
+      "lon": 9.2144302
+    },
+    {
+      "type": "node",
+      "id": 1223716516,
+      "lat": 49.1439244,
+      "lon": 9.2151563
+    },
+    {
+      "type": "node",
+      "id": 1223716517,
+      "lat": 49.1438746,
+      "lon": 9.2147496
+    },
+    {
+      "type": "node",
+      "id": 3130993378,
+      "lat": 49.1423867,
+      "lon": 9.2167337
+    },
+    {
+      "type": "node",
+      "id": 3130993380,
+      "lat": 49.1424855,
+      "lon": 9.2169008
+    },
+    {
+      "type": "node",
+      "id": 3130993381,
+      "lat": 49.1425438,
+      "lon": 9.2169144
+    },
+    {
+      "type": "node",
+      "id": 3130993382,
+      "lat": 49.1427378,
+      "lon": 9.2167469
+    },
+    {
+      "type": "node",
+      "id": 3130993383,
+      "lat": 49.1427569,
+      "lon": 9.2158091
+    },
+    {
+      "type": "node",
+      "id": 3130993384,
+      "lat": 49.1427578,
+      "lon": 9.2157708
+    },
+    {
+      "type": "node",
+      "id": 3130993386,
+      "lat": 49.1428237,
+      "lon": 9.2158527
+    },
+    {
+      "type": "node",
+      "id": 3130993387,
+      "lat": 49.1428254,
+      "lon": 9.2158133
+    },
+    {
+      "type": "node",
+      "id": 3130993388,
+      "lat": 49.1429057,
+      "lon": 9.2144653
+    },
+    {
+      "type": "node",
+      "id": 3130993389,
+      "lat": 49.1429109,
+      "lon": 9.2144665
+    },
+    {
+      "type": "node",
+      "id": 3130993390,
+      "lat": 49.1429115,
+      "lon": 9.2144603
+    },
+    {
+      "type": "node",
+      "id": 3130993391,
+      "lat": 49.1429118,
+      "lon": 9.2144034
+    },
+    {
+      "type": "node",
+      "id": 3130993392,
+      "lat": 49.1429396,
+      "lon": 9.2144099
+    },
+    {
+      "type": "node",
+      "id": 3130993394,
+      "lat": 49.1429838,
+      "lon": 9.2144846
+    },
+    {
+      "type": "node",
+      "id": 3130993395,
+      "lat": 49.1429845,
+      "lon": 9.2144773
+    },
+    {
+      "type": "node",
+      "id": 3130993396,
+      "lat": 49.1429886,
+      "lon": 9.2144857
+    },
+    {
+      "type": "node",
+      "id": 3130993398,
+      "lat": 49.1430537,
+      "lon": 9.2158802
+    },
+    {
+      "type": "node",
+      "id": 3130993399,
+      "lat": 49.1431120,
+      "lon": 9.2159001
+    },
+    {
+      "type": "node",
+      "id": 3130993400,
+      "lat": 49.1431803,
+      "lon": 9.2156821
+    },
+    {
+      "type": "node",
+      "id": 3130993401,
+      "lat": 49.1431822,
+      "lon": 9.2156371
+    },
+    {
+      "type": "node",
+      "id": 3130993402,
+      "lat": 49.1432957,
+      "lon": 9.2157245
+    },
+    {
+      "type": "node",
+      "id": 3130993404,
+      "lat": 49.1433174,
+      "lon": 9.2157275
+    },
+    {
+      "type": "node",
+      "id": 3130993405,
+      "lat": 49.1438665,
+      "lon": 9.2148135
+    },
+    {
+      "type": "node",
+      "id": 3130993406,
+      "lat": 49.1438807,
+      "lon": 9.2148081
+    },
+    {
+      "type": "node",
+      "id": 3130993407,
+      "lat": 49.1438809,
+      "lon": 9.2151627
+    },
+    {
+      "type": "node",
+      "id": 3130993409,
+      "lat": 49.1439081,
+      "lon": 9.2151602
+    },
+    {
+      "type": "node",
+      "id": 3130993411,
+      "lat": 49.1440196,
+      "lon": 9.2149875
+    },
+    {
+      "type": "node",
+      "id": 3130993412,
+      "lat": 49.1440259,
+      "lon": 9.2150331
+    },
+    {
+      "type": "node",
+      "id": 3130993413,
+      "lat": 49.1440271,
+      "lon": 9.2149857
+    },
+    {
+      "type": "node",
+      "id": 3130993414,
+      "lat": 49.1440314,
+      "lon": 9.2150295
+    },
+    {
+      "type": "node",
+      "id": 3154660677,
+      "lat": 49.1423335,
+      "lon": 9.2156157
+    },
+    {
+      "type": "node",
+      "id": 3154660679,
+      "lat": 49.1423506,
+      "lon": 9.2154550
+    },
+    {
+      "type": "node",
+      "id": 3154660680,
+      "lat": 49.1423506,
+      "lon": 9.2156414
+    },
+    {
+      "type": "node",
+      "id": 3154660681,
+      "lat": 49.1423530,
+      "lon": 9.2156198
+    },
+    {
+      "type": "node",
+      "id": 3154660682,
+      "lat": 49.1423735,
+      "lon": 9.2154550
+    },
+    {
+      "type": "node",
+      "id": 3154660683,
+      "lat": 49.1423758,
+      "lon": 9.2154324
+    },
+    {
+      "type": "node",
+      "id": 3154660684,
+      "lat": 49.1424934,
+      "lon": 9.2156815
+    },
+    {
+      "type": "node",
+      "id": 3154660685,
+      "lat": 49.1424951,
+      "lon": 9.2156625
+    },
+    {
+      "type": "node",
+      "id": 3154660686,
+      "lat": 49.1425193,
+      "lon": 9.2156709
+    },
+    {
+      "type": "node",
+      "id": 3154660688,
+      "lat": 49.1425289,
+      "lon": 9.2153896
+    },
+    {
+      "type": "node",
+      "id": 3154660689,
+      "lat": 49.1425296,
+      "lon": 9.2154143
+    },
+    {
+      "type": "node",
+      "id": 3154660690,
+      "lat": 49.1425531,
+      "lon": 9.2154076
+    },
+    {
+      "type": "way",
+      "id": 37300305,
+      "nodes": [
+        434697175,
+        434697179,
+        913673890,
+        913674622,
+        434697166,
+        3149687182,
+        796370432,
+        3149687184,
+        434697167,
+        434697172,
+        434697174,
+        913674277,
+        913673785,
+        434697177,
+        434697183,
+        434697175
+      ]
+    },
+    {
+      "type": "way",
+      "id": 77668743,
+      "nodes": [
+        913674083,
+        913673985,
+        913674616,
+        913673875,
+        913674083
+      ]
+    },
+    {
+      "type": "way",
+      "id": 77668748,
+      "nodes": [
+        913673809,
+        913674429,
+        913674323,
+        913674286,
+        913673809
+      ]
+    }
+  ]
+}
