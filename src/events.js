@@ -171,6 +171,8 @@ module.exports = function (ctx) {
       }
       ctx.lastClick = lastPoint;
     } else if (ctx.mode === Constants.modes.SELECT) {
+      const multipleSelect = event.originalEvent.shiftKey;
+
       const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
       console.log("nearFeatures: ", nearFeatures.length);
 
@@ -185,30 +187,67 @@ module.exports = function (ctx) {
       };
 
       const selectFeature = function (selectedFeatureId) {
+        if (ctx.lastKnownSelectIds.indexOf(selectedFeatureId) === -1) {
+          ctx.lastKnownSelectIds.push(selectedFeatureId);
+        }
+        if (ctx.selectedFeatures) {
+          ctx.selectedFeatures.forEach((feature) => {
+            if (selectedFeatureId === feature.properties.geoHubId) {
+              // wenn ausgewählt, dann nicht mher hinzufügen oder togglen
+            }
+          });
+        } else {
+          ctx.selectedFeatures = [];
+        }
+
         let selectedIdIndex = -1;
         ctx.coldFeatures.forEach((element, index) => {
           if (element.properties.geoHubId === selectedFeatureId) {
             selectedIdIndex = index;
           }
         });
-        const points = [];
         if (selectedIdIndex !== -1) {
-          ctx.selectedFeatures = ctx.coldFeatures.splice(selectedIdIndex, 1);
-          ctx.selectedFeatures.forEach((feature) => {
-            turf.coordEach(feature, (pointCoords) => {
-              points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
-            });
-          });
+          ctx.selectedFeatures.push(...ctx.coldFeatures.splice(selectedIdIndex, 1));
         }
+        const points = [];
+        ctx.selectedFeatures.forEach((feature) => {
+          turf.coordEach(feature, (pointCoords) => {
+            points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
+          });
+        });
         ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
         ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
         ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(points));
       };
 
       if (nearFeatures.length > 0) {
-        deselectCurrentFeature();
-        selectFeature(nearFeatures[0].properties.geoHubId);
-      } else {
+        nearFeatures.forEach((element) => {
+          console.log("nearFeature: ", element);
+        });
+        if (ctx.lastKnownSelectIds === undefined) {
+          ctx.lastKnownSelectIds = [];
+        }
+
+        if (nearFeatures.length >= ctx.lastKnownSelectIds.length) {
+          // remove old IDs
+          ctx.lastKnownSelectIds.splice(0, nearFeatures.length - ctx.lastKnownSelectIds.length + 1);
+        }
+
+        let selectedGeoHubId = nearFeatures[0].properties.geoHubId;
+        if (nearFeatures.length > 1) {
+          nearFeatures.forEach((nearFeature) => {
+            const nearFeatureId = nearFeature.properties.geoHubId;
+            if (ctx.lastKnownSelectIds.indexOf(nearFeatureId) === -1) {
+              selectedGeoHubId = nearFeatureId;
+            }
+          });
+        }
+        if (!multipleSelect) {
+          deselectCurrentFeature();
+        }
+        selectFeature(selectedGeoHubId);
+      } else if (!multipleSelect) {
+        ctx.lastKnownSelectIds = [];
         deselectCurrentFeature();
       }
     }
@@ -313,6 +352,20 @@ module.exports = function (ctx) {
 
   }
 
+  function combineFeatures() {
+    if (ctx.selectedFeatures) {
+      const polygons = [];
+      ctx.selectedFeatures.forEach((polygon) => {
+        polygons.push(...polygon.geometry.coordinates);
+      });
+      ctx.coldFeatures.push(turf.polygon(polygons, ctx.selectedFeatures.properties));
+      ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
+      ctx.selectedFeatures = null;
+    }
+  }
+
   return {
     addEventListeners: function (map) {
       map.on("mousemove", mouseMove);
@@ -330,6 +383,7 @@ module.exports = function (ctx) {
     },
     handleWaysDownloadButton,
     handleBuildingsDownloadButton,
-    changeMode
+    changeMode,
+    combineFeatures
   };
 };

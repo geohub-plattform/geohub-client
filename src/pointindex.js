@@ -2,6 +2,7 @@ import MeshIndex from "./mesh_index";
 import MeshRouting from "./mesh_routing";
 import turf from "@turf/turf";
 import Constants from "./constants";
+const overpassApi = require("./overpass_api");
 
 module.exports = function (ctx) {
 
@@ -43,6 +44,11 @@ module.exports = function (ctx) {
       console.log("Adding data: ", fc.features.length, " features");
       meshIndex = new MeshIndex(fc.features);
       console.log("Updating mesh");
+      updateMeshData();
+    },
+    addOverpassData: function (data) {
+      const fc = overpassApi.convertFromOverpassToGeojson(data);
+      meshIndex = new MeshIndex(fc.features);
       updateMeshData();
     },
     splitSegmentAtPoint: function (segmentId, pointCoords) {

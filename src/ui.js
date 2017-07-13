@@ -153,6 +153,12 @@ module.exports = function (ctx) {
       title: `Cut ${ctx.options.keybindings && '(e)'}`,
       onActivate: () => ctx.events.changeMode(Constants.modes.CUT)
     });
+    buttonElements["combine"] = createActionButton("combine", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
+      title: `Combine ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.events.combineFeatures()
+    });
 
     if (controls.trash) {
       buttonElements.trash = createControlButton('trash', {
