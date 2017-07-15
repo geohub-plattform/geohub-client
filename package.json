@@ -48,7 +48,7 @@
     "eslint-config-mourner": "^2.0.1",
     "express": "^4.13.4",
     "mapbox-gl": "^0.36.0",
-    "mapbox-gl-js-mock": "^0.28.0",
+    "mapbox-gl-js-mock": "^0.20.0",
     "mock-browser": "^0.92.10",
     "nyc": "^10.2.0",
     "opener": "^1.4.1",
