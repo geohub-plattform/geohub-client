@@ -20,12 +20,19 @@
             margin: 0;
             padding: 0;
         }
-
         #map {
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 100%;
+            left: 0;
+            width: 70%;
+        }
+        #editor{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 30%;
         }
 
         .zoom-container {
@@ -43,6 +50,7 @@
 </head>
 <body>
 <div id="map"></div>
+<div id="editor"></div>
 <div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
 
 <script>
