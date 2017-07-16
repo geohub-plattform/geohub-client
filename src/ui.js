@@ -146,6 +146,12 @@ module.exports = function (ctx) {
       title: `Download building lines ${ctx.options.keybindings && '(d)'}`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
+    buttonElements["loadData"] = createActionButton("loadData", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_LOAD_DATA,
+      title: `Upload GeoJson, KML or GPX from PC`,
+      onAction: () => ctx.events.handleLoadDataButton()
+    });
     buttonElements["saveFile"] = createActionButton("saveFile", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE,

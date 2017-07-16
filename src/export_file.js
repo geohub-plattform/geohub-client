@@ -1,5 +1,5 @@
 const filesaver = require("./filesaver");
-const tokml = require("./tokml");
+import tokml from "tokml";
 
 function asGist(file) {
     file.features.forEach(function(element, index) {
