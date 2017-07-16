@@ -101,17 +101,17 @@
     background-repeat: no-repeat;
 }
 .geohub-save-as-gist {
-    background-image: url(./svg/ic_insert_drive_file_black_24px.svg);
+    background-image: url(./github.png);
     background-position: center;
     background-repeat: no-repeat;
 }
-.geohub-save-as-geojson {
-    background-image: url(./svg/ic_insert_drive_file_black_24px.svg);    
+.geohub-save-as-geojson, .geohub-save-as-kml {
+    background-image: url(./svg/ic_file_download_black_24px.svg);    
     background-position: center;
     background-repeat: no-repeat;
 }
-.geohub-save-as-kml {
-    background-image: url(./svg/ic_insert_drive_file_black_24px.svg);    
+.geohub-load-data{
+    background-image: url(./svg/ic_file_upload_black_24px.svg);    
     background-position: center;
     background-repeat: no-repeat;
 }

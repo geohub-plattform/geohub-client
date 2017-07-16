@@ -5,6 +5,7 @@ import utils from "./utils";
 const overpassApi = require("./overpass_api");
 const closestPoints = require("./closest_points");
 const exportFile = require("./export_file");
+import togeojson from "@mapbox/togeojson";
 
 module.exports = function (ctx) {
 
@@ -368,6 +369,44 @@ module.exports = function (ctx) {
       $('#editor').removeClass('expanded');
     }
   }
+  function stringToDOM(str){
+    var parser = new DOMParser();
+    return parser.parseFromString(str, "text/xml");
+  }
+  function handleLoadDataButton() {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.setAttribute('multiple', 'multiple');
+    input.addEventListener('change', handleSelection, false);
+    input.click();
+    function handleSelection(event) {
+      var files = event.target.files;
+      var names = input.files;
+      for (var i = 0, f; f = files[i]; i++) {
+        var ext = names[i].name.substring(names[i].name.lastIndexOf('.') + 1, names[i].name.length).toLowerCase();
+        var reader = new FileReader();
+        reader.onload = (function (file) {
+          return function (e) {
+            if (ext === 'geojson') {
+              ctx.api.addUserData(JSON.parse(e.target.result));
+            }
+            else if (ext === 'kml') {
+              var geojson = togeojson.kml(stringToDOM(e.target.result));
+              ctx.api.addUserData(geojson);
+            }
+            else if (ext === 'gpx') {
+              var geojson = togeojson.gpx(stringToDOM(e.target.result));
+              ctx.api.addUserData(geojson);
+            }
+            else {
+              alert('unsupported file extension: ' + ext);
+            }
+          };
+        })(f);
+        reader.readAsText(f);
+      }
+    }
+  }
 
   function changeMode(newMode) {
     // TODO finish current mode
@@ -431,6 +470,7 @@ module.exports = function (ctx) {
     handleSaveAsGistButton,
     handleSaveAsGeojsonButton,
     handleSaveAsKmlButton,
-    handleExpandEditorButton
+    handleExpandEditorButton,
+    handleLoadDataButton
   };
 };

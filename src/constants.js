@@ -21,6 +21,7 @@ module.exports = {
     CONTROL_BUTTON_SAVE_AS_GEOJSON: 'geohub-save-as-geojson',
     CONTROL_BUTTON_SAVE_AS_KML: 'geohub-save-as-kml',
     CONTROL_BUTTON_EXPAND_EDITOR: 'geohub-expand-editor',
+    CONTROL_BUTTON_LOAD_DATA: 'geohub-load-data',
     CONTROL_GROUP: 'geohub-ctrl-group',
     DROPDOWN_GROUP: 'geohub-dropdown-group',
     DIVIDER: 'geohub-divider',
