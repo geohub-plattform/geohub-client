@@ -146,6 +146,12 @@ module.exports = function (ctx) {
       title: `Download building lines ${ctx.options.keybindings && '(d)'}`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
+    buttonElements["expandEditor"] = createActionButton("expandEditor", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_EXPAND_EDITOR,
+      title: `Expand GeoJson Feature Editor`,
+      onAction: () => ctx.events.handleExpandEditorButton()
+    });
     buttonElements["saveFile"] = createActionButton("saveFile", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE,

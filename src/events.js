@@ -119,7 +119,7 @@ module.exports = function (ctx) {
       } else {
         doubleClickZoom.disable(ctx);
         const evtCoords = [event.lngLat.lng, event.lngLat.lat];
-        lastPoint = {coords: evtCoords};
+        lastPoint = { coords: evtCoords };
       }
       if (!ctx.snapFeature) {
         ctx.snapFeature = turf.point(lastPoint.coords);
@@ -144,7 +144,7 @@ module.exports = function (ctx) {
             ctx.coldFeatures.push(ctx.hotFeature);
             ctx.hotFeature = null;
           } else {
-            const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
+            const hotFeature = turf.point(ctx.lastClick.coords, { geoHubId: ctx.geoHubIdCounter++ });
             ctx.coldFeatures.push(hotFeature);
           }
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
@@ -213,7 +213,7 @@ module.exports = function (ctx) {
         const points = [];
         ctx.selectedFeatures.forEach((feature) => {
           turf.coordEach(feature, (pointCoords) => {
-            points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
+            points.push(turf.point(pointCoords, { geoHubId: feature.properties.geoHubId }));
           });
         });
         ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
@@ -257,19 +257,19 @@ module.exports = function (ctx) {
   const keypress = function (event) {
     console.log("keycode: ", event.keyCode, " => ", event.key, " | Code: ", event.code);
     switch (event.code) {
-      case "KeyD" : {
+      case "KeyD": {
         if (ctx.debug) {
           console.log("Debug: ", JSON.stringify(ctx.debug));
         }
         break;
       }
-      case "KeyP" : {
+      case "KeyP": {
         if (ctx.coldFeatures) {
           console.log("coldFeatures: ", JSON.stringify(turf.featureCollection(ctx.coldFeatures)));
         }
         break;
       }
-      case "Delete" : {
+      case "Delete": {
         if (ctx.mode === Constants.modes.SELECT) {
           if (ctx.selectedFeatures) {
             ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
@@ -281,7 +281,7 @@ module.exports = function (ctx) {
             const coords = ctx.hotFeature.geometry.coordinates;
             if (coords.length > 1) {
               coords.splice(coords.length - 1, 1);
-              ctx.lastClick = {coords: coords[coords.length - 1]};
+              ctx.lastClick = { coords: coords[coords.length - 1] };
               if (coords.length > 0) {
                 ctx.snapFeature = turf.point(coords[coords.length - 1]);
               } else {
@@ -329,23 +329,43 @@ module.exports = function (ctx) {
   }
   function handleSaveButton() {
     const dropdownGroup = $('.geohub-dropdown-group');
-    if(dropdownGroup.css('display') == 'none'){
+    if (dropdownGroup.css('display') == 'none') {
       dropdownGroup.show();
-    } else{
+    } else {
       dropdownGroup.hide();
     }
   }
-  function handleSaveAsGistButton(){
+  function handleSaveAsGistButton() {
     var file = turf.featureCollection(ctx.coldFeatures);
     exportFile.asGist(file);
   }
-  function handleSaveAsGeojsonButton(){
+  function handleSaveAsGeojsonButton() {
     var file = turf.featureCollection(ctx.coldFeatures);
     exportFile.asGeojson(file);
   }
-  function handleSaveAsKmlButton(){
+  function handleSaveAsKmlButton() {
     var file = turf.featureCollection(ctx.coldFeatures);
     exportFile.asKml(file);
+  }
+  function handleExpandEditorButton() {
+    if (!$('#editor').hasClass('expanded')) {
+      $('#map').css('width', '70%');
+      $('#editor').css('width', '30%');
+      $('#editor').addClass('expanded');
+      $(function () {
+        $.hulk('#editor', ctx.coldFeatures, function (data) {
+          ctx.coldFeatures = data;
+        }, {
+            'separator': ':',
+            'depth': 1
+          }
+        );
+      });
+    } else {
+      $('#map').css('width', '100%');
+      $('#editor').css('width', '0%');
+      $('#editor').removeClass('expanded');
+    }
   }
 
   function changeMode(newMode) {
@@ -410,5 +430,6 @@ module.exports = function (ctx) {
     handleSaveAsGistButton,
     handleSaveAsGeojsonButton,
     handleSaveAsKmlButton,
+    handleExpandEditorButton
   };
 };
