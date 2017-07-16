@@ -349,12 +349,13 @@ module.exports = function (ctx) {
   }
   function handleExpandEditorButton() {
     if (!$('#editor').hasClass('expanded')) {
-      $('#map').css('width', '70%');
-      $('#editor').css('width', '30%');
+      $('#map').css('width', '60%');
+      $('#editor').css('width', '40%');
       $('#editor').addClass('expanded');
       $(function () {
         $.hulk('#editor', ctx.coldFeatures, function (data) {
           ctx.coldFeatures = data;
+          console.log('data saved!');
         }, {
             'separator': ':',
             'depth': 1

@@ -14,16 +14,39 @@
     <link href='http://localhost:9967/dist/geohub-client.css' rel='stylesheet' />
     <script src='http://localhost:9967/geohub-client.js'></script>
     <script src='https://code.jquery.com/jquery-3.2.1.js'></script>
+
     <script src='../hulk/hulk.js'></script>
     <style>
         body {
             margin: 0;
             padding: 0;
         }
+        #nav{
+            position: absolute;
+            top:0;
+            left:0;
+            height:4rem;
+            width:100%;
+            background: white;
+                box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+                z-index:9999;
+        }
+        #nav h1{
+            padding:0;
+            margin:0;
+            font-family: monospace;
+            font-size: 30px;
+                        margin-top:calc(2rem - 15px);margin-left:calc(2rem - 15px);
+top:0;
+        }
+        #nav img{
+            top:0;
+            position: absolute;
+        }
 
         #map {
             position: absolute;
-            top: 0;
+            top: 4rem;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -31,11 +54,11 @@
 
         #editor {
             position: absolute;
-            top: 0;
+            top: 4rem;
             bottom: 0;
             right: 0;
             width: 0%;
-            height: 100%;
+            height: calc(100% - 4rem);
             overflow-y: scroll;
         }
 
@@ -54,6 +77,8 @@
 </head>
 
 <body>
+    <div id="nav"><h1>GeoHub Client <img src="https://avatars6.githubusercontent.com/u/26528000?v=4&s=56" alt=""> </h1>
+    </div>
     <div id="map"></div>
     <div id="editor"></div>
     <div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
