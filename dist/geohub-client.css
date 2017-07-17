@@ -114,6 +114,12 @@ button.active:hover {
     background-repeat: no-repeat;
 }
 
+.geohub-delete-data{
+    background-image: url(./svg/ic_delete_black_24px.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;

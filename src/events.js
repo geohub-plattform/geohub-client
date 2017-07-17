@@ -416,6 +416,21 @@ module.exports = function (ctx) {
 
   function combineFeatures() {
     ctx.api.combineFeatures();
+
+  }
+
+  function deleteUserData() {
+    // finish current mode
+    ctx.coldFeatures = [];
+    ctx.hotFeature = null;
+    ctx.snapFeature = null;
+    ctx.selectedFeatures = null;
+    ctx.lastClick = null;
+    ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
+    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+    ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
+    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+    ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
   }
 
   return {
@@ -441,6 +456,7 @@ module.exports = function (ctx) {
     handleSaveAsGistButton,
     handleSaveAsGeojsonButton,
     handleSaveAsKmlButton,
-    handleLoadDataButton
+    handleLoadDataButton,
+    deleteUserData
   };
 };

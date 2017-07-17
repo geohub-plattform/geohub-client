@@ -200,42 +200,13 @@ module.exports = function (ctx) {
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.events.combineFeatures()
     });
-
-
-
-    if (controls.trash) {
-      buttonElements.trash = createControlButton('trash', {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_TRASH,
-        title: 'Delete',
-        onActivate: () => {
-          ctx.events.trash();
-        }
-      });
-    }
-
-    if (controls.combine_features) {
-      buttonElements.combine_features = createControlButton('combineFeatures', {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
-        title: 'Combine',
-        onActivate: () => {
-          ctx.events.combineFeatures();
-        }
-      });
-    }
-
-    if (controls.uncombine_features) {
-      buttonElements.uncombine_features = createControlButton('uncombineFeatures', {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_UNCOMBINE_FEATURES,
-        title: 'Uncombine',
-        onActivate: () => {
-          ctx.events.uncombineFeatures();
-        }
-      });
-    }
-
+    buttonElements["delete"] = createActionButton("delete", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_DELETE,
+      title: `Delete ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.events.deleteUserData()
+    });
+    
     return containerGroup;
   }
 
