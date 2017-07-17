@@ -11,27 +11,25 @@
     border-radius: 4px 0 0 4px;
 }
 
-.mapbox-gl-draw_ctrl-draw {
-    background-color: rgba(0, 0, 0, 0.75);
+.mapboxgl-ctrl-group {
     border-color: rgba(0, 0, 0, 0.9);
 }
 
-.mapbox-gl-draw_ctrl-draw > button {
+.mapboxgl-ctrl-group > button {
     border-color: rgba(0, 0, 0, 0.9);
     color: rgba(255, 255, 255, 0.5);
     width: 30px;
     height: 30px;
 }
 
-.mapbox-gl-draw_ctrl-draw > button:hover {
+.mapboxgl-ctrl-group > button:hover {
     background-color: rgba(0, 0, 0, 0.85);
     color: rgba(255, 255, 255, 0.75);
 }
 
-.mapbox-gl-draw_ctrl-draw > button.active,
-.mapbox-gl-draw_ctrl-draw > button.active:hover {
-    background-color: rgba(0, 0, 0, 0.95);
-    color: #fff;
+button.active,
+button.active:hover {
+    background-color: rgba(0, 0, 0, 0.25) !important;
 }
 
 .mapbox-gl-draw_ctrl-draw-btn {

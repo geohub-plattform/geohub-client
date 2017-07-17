@@ -68,7 +68,7 @@ module.exports = {
     DRAW: 'draw',
     CUT: 'cut',
     SELECT: 'select',
-    DELETE: 'select'
+    DELETE: 'delete'
   },
   events: {
     CREATE: 'draw.create',

@@ -35,10 +35,12 @@ const setupGeoHub = function (options = defaultOptions, api) {
       map.addImage("arrow", image);
     });
     ctx.map = map;
-    ctx.mode = Constants.modes.DIRECT_SELECT;
     ctx.container = map.getContainer();
-    ctx.container.classList.add("mouse-add");
+    const buttons = ctx.ui.addButtons();
     ctx.events.addEventListeners(map);
+    ctx.events.changeMode(Constants.modes.SELECT);
+    ctx.ui.setActiveButton("select");
+
     Object.keys(Constants.sources).forEach((key) => {
       ctx.map.addSource(Constants.sources[key], {
         data: {
@@ -183,7 +185,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
       }
     });
 
-    return ctx.ui.addButtons();
+    return buttons;
   };
   api.onRemove = function () {
     console.log("onRemove");
@@ -203,7 +205,6 @@ const setupGeoHub = function (options = defaultOptions, api) {
   api.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
   api.options = options;
   api.combineFeatures = combineFeatures(ctx);
-
   return api;
 };
 
