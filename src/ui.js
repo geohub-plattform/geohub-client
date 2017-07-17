@@ -206,7 +206,6 @@ module.exports = function (ctx) {
       title: `Delete ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.events.deleteUserData()
     });
-    
     return containerGroup;
   }
 
