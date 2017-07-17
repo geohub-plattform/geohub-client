@@ -2,6 +2,7 @@ const events = require("./src/events");
 const pointindex = require("./src/pointindex");
 const Constants = require("./src/constants");
 const ui = require("./src/ui");
+const combineFeatures = require("./src/combine_features");
 
 const defaultOptions = {
   controls: {
@@ -201,6 +202,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   api.addFeaturesToMesh = ctx.pointindex.addFeaturesToMesh;
   api.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
   api.options = options;
+  api.combineFeatures = combineFeatures(ctx);
 
   return api;
 };

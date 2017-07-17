@@ -2,10 +2,10 @@ import Constants from "./constants";
 import turf from "@turf/turf";
 import doubleClickZoom from "./double_click_zoom";
 import utils from "./utils";
+import togeojson from "@mapbox/togeojson";
 const overpassApi = require("./overpass_api");
 const closestPoints = require("./closest_points");
 const exportFile = require("./export_file");
-import togeojson from "@mapbox/togeojson";
 
 module.exports = function (ctx) {
 
@@ -120,7 +120,7 @@ module.exports = function (ctx) {
       } else {
         doubleClickZoom.disable(ctx);
         const evtCoords = [event.lngLat.lng, event.lngLat.lat];
-        lastPoint = { coords: evtCoords };
+        lastPoint = {coords: evtCoords};
       }
       if (!ctx.snapFeature) {
         ctx.snapFeature = turf.point(lastPoint.coords);
@@ -145,7 +145,7 @@ module.exports = function (ctx) {
             ctx.coldFeatures.push(ctx.hotFeature);
             ctx.hotFeature = null;
           } else {
-            const hotFeature = turf.point(ctx.lastClick.coords, { geoHubId: ctx.geoHubIdCounter++ });
+            const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
             ctx.coldFeatures.push(hotFeature);
           }
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
@@ -214,7 +214,7 @@ module.exports = function (ctx) {
         const points = [];
         ctx.selectedFeatures.forEach((feature) => {
           turf.coordEach(feature, (pointCoords) => {
-            points.push(turf.point(pointCoords, { geoHubId: feature.properties.geoHubId }));
+            points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
           });
         });
         ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
@@ -282,7 +282,7 @@ module.exports = function (ctx) {
             const coords = ctx.hotFeature.geometry.coordinates;
             if (coords.length > 1) {
               coords.splice(coords.length - 1, 1);
-              ctx.lastClick = { coords: coords[coords.length - 1] };
+              ctx.lastClick = {coords: coords[coords.length - 1]};
               if (coords.length > 0) {
                 ctx.snapFeature = turf.point(coords[coords.length - 1]);
               } else {
@@ -328,6 +328,7 @@ module.exports = function (ctx) {
       ctx.api.addData(geojson);
     });
   }
+
   function handleSaveButton() {
     const dropdownGroup = $('.geohub-dropdown-group');
     if (dropdownGroup.css('display') == 'none') {
@@ -336,49 +337,51 @@ module.exports = function (ctx) {
       dropdownGroup.hide();
     }
   }
+
   function handleSaveAsGistButton() {
-    var file = turf.featureCollection(ctx.coldFeatures);
+    const file = turf.featureCollection(ctx.coldFeatures);
     exportFile.asGist(file);
   }
+
   function handleSaveAsGeojsonButton() {
-    var file = turf.featureCollection(ctx.coldFeatures);
+    const file = turf.featureCollection(ctx.coldFeatures);
     exportFile.asGeojson(file);
   }
+
   function handleSaveAsKmlButton() {
-    var file = turf.featureCollection(ctx.coldFeatures);
+    const file = turf.featureCollection(ctx.coldFeatures);
     exportFile.asKml(file);
   }
-  function stringToDOM(str){
-    var parser = new DOMParser();
+
+  function stringToDOM(str) {
+    const parser = new DOMParser();
     return parser.parseFromString(str, "text/xml");
   }
+
   function handleLoadDataButton() {
-    var input = document.createElement('input');
+    const input = document.createElement('input');
     input.type = 'file';
     input.setAttribute('multiple', 'multiple');
     input.addEventListener('change', handleSelection, false);
     input.click();
     function handleSelection(event) {
-      var files = event.target.files;
-      var names = input.files;
+      const files = event.target.files;
+      const names = input.files;
       for (var i = 0, f; f = files[i]; i++) {
-        var ext = names[i].name.substring(names[i].name.lastIndexOf('.') + 1, names[i].name.length).toLowerCase();
-        var reader = new FileReader();
+        const ext = names[i].name.substring(names[i].name.lastIndexOf('.') + 1, names[i].name.length).toLowerCase();
+        const reader = new FileReader();
         reader.onload = (function (file) {
           return function (e) {
-            if (ext === 'geojson') {
+            if (ext === 'geojson' || ext === 'json') {
               ctx.api.addUserData(JSON.parse(e.target.result));
-            }
-            else if (ext === 'kml') {
+            } else if (ext === 'kml') {
               var geojson = togeojson.kml(stringToDOM(e.target.result));
               ctx.api.addUserData(geojson);
-            }
-            else if (ext === 'gpx') {
+            } else if (ext === 'gpx') {
               var geojson = togeojson.gpx(stringToDOM(e.target.result));
               ctx.api.addUserData(geojson);
-            }
-            else {
-              alert('unsupported file extension: ' + ext);
+            } else {
+              alert(`unsupported file extension: ${ext}`);
             }
           };
         })(f);
@@ -409,21 +412,10 @@ module.exports = function (ctx) {
       ctx.container.classList.add("mouse-move");
 
     }
-
   }
 
   function combineFeatures() {
-    if (ctx.selectedFeatures) {
-      const polygons = [];
-      ctx.selectedFeatures.forEach((polygon) => {
-        polygons.push(...polygon.geometry.coordinates);
-      });
-      ctx.coldFeatures.push(turf.polygon(polygons, ctx.selectedFeatures.properties));
-      ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
-      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
-      ctx.selectedFeatures = null;
-    }
+    ctx.api.combineFeatures();
   }
 
   return {
