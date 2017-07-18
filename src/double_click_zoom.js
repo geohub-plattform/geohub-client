@@ -1,14 +1,14 @@
 module.exports = {
-  enable(ctx) {
+  enable(map) {
     setTimeout(() => {
-      if (!ctx.map || !ctx.map.doubleClickZoom) return;
-      ctx.map.doubleClickZoom.enable();
+      if (!map || !map.doubleClickZoom) return;
+      map.doubleClickZoom.enable();
     }, 0);
   },
-  disable(ctx) {
+  disable(map) {
     setTimeout(() => {
-      if (!ctx.map || !ctx.map.doubleClickZoom) return;
-      ctx.map.doubleClickZoom.disable();
+      if (!map || !map.doubleClickZoom) return;
+      map.doubleClickZoom.disable();
     }, 0);
   }
 };

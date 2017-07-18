@@ -5,6 +5,8 @@ const ui = require("./src/ui");
 const combineFeatures = require("./src/combine_features");
 const theme = require("./src/theme");
 const SelectMode = require("./src/mode_select");
+const DrawMode = require("./src/mode_draw");
+const doubleClickZoom = require("./src/double_click_zoom");
 
 const defaultOptions = {
   controls: {
@@ -39,7 +41,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
     ctx.map = map;
     ctx.container = map.getContainer();
     ctx.modes = [];
-    ctx.modes.push(new SelectMode(ctx));
+    ctx.modes.push(new SelectMode(ctx), new DrawMode(ctx));
 
     const buttons = ctx.ui.addButtons();
     ctx.events.addEventListeners(map);
@@ -58,6 +60,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
     theme.forEach((layer) => {
       ctx.map.addLayer(layer);
     });
+    doubleClickZoom.disable(ctx.map);
     return buttons;
   };
   api.onRemove = function () {
@@ -66,6 +69,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
     if (ctx.map.getLayer('geohub-line-active') !== undefined) {
       ctx.map.removeLayer('geohub-line-active');
     }
+    doubleClickZoom.enable(ctx.map);
   };
   api.addData = ctx.pointindex.addData;
   api.addOverpassData = ctx.pointindex.addOverpassData;

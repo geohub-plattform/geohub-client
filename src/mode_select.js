@@ -51,6 +51,9 @@ module.exports = function (ctx) {
     }
   };
 
+  this.handleMove = function (event) {
+  };
+
   this.handleClick = function (event) {
     const multipleSelect = event.originalEvent.shiftKey;
     const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
