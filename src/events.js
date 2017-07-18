@@ -173,85 +173,7 @@ module.exports = function (ctx) {
       }
       ctx.lastClick = lastPoint;
     } else if (ctx.mode === Constants.modes.SELECT) {
-      const multipleSelect = event.originalEvent.shiftKey;
-
-      const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
-      console.log("nearFeatures: ", nearFeatures.length);
-
-      const deselectCurrentFeature = function () {
-        if (ctx.selectedFeatures) {
-          ctx.coldFeatures.push(...ctx.selectedFeatures);
-          ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
-          ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-          ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
-          ctx.selectedFeatures = null;
-        }
-      };
-
-      const selectFeature = function (selectedFeatureId) {
-        if (ctx.lastKnownSelectIds.indexOf(selectedFeatureId) === -1) {
-          ctx.lastKnownSelectIds.push(selectedFeatureId);
-        }
-        if (ctx.selectedFeatures) {
-          ctx.selectedFeatures.forEach((feature) => {
-            if (selectedFeatureId === feature.properties.geoHubId) {
-              // wenn ausgewählt, dann nicht mher hinzufügen oder togglen
-            }
-          });
-        } else {
-          ctx.selectedFeatures = [];
-        }
-
-        let selectedIdIndex = -1;
-        ctx.coldFeatures.forEach((element, index) => {
-          if (element.properties.geoHubId === selectedFeatureId) {
-            selectedIdIndex = index;
-          }
-        });
-        if (selectedIdIndex !== -1) {
-          ctx.selectedFeatures.push(...ctx.coldFeatures.splice(selectedIdIndex, 1));
-        }
-        const points = [];
-        ctx.selectedFeatures.forEach((feature) => {
-          turf.coordEach(feature, (pointCoords) => {
-            points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
-          });
-        });
-        ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
-        ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
-        ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(points));
-      };
-
-      if (nearFeatures.length > 0) {
-        nearFeatures.forEach((element) => {
-          console.log("nearFeature: ", element);
-        });
-        if (ctx.lastKnownSelectIds === undefined) {
-          ctx.lastKnownSelectIds = [];
-        }
-
-        if (nearFeatures.length >= ctx.lastKnownSelectIds.length) {
-          // remove old IDs
-          ctx.lastKnownSelectIds.splice(0, nearFeatures.length - ctx.lastKnownSelectIds.length + 1);
-        }
-
-        let selectedGeoHubId = nearFeatures[0].properties.geoHubId;
-        if (nearFeatures.length > 1) {
-          nearFeatures.forEach((nearFeature) => {
-            const nearFeatureId = nearFeature.properties.geoHubId;
-            if (ctx.lastKnownSelectIds.indexOf(nearFeatureId) === -1) {
-              selectedGeoHubId = nearFeatureId;
-            }
-          });
-        }
-        if (!multipleSelect) {
-          deselectCurrentFeature();
-        }
-        selectFeature(selectedGeoHubId);
-      } else if (!multipleSelect) {
-        ctx.lastKnownSelectIds = [];
-        deselectCurrentFeature();
-      }
+      ctx.currentMode.handleClick(event);
     }
   };
 
@@ -390,10 +312,13 @@ module.exports = function (ctx) {
     }
   }
 
-  function changeMode(newMode) {
-    // TODO finish current mode
-    console.log("New mode", newMode);
-    ctx.mode = newMode;
+  function changeMode(modeName) {
+    console.log("New mode", modeName);
+    ctx.mode = modeName;
+    if (ctx.currentMode) {
+      ctx.currentMode.deactivate();
+    }
+
     const classesToRemove = [];
     ctx.container.classList.forEach((className) => {
       if (className.indexOf("mouse-") !== -1) {
@@ -404,13 +329,19 @@ module.exports = function (ctx) {
       ctx.container.classList.remove(...classesToRemove);
     }
 
-    if (newMode === Constants.modes.SELECT) {
-      ctx.container.classList.add("mouse-pointer");
-    } else if (newMode === Constants.modes.DRAW) {
-      ctx.container.classList.add("mouse-add");
-    } else {
-      ctx.container.classList.add("mouse-move");
+    let nextMode = null;
+    ctx.modes.forEach((mode) => {
+      if (mode.canHandle(modeName)) {
+        nextMode = mode;
+      }
+    });
+    if (nextMode) {
+      nextMode.activate();
+      ctx.currentMode = nextMode;
+    }
 
+    if (modeName === Constants.modes.SELECT) {
+      ctx.container.classList.add("mouse-pointer");
     }
   }
 

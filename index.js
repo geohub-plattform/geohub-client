@@ -4,6 +4,7 @@ const Constants = require("./src/constants");
 const ui = require("./src/ui");
 const combineFeatures = require("./src/combine_features");
 const theme = require("./src/theme");
+const SelectMode = require("./src/mode_select");
 
 const defaultOptions = {
   controls: {
@@ -37,6 +38,9 @@ const setupGeoHub = function (options = defaultOptions, api) {
     });
     ctx.map = map;
     ctx.container = map.getContainer();
+    ctx.modes = [];
+    ctx.modes.push(new SelectMode(ctx));
+
     const buttons = ctx.ui.addButtons();
     ctx.events.addEventListeners(map);
     ctx.events.changeMode(Constants.modes.SELECT);

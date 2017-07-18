@@ -4,8 +4,6 @@ const Constants = require('./constants');
 const classTypes = ['mode', 'feature', 'mouse'];
 
 module.exports = function (ctx) {
-
-
   const buttonElements = {};
   let activeButton = null;
 
