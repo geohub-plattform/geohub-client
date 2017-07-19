@@ -32,6 +32,27 @@ module.exports = function (ctx) {
     }
   };
 
+  const finishDraw = function () {
+    if (ctx.hotFeature) {
+      if (utils.isPolygon(ctx.hotFeature)) {
+        console.log("Convert to polygon");
+        ctx.hotFeature.geometry.type = "Polygon";
+        ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
+      }
+      ctx.hotFeature.properties.geoHubId = ctx.geoHubIdCounter++;
+      ctx.coldFeatures.push(ctx.hotFeature);
+      ctx.hotFeature = null;
+    } else if (ctx.lastClick) {
+      const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
+      ctx.coldFeatures.push(hotFeature);
+    }
+    ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
+    ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
+    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+
+  };
+
+
   this.handleMove = function (event) {
     const button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
     if (button === 1) {
@@ -129,22 +150,7 @@ module.exports = function (ctx) {
         console.log("Finish draw");
         ctx.snapFeature = null;
         lastPoint = null;
-        if (ctx.hotFeature) {
-          if (utils.isPolygon(ctx.hotFeature)) {
-            console.log("Convert to polygon");
-            ctx.hotFeature.geometry.type = "Polygon";
-            ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
-          }
-          ctx.hotFeature.properties.geoHubId = ctx.geoHubIdCounter++;
-          ctx.coldFeatures.push(ctx.hotFeature);
-          ctx.hotFeature = null;
-        } else {
-          const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
-          ctx.coldFeatures.push(hotFeature);
-        }
-        ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
-        ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
-        ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+        finishDraw();
       }
     }
 
@@ -165,7 +171,7 @@ module.exports = function (ctx) {
           ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([ctx.snapFeature]));
         } else {
           ctx.snapFeature = null;
-          ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection());
+          ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
         }
         ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([hotFeature]));
       }
@@ -175,10 +181,14 @@ module.exports = function (ctx) {
   };
 
   this.activate = function () {
-    ctx.container.classList.add("mouse-pointer");
+    ctx.container.classList.add("mouse-add");
   };
 
   this.deactivate = function () {
-    // TODO finish draw
+    finishDraw();
+    ctx.lastClick = null;
+    ctx.snapFeature = null;
+    ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
+    ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
   };
 };

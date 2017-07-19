@@ -177,6 +177,7 @@ module.exports = function (ctx) {
       nextMode.activate();
       ctx.currentMode = nextMode;
     }
+    console.log("class list container: ", ctx.container.classList);
   }
 
   function combineFeatures() {
