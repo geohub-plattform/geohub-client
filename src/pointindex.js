@@ -6,7 +6,7 @@ const overpassApi = require("./overpass_api");
 
 module.exports = function (ctx) {
 
-  let meshIndex = null;
+  let meshIndex = new MeshIndex([]);
   let meshRouting = null;
 
   const queryMapFeatures = function (lngLat, radiusInKm) {
@@ -42,9 +42,7 @@ module.exports = function (ctx) {
 
   return {
     addData: function (fc) {
-      console.log("Adding data: ", fc.features.length, " features");
       meshIndex = new MeshIndex(fc.features);
-      console.log("Updating mesh");
       updateMeshData();
     },
     addOverpassData: function (data) {
@@ -53,7 +51,6 @@ module.exports = function (ctx) {
       updateMeshData();
     },
     addUserData: function (data) {
-      console.log("user data: ", data);
       meshIndex.addNewFeatures(data.features);
       updateMeshData();
       if (ctx.coldFeatures === undefined) {
@@ -61,6 +58,10 @@ module.exports = function (ctx) {
       }
       ctx.coldFeatures.push(...data.features);
       ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+    },
+    deleteSnapData : function() {
+      meshIndex = new MeshIndex([]);
+      updateMeshData();
     },
     splitSegmentAtPoint: function (segmentId, pointCoords) {
       meshIndex.splitSegmentAtPoint(segmentId, pointCoords);

@@ -74,6 +74,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   api.addData = ctx.pointindex.addData;
   api.addOverpassData = ctx.pointindex.addOverpassData;
   api.addUserData = ctx.pointindex.addUserData;
+  api.deleteSnapData = ctx.pointindex.deleteSnapData;
   api.featuresAt = ctx.pointindex.featuresAt;
   api.userFeaturesAt = ctx.pointindex.userFeaturesAt;
   api.getRouteFromTo = ctx.pointindex.getRouteFromTo;

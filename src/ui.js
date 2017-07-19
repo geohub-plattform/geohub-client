@@ -201,8 +201,14 @@ module.exports = function (ctx) {
     buttonElements["delete"] = createActionButton("delete", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_DELETE,
-      title: `Delete ${ctx.options.keybindings && '(e)'}`,
+      title: `Delete data ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.events.deleteUserData()
+    });
+    buttonElements["delete-snap"] = createActionButton("delete-snap", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_DELETE_SNAP,
+      title: `Delete snap data ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.api.deleteSnapData()
     });
     return containerGroup;
   }
