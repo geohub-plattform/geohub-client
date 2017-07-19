@@ -7,6 +7,7 @@ const theme = require("./src/theme");
 const SelectMode = require("./src/mode_select");
 const DrawMode = require("./src/mode_draw");
 const doubleClickZoom = require("./src/double_click_zoom");
+const userData = require("./src/user_data");
 
 const defaultOptions = {
   controls: {
@@ -24,6 +25,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
     options: options
   };
   ctx.api = api;
+  ctx.internalApi = {};
   ctx.geoHubIdCounter = 1;
   ctx.ui = ui(ctx);
   ctx.pointindex = pointindex(ctx);
@@ -71,9 +73,15 @@ const setupGeoHub = function (options = defaultOptions, api) {
     }
     doubleClickZoom.enable(ctx.map);
   };
+
+  ctx.userData = userData(ctx);
+
   api.addData = ctx.pointindex.addData;
   api.addOverpassData = ctx.pointindex.addOverpassData;
-  api.addUserData = ctx.pointindex.addUserData;
+  api.addUserData = ctx.userData.addUserData;
+
+  ctx.internalApi.addUserData = ctx.pointindex.addUserData;
+
   api.deleteSnapData = ctx.pointindex.deleteSnapData;
   api.featuresAt = ctx.pointindex.featuresAt;
   api.userFeaturesAt = ctx.pointindex.userFeaturesAt;

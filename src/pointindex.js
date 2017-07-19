@@ -43,21 +43,22 @@ module.exports = function (ctx) {
   return {
     addData: function (fc) {
       meshIndex = new MeshIndex(fc.features);
+      if (ctx.coldFeatures) {
+        meshIndex.addNewFeatures(ctx.coldFeatures);
+      }
       updateMeshData();
     },
     addOverpassData: function (data) {
       const fc = overpassApi.convertFromOverpassToGeojson(data);
       meshIndex = new MeshIndex(fc.features);
+      if (ctx.coldFeatures) {
+        meshIndex.addNewFeatures(ctx.coldFeatures);
+      }
       updateMeshData();
     },
     addUserData: function (data) {
       meshIndex.addNewFeatures(data.features);
       updateMeshData();
-      if (ctx.coldFeatures === undefined) {
-        ctx.coldFeatures = [];
-      }
-      ctx.coldFeatures.push(...data.features);
-      ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
     },
     deleteSnapData : function() {
       meshIndex = new MeshIndex([]);
