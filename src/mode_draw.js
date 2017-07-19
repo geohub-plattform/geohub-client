@@ -160,8 +160,13 @@ module.exports = function (ctx) {
           hotFeature = turf.lineString(snapCoords);
           ctx.hotFeature = hotFeature;
         }
-        ctx.snapFeature = null;
-        ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
+        if (lastPoint) {
+          ctx.snapFeature = turf.point(lastPoint.coords);
+          ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([ctx.snapFeature]));
+        } else {
+          ctx.snapFeature = null;
+          ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection());
+        }
         ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([hotFeature]));
       }
     }
