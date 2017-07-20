@@ -24,12 +24,6 @@ module.exports = function (ctx) {
         }
         break;
       }
-      case "KeyP": {
-        if (ctx.coldFeatures) {
-          console.log("coldFeatures: ", JSON.stringify(turf.featureCollection(ctx.coldFeatures)));
-        }
-        break;
-      }
       case "Delete": {
         if (ctx.mode === Constants.modes.SELECT) {
           if (ctx.selectedFeatures) {
@@ -99,17 +93,17 @@ module.exports = function (ctx) {
   }
 
   function handleSaveAsGistButton() {
-    const file = turf.featureCollection(ctx.coldFeatures);
+    const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
     exportFile.asGist(file);
   }
 
   function handleSaveAsGeojsonButton() {
-    const file = turf.featureCollection(ctx.coldFeatures);
+    const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
     exportFile.asGeojson(file);
   }
 
   function handleSaveAsKmlButton() {
-    const file = turf.featureCollection(ctx.coldFeatures);
+    const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
     exportFile.asKml(file);
   }
 
@@ -187,13 +181,12 @@ module.exports = function (ctx) {
 
   function deleteUserData() {
     // finish current mode
-    ctx.coldFeatures = [];
+    ctx.featuresStore.deleteFeatures();
     ctx.hotFeature = null;
     ctx.snapFeature = null;
     ctx.selectedFeatures = null;
     ctx.lastClick = null;
     ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
-    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
     ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));

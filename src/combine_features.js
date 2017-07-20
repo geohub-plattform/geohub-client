@@ -1,12 +1,10 @@
 const Constants = require("./constants");
 const turf = require("@turf/turf");
-const utils = require("./utils");
 const featureUtils = require("./feature_utils");
 
 module.exports = function (ctx) {
 
   function updateSources() {
-    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
     ctx.selectedFeatures = null;
@@ -29,13 +27,13 @@ module.exports = function (ctx) {
             polygons.push(...polygon.geometry.coordinates);
           });
           if (polygons.length > 0) {
-            ctx.coldFeatures.push(turf.polygon(polygons, ctx.selectedFeatures[0].properties));
+            ctx.featuresStore.addFeatures([turf.polygon(polygons, ctx.selectedFeatures[0].properties)]);
             updateSources();
           }
         } else if (allFeaturesType === "LineString") {
           const coords = featureUtils.combineSameTypeFeatures(ctx.selectedFeatures);
           if (coords.length > 0) {
-            ctx.coldFeatures.push(turf.lineString(coords, ctx.selectedFeatures[0].properties));
+            ctx.featuresStore.addFeatures([turf.lineString(coords, ctx.selectedFeatures[0].properties)]);
             updateSources();
           }
         } else {

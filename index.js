@@ -6,8 +6,10 @@ const combineFeatures = require("./src/combine_features");
 const theme = require("./src/theme");
 const SelectMode = require("./src/mode_select");
 const DrawMode = require("./src/mode_draw");
+const CutMode = require("./src/mode_cut");
 const doubleClickZoom = require("./src/double_click_zoom");
 const userData = require("./src/user_data");
+const ColdFeaturesStore = require("./src/cold_features_store");
 
 const defaultOptions = {
   controls: {
@@ -26,11 +28,10 @@ const setupGeoHub = function (options = defaultOptions, api) {
   };
   ctx.api = api;
   ctx.internalApi = {};
-  ctx.geoHubIdCounter = 1;
   ctx.ui = ui(ctx);
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
-  ctx.coldFeatures = [];
+  ctx.featuresStore = new ColdFeaturesStore(ctx);
 
   api.onAdd = function (map) {
     console.log("onAdd");
@@ -43,7 +44,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
     ctx.map = map;
     ctx.container = map.getContainer();
     ctx.modes = [];
-    ctx.modes.push(new SelectMode(ctx), new DrawMode(ctx));
+    ctx.modes.push(new SelectMode(ctx), new DrawMode(ctx), new CutMode(ctx));
 
     const buttons = ctx.ui.addButtons();
     ctx.events.addEventListeners(map);

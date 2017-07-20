@@ -2,6 +2,7 @@ import MeshIndex from "./mesh_index";
 import MeshRouting from "./mesh_routing";
 import turf from "@turf/turf";
 import Constants from "./constants";
+
 const overpassApi = require("./overpass_api");
 
 module.exports = function (ctx) {
@@ -43,24 +44,20 @@ module.exports = function (ctx) {
   return {
     addData: function (fc) {
       meshIndex = new MeshIndex(fc.features);
-      if (ctx.coldFeatures) {
-        meshIndex.addNewFeatures(ctx.coldFeatures);
-      }
+      meshIndex.addNewFeatures(ctx.featuresStore.getColdFeatures());
       updateMeshData();
     },
     addOverpassData: function (data) {
       const fc = overpassApi.convertFromOverpassToGeojson(data);
       meshIndex = new MeshIndex(fc.features);
-      if (ctx.coldFeatures) {
-        meshIndex.addNewFeatures(ctx.coldFeatures);
-      }
+      meshIndex.addNewFeatures(ctx.featuresStore.getColdFeatures());
       updateMeshData();
     },
     addUserData: function (data) {
       meshIndex.addNewFeatures(data.features);
       updateMeshData();
     },
-    deleteSnapData : function() {
+    deleteSnapData: function () {
       meshIndex = new MeshIndex([]);
       updateMeshData();
     },

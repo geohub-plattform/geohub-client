@@ -14,37 +14,28 @@ module.exports = function (ctx) {
     if (ctx.selectedFeatures) {
       ctx.selectedFeatures.forEach((feature) => {
         if (selectedFeatureId === feature.properties.geoHubId) {
-          // wenn ausgewählt, dann nicht mher hinzufügen oder togglen
+          // wenn ausgewählt, dann nicht mehr hinzufügen oder togglen
         }
       });
     } else {
       ctx.selectedFeatures = [];
     }
 
-    let selectedIdIndex = -1;
-    ctx.coldFeatures.forEach((element, index) => {
-      if (element.properties.geoHubId === selectedFeatureId) {
-        selectedIdIndex = index;
-      }
-    });
-    if (selectedIdIndex !== -1) {
-      ctx.selectedFeatures.push(...ctx.coldFeatures.splice(selectedIdIndex, 1));
-    }
+    const removedFeatures = ctx.featuresStore.removeFeatures(selectedFeatureId);
+    ctx.selectedFeatures.push(...removedFeatures);
     const points = [];
     ctx.selectedFeatures.forEach((feature) => {
       turf.coordEach(feature, (pointCoords) => {
         points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
       });
     });
-    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
     ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(points));
   };
 
   this.deselectCurrentFeature = function () {
     if (ctx.selectedFeatures) {
-      ctx.coldFeatures.push(...ctx.selectedFeatures);
-      ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+      ctx.featuresStore.addFeatures(ctx.selectedFeatures);
       ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
       ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
       ctx.selectedFeatures = null;

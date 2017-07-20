@@ -18,7 +18,7 @@
     "no-eq-null": "off",
     "no-new": "off",
     "no-var": "error",
-    "no-warning-comments": "error",
+    "no-warning-comments": "warn",
     "object-curly-spacing": "off",
     "prefer-arrow-callback": "error",
     "prefer-const": "error",

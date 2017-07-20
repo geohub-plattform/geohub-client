@@ -39,17 +39,14 @@ module.exports = function (ctx) {
         ctx.hotFeature.geometry.type = "Polygon";
         ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
       }
-      ctx.hotFeature.properties.geoHubId = ctx.geoHubIdCounter++;
-      ctx.coldFeatures.push(ctx.hotFeature);
+      ctx.featuresStore.addFeatures([ctx.hotFeature]);
       ctx.hotFeature = null;
     } else if (ctx.lastClick) {
-      const hotFeature = turf.point(ctx.lastClick.coords, {geoHubId: ctx.geoHubIdCounter++});
-      ctx.coldFeatures.push(hotFeature);
+      const hotFeature = turf.point(ctx.lastClick.coords);
+      ctx.featuresStore.addFeatures([hotFeature]);
     }
     ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
-    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
-
   };
 
 
@@ -78,7 +75,6 @@ module.exports = function (ctx) {
       if (nearFeatures) {
         const closestPoint = closestPoints.findClosestPoint(nearFeatures, evtCoords, radiusInKm);
         if (closestPoint) {
-          //utils.reducePrecision(closestPoint.coords);
           ctx.closestPoint = closestPoint;
           if (closestPoint.borders) {
             debugFeatures.push(turf.lineString([closestPoint.coords, closestPoint.borders.border1]));
@@ -119,14 +115,12 @@ module.exports = function (ctx) {
     } else {
       snapFeature = createLineToCurrentMouseMove(evtCoords);
     }
-    //ctx.map.getSource(Constants.sources.DEBUG).setData(turf.featureCollection(debugFeatures));
     ctx.snapFeature = snapFeature;
     if (snapFeature) {
       ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([snapFeature]));
     } else {
       ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
     }
-
   };
 
   this.handleClick = function (event) {

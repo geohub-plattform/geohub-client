@@ -104,12 +104,12 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   if (closestVertex !== null) {
     if (closestLinepoint !== null) {
       if (closestVertex.dist < radius) {
-        return {coords: closestVertex.coords, borders: null, geoHubId: null};
+        return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId};
       } else {
         return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId};
       }
     } else {
-      return {coords: closestVertex.coords, borders: null, geoHubId: null};
+      return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId};
     }
   } else if (closestLinepoint !== null) {
     return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId};
