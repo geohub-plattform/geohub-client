@@ -32,7 +32,10 @@ module.exports = function (ctx) {
     };
     const point = ctx.map.project([lngLat.lng, lngLat.lat]);
     const bbox = [[point.x - 5, point.y - 5], [point.x + 5, point.y + 5]];
-    return ctx.map.queryRenderedFeatures(bbox, filter);
+    const mapFeatures =  ctx.map.queryRenderedFeatures(bbox, filter);
+    return ctx.featuresStore.getFeaturesById(mapFeatures.map((element) => {
+      return element.properties.geoHubId;
+    }));
   };
 
   const updateMeshData = function () {

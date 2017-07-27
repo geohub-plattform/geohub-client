@@ -9,9 +9,34 @@ module.exports = function (ctx) {
     ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(coldFeatures));
   }
 
+  function getFeatureById(id) {
+    let result = null;
+    coldFeatures.forEach((element) => {
+      if (element.properties.geoHubId === id) {
+        result = element;
+      }
+    });
+    if (result === null) {
+      console.error("cannot find cold feature with id: ", id, " storeFeatureId: ", storeFeatureId, " coldFeatures length: ", coldFeatures.length);
+    }
+    return result;
+  }
+
   this.getColdFeatures = function () {
     // TODO clone everything, remove geoHubId from properties
     return coldFeatures;
+  };
+
+
+  this.getFeaturesById = function (ids) {
+    const result = [];
+    ids.forEach((id) => {
+      const feature = getFeatureById(id);
+      if (feature) {
+        result.push(feature);
+      }
+    });
+    return result;
   };
 
   this.deleteFeatures = function () {
@@ -41,5 +66,4 @@ module.exports = function (ctx) {
     updateSource();
     return removedFeatures;
   };
-
 };
