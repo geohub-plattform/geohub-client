@@ -43,7 +43,12 @@ module.exports = function (ctx) {
       if (clickedFeature.length === 1) {
         console.log("clickedFeature: ", JSON.stringify(turf.featureCollection(clickedFeature)));
 
-        const newLineStrings = turf.lineSplit(clickedFeature[0], turf.point(ctx.closestPoint.coords));
+        const cutPoint = turf.point(ctx.closestPoint.coords);
+        const truncatedCutPoint = turf.truncate(cutPoint, 7);
+
+        console.log("line to cut: ", clickedFeature[0].geometry.coordinates);
+        console.log("cut point: ", cutPoint.geometry.coordinates, " truncated: ", truncatedCutPoint.geometry.coordinates);
+        const newLineStrings = turf.lineSplit(clickedFeature[0], truncatedCutPoint);
         // TODO copy properties on both parts
         console.log("new lines:", newLineStrings);
         ctx.featuresStore.addFeatures(newLineStrings.features);
