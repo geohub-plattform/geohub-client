@@ -39,6 +39,12 @@ module.exports = function (ctx) {
         ctx.hotFeature.geometry.type = "Polygon";
         ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
       }
+
+      if (ctx.hotFeature.geometry.type === "LineString") {
+        const length = Math.round(turf.lineDistance(ctx.hotFeature) * 1000) / 1000;
+        ctx.snackbar(`Linie erstellt, Länge: ${length} km`);
+      }
+
       ctx.featuresStore.addFeatures([ctx.hotFeature]);
       ctx.hotFeature = null;
     } else if (ctx.lastClick) {
