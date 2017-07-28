@@ -11,6 +11,7 @@ const doubleClickZoom = require("./src/double_click_zoom");
 const userData = require("./src/user_data");
 const ColdFeaturesStore = require("./src/cold_features_store");
 const zoomInFeatures = require("./src/zoom_in_features");
+const snackbar = require("./src/snackbar");
 
 const defaultOptions = {
   controls: {
@@ -30,6 +31,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   ctx.api = api;
   ctx.internalApi = {};
   ctx.ui = ui(ctx);
+  ctx.snackbar = snackbar();
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
   ctx.featuresStore = new ColdFeaturesStore(ctx);
