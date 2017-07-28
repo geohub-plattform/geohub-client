@@ -10,6 +10,7 @@ const CutMode = require("./src/mode_cut");
 const doubleClickZoom = require("./src/double_click_zoom");
 const userData = require("./src/user_data");
 const ColdFeaturesStore = require("./src/cold_features_store");
+const zoomInFeatures = require("./src/zoom_in_features");
 
 const defaultOptions = {
   controls: {
@@ -90,6 +91,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   api.getRouteLength = ctx.pointindex.getRouteLength;
   api.addFeaturesToMesh = ctx.pointindex.addFeaturesToMesh;
   api.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
+  api.zoomInFeatures = zoomInFeatures(ctx);
   api.options = options;
   api.combineFeatures = combineFeatures(ctx);
   return api;

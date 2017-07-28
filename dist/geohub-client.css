@@ -113,6 +113,10 @@ button.active:hover {
     background-image: url(./svg/ic_delete_sweep_black_24px.svg);
 }
 
+.geohub-zoom-in-features {
+    background-image: url(./svg/ic_zoom_out_map_black_24px.svg);
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;

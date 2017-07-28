@@ -210,6 +210,12 @@ module.exports = function (ctx) {
       title: `Delete snap data ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.api.deleteSnapData()
     });
+    buttonElements["zoom-in-features"] = createActionButton("zoom-in-features", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
+      title: `Zoom in current features ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.api.zoomInFeatures()
+    });
     return containerGroup;
   }
 
