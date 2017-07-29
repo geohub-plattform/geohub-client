@@ -106,35 +106,20 @@ module.exports = function (ctx) {
     const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
     exportFile.asKml(file);
   }
-<<<<<<< HEAD
   function handleExpandEditorButton() {
     if (!$('#editor').hasClass('expanded')) {
       $('#map').css('width', '60%');
       $('#editor').css('width', '40%');
       $('#editor').addClass('expanded');
-      $(function () {
-        $.hulk('#editor', ctx.coldFeatures, function (data) {
-          ctx.coldFeatures = data;
-          console.log('data saved!');
-        }, {
-            'separator': ':',
-            'depth': 1
-          }
-        );
-      });
+      ctx.editor.renderEditor();
     } else {
       $('#map').css('width', '100%');
       $('#editor').css('width', '0%');
       $('#editor').removeClass('expanded');
     }
   }
-  function stringToDOM(str){
-    var parser = new DOMParser();
-=======
-
   function stringToDOM(str) {
     const parser = new DOMParser();
->>>>>>> master
     return parser.parseFromString(str, "text/xml");
   }
 

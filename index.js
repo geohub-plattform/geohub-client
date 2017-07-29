@@ -12,6 +12,7 @@ const userData = require("./src/user_data");
 const ColdFeaturesStore = require("./src/cold_features_store");
 const zoomInFeatures = require("./src/zoom_in_features");
 const snackbar = require("./src/snackbar");
+const editor = require("./src/editor");
 
 const defaultOptions = {
   controls: {
@@ -35,6 +36,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
   ctx.featuresStore = new ColdFeaturesStore(ctx);
+  ctx.editor = editor(ctx);
 
   api.onAdd = function (map) {
     console.log("onAdd");

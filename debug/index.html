@@ -14,8 +14,6 @@
     <link href='http://localhost:9967/dist/geohub-client.css' rel='stylesheet' />
     <script src='http://localhost:9967/geohub-client.js'></script>
     <script src='https://code.jquery.com/jquery-3.2.1.js'></script>
-
-    <script src='../hulk/hulk.js'></script>
     <style>
         body {
             margin: 0;
@@ -162,8 +160,8 @@
         <a class="link" href="#"><img src="https://avatars6.githubusercontent.com/u/26528000?v=4&s=56" alt=""></a>
         <a class="link title" href="#">GeoHub Client</a>
         <a class="separator"></a>
-        <a class="link" href="#">Link 1</a>
-        <a class="link" href="#">Link 2</a>
+        <a class="link" href="https://github.com/geohub-plattform/geohub-client">Github</a>
+        <a class="link" href="https://geohub-plattform.github.io/">Blog</a>
     </div>
     <div id="loading">
         <div class="spinner">
@@ -175,7 +173,8 @@
     <div id="map"></div>
     <div id="editor"></div>
     <div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
-
+        <script src="underscore.js"></script>
+        <script src="underscore-observe.js"></script>
     <script>
         var zoomContainer = document.getElementById('zoom');
         var positionContainer = document.getElementById('position');
