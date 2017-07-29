@@ -209,35 +209,45 @@ button.active:hover {
     opacity: 0.5;
 }
 
-#editor .hulk-map-pair, #editor .hulk-array {
-  margin: 1rem;
-  border: 2px solid grey;
-  background: rgba(0, 0, 0, .1);
+.feature{
+    border: 1px solid red;
+    border-top: 3px solid red;
+    margin: 1rem;
+    padding: 0.2rem;
 }
-
-#editor .hulk-separator {
-  position: relative;
-  bottom: 5px;
-  display: inline-block; }
-
-#editor button{
-  border: 2px solid grey;
-  border-radius: 5px;
-  background: lightgrey;
-  font-size: 15px;
-  line-height: 15px;
-  height: 30px;
+.feature .item{
+    padding-left: 1rem;
 }
-#editor input{
-  border: 2px solid grey;
-  border-radius: 5px;
-  background: lightgrey;
-  font-size: 15px;
+.key span{
+    margin-bottom: 0.2rem;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid red;
+    border-radius: 3px;
 }
-#editor button, #editor input{
-  margin: 1rem;
+.key{
+    margin-bottom: 0.2rem;    
 }
-
+.val span, .val{
+    margin-bottom: 0.5rem;
+}
+.val.editable span{
+    font-family: monospace;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    background: lightgrey;
+    border: 1px solid lightgrey;    
+    border-radius: 3px;
+}
+.val.editable span:hover,
+.val.editable span:active,
+.val.editable span:focus{
+    background: lightgrey;
+    border: 1px solid red;
+    border-radius: 3px;
+}
 .paper-snackbar {
     transition-property: opacity, bottom, left, right, width, margin, border-radius;
     transition-duration: 0.5s;
