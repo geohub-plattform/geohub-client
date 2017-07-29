@@ -2,11 +2,12 @@ import MeshIndex from "./mesh_index";
 import MeshRouting from "./mesh_routing";
 import turf from "@turf/turf";
 import Constants from "./constants";
+
 const overpassApi = require("./overpass_api");
 
 module.exports = function (ctx) {
 
-  let meshIndex = null;
+  let meshIndex = new MeshIndex([]);
   let meshRouting = null;
 
   const queryMapFeatures = function (lngLat, radiusInKm) {
@@ -31,7 +32,10 @@ module.exports = function (ctx) {
     };
     const point = ctx.map.project([lngLat.lng, lngLat.lat]);
     const bbox = [[point.x - 5, point.y - 5], [point.x + 5, point.y + 5]];
-    return ctx.map.queryRenderedFeatures(bbox, filter);
+    const mapFeatures =  ctx.map.queryRenderedFeatures(bbox, filter);
+    return ctx.featuresStore.getFeaturesById(mapFeatures.map((element) => {
+      return element.properties.geoHubId;
+    }));
   };
 
   const updateMeshData = function () {
@@ -42,25 +46,23 @@ module.exports = function (ctx) {
 
   return {
     addData: function (fc) {
-      console.log("Adding data: ", fc.features.length, " features");
       meshIndex = new MeshIndex(fc.features);
-      console.log("Updating mesh");
+      meshIndex.addNewFeatures(ctx.featuresStore.getColdFeatures());
       updateMeshData();
     },
     addOverpassData: function (data) {
       const fc = overpassApi.convertFromOverpassToGeojson(data);
       meshIndex = new MeshIndex(fc.features);
+      meshIndex.addNewFeatures(ctx.featuresStore.getColdFeatures());
       updateMeshData();
     },
     addUserData: function (data) {
-      console.log("user data: ", data);
       meshIndex.addNewFeatures(data.features);
       updateMeshData();
-      if (ctx.coldFeatures === undefined) {
-        ctx.coldFeatures = [];
-      }
-      ctx.coldFeatures.push(...data.features);
-      ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(ctx.coldFeatures));
+    },
+    deleteSnapData: function () {
+      meshIndex = new MeshIndex([]);
+      updateMeshData();
     },
     splitSegmentAtPoint: function (segmentId, pointCoords) {
       meshIndex.splitSegmentAtPoint(segmentId, pointCoords);

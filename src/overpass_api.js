@@ -5,12 +5,14 @@ function loadData(query, success) {
   console.log("Query data: ", query);
   xhr.open('GET', "http://overpass-api.de/api/interpreter?data=" + query, true);
   xhr.onreadystatechange = function (e) {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      const response = JSON.parse(xhr.responseText);
-      success(response);
-    } else {
-      console.log(e);
-      console.log(xhr.status);
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        success(response);
+      } else {
+        console.log(e);
+        console.log(xhr.status);
+      }
     }
   };
   xhr.send();

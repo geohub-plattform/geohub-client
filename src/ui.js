@@ -4,8 +4,6 @@ const Constants = require('./constants');
 const classTypes = ['mode', 'feature', 'mouse'];
 
 module.exports = function (ctx) {
-
-
   const buttonElements = {};
   let activeButton = null;
 
@@ -206,42 +204,24 @@ module.exports = function (ctx) {
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.events.combineFeatures()
     });
-
-
-
-    if (controls.trash) {
-      buttonElements.trash = createControlButton('trash', {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_TRASH,
-        title: 'Delete',
-        onActivate: () => {
-          ctx.events.trash();
-        }
-      });
-    }
-
-    if (controls.combine_features) {
-      buttonElements.combine_features = createControlButton('combineFeatures', {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
-        title: 'Combine',
-        onActivate: () => {
-          ctx.events.combineFeatures();
-        }
-      });
-    }
-
-    if (controls.uncombine_features) {
-      buttonElements.uncombine_features = createControlButton('uncombineFeatures', {
-        container: controlGroup,
-        className: Constants.classes.CONTROL_BUTTON_UNCOMBINE_FEATURES,
-        title: 'Uncombine',
-        onActivate: () => {
-          ctx.events.uncombineFeatures();
-        }
-      });
-    }
-
+    buttonElements["delete"] = createActionButton("delete", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_DELETE,
+      title: `Delete data ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.events.deleteUserData()
+    });
+    buttonElements["delete-snap"] = createActionButton("delete-snap", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_DELETE_SNAP,
+      title: `Delete snap data ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.api.deleteSnapData()
+    });
+    buttonElements["zoom-in-features"] = createActionButton("zoom-in-features", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
+      title: `Zoom in current features ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.api.zoomInFeatures()
+    });
     return containerGroup;
   }
 

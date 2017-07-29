@@ -69,7 +69,7 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
     const dist = pointType.dist;
     if (dist !== null) {
       if (pointType.type === "vertex") {
-        if (closestVertex === null || closestVertex.dist > pointType.dist) {
+        if (closestVertex === null || pointType.dist < closestVertex.dist) {
           closestVertex = pointType;
         }
       } else if (dist < radius) {
@@ -104,15 +104,15 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   if (closestVertex !== null) {
     if (closestLinepoint !== null) {
       if (closestVertex.dist < radius) {
-        return {coords: closestVertex.coords, borders: null, geoHubId: null};
+        return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId, type: "vertex"};
       } else {
-        return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId};
+        return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId, type: "linepoint"};
       }
     } else {
-      return {coords: closestVertex.coords, borders: null, geoHubId: null};
+      return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId, type: "vertex"};
     }
   } else if (closestLinepoint !== null) {
-    return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId};
+    return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId, type: "linepoint"};
   } else {
     return null;
   }
