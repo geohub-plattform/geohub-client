@@ -44,7 +44,7 @@ module.exports = function (ctx) {
         console.log("clickedFeature: ", JSON.stringify(turf.featureCollection(clickedFeature)));
 
         const cutPoint = turf.point(ctx.closestPoint.coords);
-        const truncatedCutPoint = turf.truncate(cutPoint, 7);
+        const truncatedCutPoint = turf.truncate(cutPoint, 7); // turf issue
 
         console.log("line to cut: ", clickedFeature[0].geometry.coordinates);
         console.log("cut point: ", cutPoint.geometry.coordinates, " truncated: ", truncatedCutPoint.geometry.coordinates);

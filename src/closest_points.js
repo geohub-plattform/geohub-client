@@ -4,25 +4,36 @@ function closestPoints(ruler, coordinates, evtCoords) {
   const result = [];
   const pointOnLine = ruler.pointOnLine(coordinates, evtCoords);
   if (pointOnLine) {
+    let lineEdge = false;
     const pointCoords = pointOnLine.point;
     const pointIndex = pointOnLine.index;
     const linePoint = {type: "linepoint", coords: pointCoords};
     let vertex = null;
     if (pointIndex === coordinates.length) {
       vertex = coordinates[pointIndex];
+      lineEdge = true;
     } else {
       const p1 = coordinates[pointIndex];
       const p2 = coordinates[pointIndex + 1];
       const distance1 = ruler.distance(p1, evtCoords);
       const distance2 = ruler.distance(p2, evtCoords);
-      vertex = distance1 < distance2 ? p1 : p2;
+      if (distance1 < distance2) {
+        if (pointIndex === 0) {
+          lineEdge = true;
+        }
+        vertex = p1;
+      } else {
+        vertex = p2;
+      }
+
       linePoint.border1 = p1;
       linePoint.distance1 = distance1;
       linePoint.border2 = p2;
       linePoint.distance2 = distance2;
     }
     result.push(linePoint);
-    result.push({type: "vertex", coords: vertex});
+    result.push({type: "vertex", coords: vertex, lineEdge: lineEdge});
+    console.log("pointOnLine: ", pointOnLine, " coordinates count: ", coordinates.length);
   }
   return result;
 }
@@ -39,6 +50,7 @@ function calculatePointsOnLine(uniqueFeatures, evtCoords) {
       if (type === "LineString") {
         if (feature.geometry.coordinates) {
           const ruler = cheapRuler(feature.geometry.coordinates[0][1]);
+          console.log("geoHubId: ", geoHubId);
           closestPoints(ruler, feature.geometry.coordinates, evtCoords).forEach((pointType) => {
             pointType.geoHubId = geoHubId;
             pointType.dist = ruler.distance(pointType.coords, evtCoords);
@@ -49,7 +61,7 @@ function calculatePointsOnLine(uniqueFeatures, evtCoords) {
         }
       } else if (type === "Point") {
         const ruler = cheapRuler(feature.geometry.coordinates[1]);
-        const pointType = {type: "vertex", coords: feature.geometry.coordinates};
+        const pointType = {type: "vertex", coords: feature.geometry.coordinates, lineEdge: true};
         pointType.dist = ruler.distance(pointType.coords, evtCoords);
         coords.push(pointType);
       }
@@ -65,12 +77,23 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   let closestLinepoint = null;
   let borders;
 
+  console.log("coords: ", JSON.stringify(coords));
+
   coords.forEach((pointType) => {
     const dist = pointType.dist;
     if (dist !== null) {
       if (pointType.type === "vertex") {
-        if (closestVertex === null || pointType.dist < closestVertex.dist) {
+        if (closestVertex === null) {
           closestVertex = pointType;
+        } else if (pointType.dist <= closestVertex.dist) {
+          if (pointType.dist === closestVertex.dist) {
+            if (closestVertex.lineEdge) {
+              console.log("switching lineEdge to ", pointType);
+              closestVertex = pointType;
+            }
+          } else {
+            closestVertex = pointType;
+          }
         }
       } else if (dist < radius) {
         if (closestLinepoint !== null && dist === closestLinepoint.dist && closestLinepoint.geoHubId !== pointType.geoHubId) {
@@ -106,7 +129,12 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
       if (closestVertex.dist < radius) {
         return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId, type: "vertex"};
       } else {
-        return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId, type: "linepoint"};
+        return {
+          coords: closestLinepoint.coords,
+          borders: borders,
+          geoHubId: closestLinepoint.geoHubId,
+          type: "linepoint"
+        };
       }
     } else {
       return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId, type: "vertex"};
