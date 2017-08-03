@@ -43,6 +43,7 @@ module.exports = function (ctx) {
       if (clickedFeature.length === 1) {
         console.log("clickedFeature: ", JSON.stringify(turf.featureCollection(clickedFeature)));
 
+
         const cutPoint = turf.point(ctx.closestPoint.coords);
         const truncatedCutPoint = turf.truncate(cutPoint, 7); // turf issue
 
@@ -52,6 +53,8 @@ module.exports = function (ctx) {
         // TODO copy properties on both parts
         console.log("new lines:", newLineStrings);
         ctx.featuresStore.addFeatures(newLineStrings.features);
+
+        ctx.api.addFeaturesToMesh([turf.point(ctx.closestPoint.coords)]);
       }
     }
   };
