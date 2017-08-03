@@ -39,22 +39,38 @@ module.exports = function (ctx) {
     console.log("ctx.closestPoint :", ctx.closestPoint);
     if (ctx.closestPoint && ctx.closestPoint.geoHubId) {
 
-      const clickedFeature = ctx.featuresStore.removeFeatures(ctx.closestPoint.geoHubId);
-      if (clickedFeature.length === 1) {
-        console.log("clickedFeature: ", JSON.stringify(turf.featureCollection(clickedFeature)));
+      const clickedFeatures = ctx.featuresStore.removeFeatures(ctx.closestPoint.geoHubId);
+      if (clickedFeatures.length === 1) {
+        const clickedFeature = clickedFeatures[0];
+        console.log("clickedFeature: ", JSON.stringify(turf.featureCollection(clickedFeatures)));
+
+        if (clickedFeature.geometry.type === "LineString") {
+          const cutPoint = turf.point(ctx.closestPoint.coords);
+          const truncatedCutPoint = turf.truncate(cutPoint, 7); // turf issue
+          const newLineStrings = turf.lineSplit(clickedFeature, truncatedCutPoint);
+          // TODO copy properties on both parts
+          ctx.featuresStore.addFeatures(newLineStrings.features);
+          ctx.api.addFeaturesToMesh([turf.point(ctx.closestPoint.coords)]);
+        } else if (clickedFeature.geometry.type === "Polygon") {
+          const newFeatures = [];
+          console.log("polygonCoordsArray: ", ctx.closestPoint.polygonCoordsArray);
+          console.log("coordinates: ", clickedFeature.geometry.coordinates);
+
+          const lineToCut = clickedFeature.geometry.coordinates.splice(ctx.closestPoint.polygonCoordsArray, 1);
 
 
-        const cutPoint = turf.point(ctx.closestPoint.coords);
-        const truncatedCutPoint = turf.truncate(cutPoint, 7); // turf issue
+          const cutPoint = turf.point(ctx.closestPoint.coords);
+          const truncatedCutPoint = turf.truncate(cutPoint, 7); // turf issue
+          const newLineStrings = turf.lineSplit(turf.lineString(lineToCut), truncatedCutPoint);
+          newFeatures.push(...newLineStrings);
+          clickedFeature.geometry.coordinates.forEach((element) => {
+            newFeatures.push(turf.polygon(element));
+          });
+          ctx.featuresStore.addFeatures(newLineStrings.features);
+          ctx.api.addFeaturesToMesh([turf.point(ctx.closestPoint.coords)]);
 
-        console.log("line to cut: ", clickedFeature[0].geometry.coordinates);
-        console.log("cut point: ", cutPoint.geometry.coordinates, " truncated: ", truncatedCutPoint.geometry.coordinates);
-        const newLineStrings = turf.lineSplit(clickedFeature[0], truncatedCutPoint);
-        // TODO copy properties on both parts
-        console.log("new lines:", newLineStrings);
-        ctx.featuresStore.addFeatures(newLineStrings.features);
 
-        ctx.api.addFeaturesToMesh([turf.point(ctx.closestPoint.coords)]);
+        }
       }
     }
   };

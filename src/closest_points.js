@@ -53,10 +53,18 @@ function calculatePointsOnLine(uniqueFeatures, evtCoords) {
           console.log("no coordinates: ", feature);
         }
       } else if (type === "Point") {
-        const ruler = cheapRuler(feature.geometry.coordinates[1]);
         const pointType = {type: "vertex", coords: feature.geometry.coordinates, lineEdge: true};
         pointType.dist = ruler.distance(pointType.coords, evtCoords);
         coords.push(pointType);
+      } else if (type === "Polygon") {
+        feature.geometry.coordinates.forEach((featureCoords, index) => {
+          closestPoints(ruler, featureCoords, evtCoords).forEach((pointType) => {
+            pointType.geoHubId = geoHubId;
+            pointType.polygonCoordsArray = index;
+            pointType.dist = ruler.distance(pointType.coords, evtCoords);
+            coords.push(pointType);
+          });
+        });
       }
     }
   });
@@ -69,7 +77,6 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   let closestVertex = null;
   let closestLinepoint = null;
   let borders;
-
 
   coords.forEach((pointType) => {
     const dist = pointType.dist;
@@ -118,20 +125,15 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   if (closestVertex !== null) {
     if (closestLinepoint !== null) {
       if (closestVertex.dist < radius) {
-        return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId, type: "vertex"};
+        return Object.assign({borders: null}, closestVertex);
       } else {
-        return {
-          coords: closestLinepoint.coords,
-          borders: borders,
-          geoHubId: closestLinepoint.geoHubId,
-          type: "linepoint"
-        };
+        return Object.assign({borders: borders}, closestLinepoint);
       }
     } else {
-      return {coords: closestVertex.coords, borders: null, geoHubId: closestVertex.geoHubId, type: "vertex"};
+      return Object.assign({borders: null}, closestVertex);
     }
   } else if (closestLinepoint !== null) {
-    return {coords: closestLinepoint.coords, borders: borders, geoHubId: closestLinepoint.geoHubId, type: "linepoint"};
+    return Object.assign({borders: borders}, closestLinepoint);
   } else {
     return null;
   }
