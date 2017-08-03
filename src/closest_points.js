@@ -1,46 +1,41 @@
 import cheapRuler from "cheap-ruler";
 
+
 function closestPoints(ruler, coordinates, evtCoords) {
   const result = [];
   const pointOnLine = ruler.pointOnLine(coordinates, evtCoords);
-  if (pointOnLine) {
-    let lineEdge = false;
-    const pointCoords = pointOnLine.point;
-    const pointIndex = pointOnLine.index;
-    const linePoint = {type: "linepoint", coords: pointCoords};
-    let vertex = null;
-    if (pointIndex === coordinates.length) {
-      vertex = coordinates[pointIndex];
-      lineEdge = true;
-    } else {
-      const p1 = coordinates[pointIndex];
-      const p2 = coordinates[pointIndex + 1];
-      const distance1 = ruler.distance(p1, evtCoords);
-      const distance2 = ruler.distance(p2, evtCoords);
-      if (distance1 < distance2) {
-        if (pointIndex === 0) {
-          lineEdge = true;
-        }
-        vertex = p1;
-      } else {
-        vertex = p2;
-      }
+  let lineEdge = false;
+  const pointCoords = pointOnLine.point;
+  const pointIndex = pointOnLine.index;
+  const linePoint = {type: "linepoint", coords: pointCoords};
+  let vertex = null;
 
-      linePoint.border1 = p1;
-      linePoint.distance1 = distance1;
-      linePoint.border2 = p2;
-      linePoint.distance2 = distance2;
-    }
-    result.push(linePoint);
-    result.push({type: "vertex", coords: vertex, lineEdge: lineEdge});
-    console.log("pointOnLine: ", pointOnLine, " coordinates count: ", coordinates.length);
+  const p1 = coordinates[pointIndex];
+  const p2 = coordinates[pointIndex + 1];
+  const distance1 = ruler.distance(p1, evtCoords);
+  const distance2 = ruler.distance(p2, evtCoords);
+  if (distance1 < distance2) {
+    lineEdge = pointIndex === 0;
+    vertex = p1;
+  } else {
+    lineEdge = pointIndex + 1 === coordinates.length - 1;
+    vertex = p2;
   }
+
+  linePoint.border1 = p1;
+  linePoint.distance1 = distance1;
+  linePoint.border2 = p2;
+  linePoint.distance2 = distance2;
+
+  result.push(linePoint);
+  result.push({type: "vertex", coords: vertex, lineEdge: lineEdge});
   return result;
 }
 
 function calculatePointsOnLine(uniqueFeatures, evtCoords) {
   const coords = [];
   const knownIds = {};
+  const ruler = cheapRuler(evtCoords[1]);
 
   uniqueFeatures.forEach((feature) => {
     const geoHubId = feature.properties.geoHubId;
@@ -49,8 +44,6 @@ function calculatePointsOnLine(uniqueFeatures, evtCoords) {
       const type = feature.geometry.type;
       if (type === "LineString") {
         if (feature.geometry.coordinates) {
-          const ruler = cheapRuler(feature.geometry.coordinates[0][1]);
-          console.log("geoHubId: ", geoHubId);
           closestPoints(ruler, feature.geometry.coordinates, evtCoords).forEach((pointType) => {
             pointType.geoHubId = geoHubId;
             pointType.dist = ruler.distance(pointType.coords, evtCoords);
@@ -77,7 +70,6 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
   let closestLinepoint = null;
   let borders;
 
-  console.log("coords: ", JSON.stringify(coords));
 
   coords.forEach((pointType) => {
     const dist = pointType.dist;
@@ -88,7 +80,6 @@ function findClosestPoint(uniqueFeatures, evtCoords, radius) {
         } else if (pointType.dist <= closestVertex.dist) {
           if (pointType.dist === closestVertex.dist) {
             if (closestVertex.lineEdge) {
-              console.log("switching lineEdge to ", pointType);
               closestVertex = pointType;
             }
           } else {
