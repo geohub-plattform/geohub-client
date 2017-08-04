@@ -63,7 +63,8 @@
   },
   "dependencies": {
     "@mapbox/togeojson": "^0.16.0",
-    "@turf/turf": "^4.3.1",
+    "@turf/line-split": "4.5.2",
+    "@turf/turf": "4.5.2",
     "cheap-ruler": "^2.5.0",
     "clone-deep": "^0.3.0",
     "strxml": "1.0.0",

@@ -43,5 +43,16 @@ test("geohub - route to endpoint simple-simple grid", {skip: false}, t => {
   t.end();
 });
 
+test("geohub - route to endpoint simple-simple grid", {skip: true}, t => {
+  const fc = JSON.parse(fs.readFileSync("./debug/odenwald-hw.json"));
+  const features = fc.features;
+  console.time("Meshing");
+  const meshIndex = new MeshIndex(features);
+  console.timeEnd("Meshing");
+  t.equals(meshIndex.getMesh().length, 9894);
+  t.end();
+});
+
+
 
 
