@@ -3,7 +3,7 @@ const turf = require("@turf/turf");
 
 module.exports = function (ctx) {
   const coldFeatures = [];
-  let storeFeatureId = 0;
+  let storeFeatureId = 1;
 
   function updateSource() {
     ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(coldFeatures));
@@ -47,7 +47,7 @@ module.exports = function (ctx) {
   this.addFeatures = function (features) {
     features.forEach((feature) => {
       feature.properties.geoHubId = storeFeatureId++;
-      coldFeatures.push(feature);
+      coldFeatures.push(turf.truncate(feature, 7, 3, true));
     });
     updateSource();
   };
