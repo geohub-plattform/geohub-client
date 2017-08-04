@@ -196,7 +196,13 @@ module.exports = function (ctx) {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
-      onAction: () => ctx.events.combineFeatures()
+      onAction: () => ctx.api.combineFeatures()
+    });
+    buttonElements["create-polygon"] = createActionButton("create-polygon", {
+      container: controlGroup,
+      className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,
+      title: `Create polygon ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.api.createPolygon()
     });
     buttonElements["delete"] = createActionButton("delete", {
       container: controlGroup,

@@ -3,6 +3,7 @@ const pointindex = require("./src/pointindex");
 const Constants = require("./src/constants");
 const ui = require("./src/ui");
 const combineFeatures = require("./src/combine_features");
+const createPolygon = require("./src/create_polygon");
 const theme = require("./src/theme");
 const SelectMode = require("./src/mode_select");
 const DrawMode = require("./src/mode_draw");
@@ -96,6 +97,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   api.zoomInFeatures = zoomInFeatures(ctx);
   api.options = options;
   api.combineFeatures = combineFeatures(ctx);
+  api.createPolygon = createPolygon(ctx);
   return api;
 };
 

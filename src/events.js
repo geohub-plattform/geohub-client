@@ -174,11 +174,6 @@ module.exports = function (ctx) {
     console.log("class list container: ", ctx.container.classList);
   }
 
-  function combineFeatures() {
-    ctx.api.combineFeatures();
-
-  }
-
   function deleteUserData() {
     // finish current mode
     ctx.featuresStore.deleteFeatures();
@@ -210,7 +205,6 @@ module.exports = function (ctx) {
     handleWaysDownloadButton,
     handleBuildingsDownloadButton,
     changeMode,
-    combineFeatures,
     handleSaveButton,
     handleSaveAsGistButton,
     handleSaveAsGeojsonButton,
