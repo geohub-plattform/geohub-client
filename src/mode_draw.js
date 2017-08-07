@@ -13,7 +13,7 @@ module.exports = function (ctx) {
     const meshFeatures = [];
     if (ctx.closestPoint && ctx.closestPoint.borders && ctx.closestPoint.geoHubId !== undefined) {
       console.log("adding mesh features");
-      ctx.api.splitSegmentAtPoint(ctx.closestPoint.geoHubId, ctx.closestPoint.coords);
+      ctx.internalApi.splitSegmentAtPoint(ctx.closestPoint.geoHubId, ctx.closestPoint.coords);
     }
     if (ctx.snapFeature) {
       if (ctx.snapFeature.geometry.type === "LineString") {
@@ -28,7 +28,7 @@ module.exports = function (ctx) {
     }
     console.log("meshFeatures: ", JSON.stringify(meshFeatures));
     if (meshFeatures.length > 0) {
-      ctx.api.addFeaturesToMesh(meshFeatures);
+      ctx.internalApi.addFeaturesToMesh(meshFeatures);
     }
   };
 
@@ -83,7 +83,7 @@ module.exports = function (ctx) {
     if (snapToPoint) {
       const calculatedRadius = 0.005 * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()));
       const radiusInKm = Math.min(1.0, Math.max(0.005, calculatedRadius));
-      const nearFeatures = ctx.api.featuresAt(event.lngLat, radiusInKm);
+      const nearFeatures = ctx.internalApi.featuresAt(event.lngLat, radiusInKm);
       if (nearFeatures) {
         const closestPoint = closestPoints.findClosestPoint(nearFeatures, evtCoords, radiusInKm);
         if (closestPoint) {
@@ -99,7 +99,7 @@ module.exports = function (ctx) {
             } else {
               const fromPoint = ctx.lastClick;
               if (calculateRoute) {
-                const route = ctx.api.getRouteFromTo(fromPoint, closestPoint);
+                const route = ctx.internalApi.getRouteFromTo(fromPoint, closestPoint);
                 if (route) {
                   ctx.debug = {
                     routeFrom: fromPoint.coords,

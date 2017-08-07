@@ -19,7 +19,7 @@ module.exports = function (ctx) {
     ctx.closestPoint = null;
     const calculatedRadius = 0.005 * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()));
     const radiusInKm = Math.min(1.0, Math.max(0.005, calculatedRadius));
-    const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
+    const nearFeatures = ctx.internalApi.userFeaturesAt(event.lngLat);
     if (nearFeatures) {
       const closestPoint = closestPoints.findClosestPoint(nearFeatures, evtCoords, radiusInKm);
       if (closestPoint) {
@@ -58,7 +58,7 @@ module.exports = function (ctx) {
             truncatedCutPoint, ctx.closestPoint.polygonCoordsArray);
           ctx.featuresStore.addFeatures(newFeatures);
         }
-        ctx.api.addFeaturesToMesh([cutPoint]);
+        ctx.internalApi.addFeaturesToMesh([cutPoint]);
       }
     }
   };

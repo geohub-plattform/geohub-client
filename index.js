@@ -81,17 +81,15 @@ const setupGeoHub = function (options = defaultOptions, api) {
 
   ctx.internalApi.addUserData = ctx.pointindex.addUserData;
 
-  api.deleteSnapData = ctx.pointindex.deleteSnapData;
-  api.featuresAt = ctx.pointindex.featuresAt;
-  api.userFeaturesAt = ctx.pointindex.userFeaturesAt;
-  api.getRouteFromTo = ctx.pointindex.getRouteFromTo;
-  api.getRouteLength = ctx.pointindex.getRouteLength;
-  api.addFeaturesToMesh = ctx.pointindex.addFeaturesToMesh;
-  api.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
-  api.zoomInFeatures = zoomInFeatures(ctx);
-  api.options = options;
-  api.combineFeatures = combineFeatures(ctx);
-  api.createPolygon = createPolygon(ctx);
+  ctx.internalApi.deleteSnapData = ctx.pointindex.deleteSnapData;
+  ctx.internalApi.featuresAt = ctx.pointindex.featuresAt;
+  ctx.internalApi.userFeaturesAt = ctx.pointindex.userFeaturesAt;
+  ctx.internalApi.getRouteFromTo = ctx.pointindex.getRouteFromTo;
+  ctx.internalApi.addFeaturesToMesh = ctx.pointindex.addFeaturesToMesh;
+  ctx.internalApi.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
+  ctx.internalApi.zoomInFeatures = zoomInFeatures(ctx);
+  ctx.internalApi.combineFeatures = combineFeatures(ctx);
+  ctx.internalApi.createPolygon = createPolygon(ctx);
   return api;
 };
 

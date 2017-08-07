@@ -47,7 +47,7 @@ module.exports = function (ctx) {
 
   this.handleClick = function (event) {
     const multipleSelect = event.originalEvent.shiftKey;
-    const nearFeatures = ctx.api.userFeaturesAt(event.lngLat);
+    const nearFeatures = ctx.internalApi.userFeaturesAt(event.lngLat);
     console.log("nearFeatures: ", nearFeatures.length);
 
     if (nearFeatures.length > 0) {

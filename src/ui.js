@@ -255,13 +255,13 @@ module.exports = function (ctx) {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
-      onAction: () => ctx.api.combineFeatures()
+      onAction: () => ctx.internalApi.combineFeatures()
     });
     buttonElements["create-polygon"] = createActionButton("create-polygon", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,
       title: `Create polygon ${ctx.options.keybindings && '(e)'}`,
-      onAction: () => ctx.api.createPolygon()
+      onAction: () => ctx.internalApi.createPolygon()
     });
     buttonElements["delete"] = createActionButton("delete", {
       container: action2Group,
@@ -273,13 +273,13 @@ module.exports = function (ctx) {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE_SNAP,
       title: `Delete snap data ${ctx.options.keybindings && '(e)'}`,
-      onAction: () => ctx.api.deleteSnapData()
+      onAction: () => ctx.internalApi.deleteSnapData()
     });
     buttonElements["zoom-in-features"] = createActionButton("zoom-in-features", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
       title: `Zoom in current features ${ctx.options.keybindings && '(e)'}`,
-      onAction: () => ctx.api.zoomInFeatures()
+      onAction: () => ctx.internalApi.zoomInFeatures()
     });
     return containerGroup;
   }
