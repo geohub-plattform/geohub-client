@@ -257,6 +257,18 @@ module.exports = function (ctx) {
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.internalApi.combineFeatures()
     });
+    buttonElements["group-elements"] = createActionButton("group-elements", {
+      container: action2Group,
+      className: Constants.classes.CONTROL_BUTTON_GROUP_FEATURES,
+      title: `Group ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.internalApi.groupFeatures()
+    });
+    buttonElements["ungroup-elements"] = createActionButton("ungroup-elements", {
+      container: action2Group,
+      className: Constants.classes.CONTROL_BUTTON_UNGROUP_FEATURES,
+      title: `Ungroup ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.internalApi.ungroupFeatures()
+    });
     buttonElements["create-polygon"] = createActionButton("create-polygon", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,

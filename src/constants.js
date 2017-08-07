@@ -14,6 +14,8 @@ module.exports = {
     CONTROL_BUTTON_CREATE_POLYGON: 'geohub-create-polygon',
     CONTROL_BUTTON_COMBINE_FEATURES: 'mapbox-gl-draw_combine',
     CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',
+    CONTROL_BUTTON_GROUP_FEATURES: 'geohub-group-features',
+    CONTROL_BUTTON_UNGROUP_FEATURES: 'geohub-ungroup-features',
     CONTROL_BUTTON_DOWNLOAD: 'geohub-download',
     CONTROL_BUTTON_EDIT: 'geohub-edit',
     CONTROL_BUTTON_CUT: 'geohub-cut',

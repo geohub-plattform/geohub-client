@@ -137,6 +137,14 @@ button.active:hover {
     background-image: url(./svg/ic_timeline_gray_24px.svg);
 }
 
+.geohub-group-features {
+    background-image: url(./svg/ic_group_work_black_24px.svg);
+}
+
+.geohub-ungroup-features {
+    background-image: url(./svg/ic_group_work_gray_24px.svg);
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;

@@ -74,7 +74,7 @@
         map.addControl(new mapboxgl.GeolocateControl());
         map.addControl(new mapboxgl.ScaleControl());
         map.addControl(new mapboxgl.FullscreenControl());
-        $.getJSON("geohub-export-2017-7-4-115.geojson", null, function (data) {
+        $.getJSON("anwohner-neu.json", null, function (data) {
             geoHubClient.addUserData(data);
         });
       /*  $.getJSON("overpass-experimenta.json", null, function (data) {

@@ -13,6 +13,8 @@ const userData = require("./src/user_data");
 const ColdFeaturesStore = require("./src/cold_features_store");
 const zoomInFeatures = require("./src/zoom_in_features");
 const snackbar = require("./src/snackbar");
+const groupFeatures = require("./src/group_features");
+const ungroupFeatures = require("./src/ungroup_features");
 
 const defaultOptions = {
   snapToFeatures : true,
@@ -89,6 +91,8 @@ const setupGeoHub = function (options = defaultOptions, api) {
   ctx.internalApi.splitSegmentAtPoint = ctx.pointindex.splitSegmentAtPoint;
   ctx.internalApi.zoomInFeatures = zoomInFeatures(ctx);
   ctx.internalApi.combineFeatures = combineFeatures(ctx);
+  ctx.internalApi.groupFeatures = groupFeatures(ctx);
+  ctx.internalApi.ungroupFeatures = ungroupFeatures(ctx);
   ctx.internalApi.createPolygon = createPolygon(ctx);
   return api;
 };
