@@ -39,11 +39,11 @@ module.exports = function (ctx) {
     });
 
     if (classesToRemove.length > 0) {
-      ctx.container.classList.remove.apply(ctx.container.classList, classesToRemove);
+      ctx.container.classList.remove(...classesToRemove);
     }
 
     if (classesToAdd.length > 0) {
-      ctx.container.classList.add.apply(ctx.container.classList, classesToAdd);
+      ctx.container.classList.add(...classesToAdd);
     }
 
     currentMapClasses = xtend(currentMapClasses, nextMapClasses);
@@ -72,6 +72,41 @@ module.exports = function (ctx) {
     return button;
   }
 
+  function createOptionButton(id, options = {}) {
+    const button = document.createElement('button');
+    button.className = `${Constants.classes.CONTROL_BUTTON}`;
+    button.setAttribute('title', options.title);
+    if (ctx.options[options.name]) {
+      button.classList.add(options.activeClass);
+    } else {
+      button.classList.add(options.inactiveClass);
+    }
+    options.container.appendChild(button);
+
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (ctx.options[options.name]) {
+        ctx.options[options.name] = false;
+        button.classList.remove(options.activeClass);
+        button.classList.add(options.inactiveClass);
+        if (options.onDeactivate) {
+          options.onDeactivate();
+        }
+      } else {
+        ctx.options[options.name] = true;
+        button.classList.remove(options.inactiveClass);
+        button.classList.add(options.activeClass);
+        if (options.onActivate) {
+          options.onActivate();
+        }
+      }
+    }, true);
+
+
+    return button;
+  }
+
   function createActionButton(id, options = {}) {
     const button = document.createElement('button');
     button.className = `${Constants.classes.ACTION_BUTTON} ${options.className}`;
@@ -85,6 +120,12 @@ module.exports = function (ctx) {
     }, true);
 
     return button;
+  }
+
+  function createDivider() {
+    const divider = document.createElement('div');
+    divider.className = `${Constants.classes.DIVIDER}`;
+    return divider;
   }
 
   function createButtonDropdown() {
@@ -111,10 +152,8 @@ module.exports = function (ctx) {
   }
 
   function addButtons() {
-    const controls = ctx.options.controls;
     const containerGroup = document.createElement('div');
     containerGroup.className = `${Constants.classes.PREDEFINED_CONTROL_BASE} ${Constants.classes.PREDEFINED_CONTROL_GROUP}`;
-    if (!controls) return containerGroup;
     const actionGroup = document.createElement('div');
     actionGroup.className = `${Constants.classes.ACTION_GROUP}`;
     const controlGroup = document.createElement('div');
@@ -123,13 +162,19 @@ module.exports = function (ctx) {
     dropdownGroup.className = `${Constants.classes.DROPDOWN_GROUP}`;
     dropdownGroup.style.display = 'none';
 
-    const divider = document.createElement('div');
-    divider.className = `${Constants.classes.DIVIDER}`;
+    const action2Group = document.createElement('div');
+    action2Group.className = `${Constants.classes.ACTION_GROUP}`;
+    const optionsGroup = document.createElement('div');
+    optionsGroup.className = `${Constants.classes.ACTION_GROUP}`;
 
     containerGroup.appendChild(actionGroup);
     containerGroup.appendChild(dropdownGroup);
-    containerGroup.appendChild(divider);
+    containerGroup.appendChild(createDivider());
     containerGroup.appendChild(controlGroup);
+    containerGroup.appendChild(createDivider());
+    containerGroup.appendChild(optionsGroup);
+    containerGroup.appendChild(createDivider());
+    containerGroup.appendChild(action2Group);
 
 
     buttonElements["downloadWays"] = createActionButton("downloadWays", {
@@ -192,32 +237,46 @@ module.exports = function (ctx) {
       title: `Cut ${ctx.options.keybindings && '(e)'}`,
       onActivate: () => ctx.events.changeMode(Constants.modes.CUT)
     });
+    buttonElements["snap-enabled"] = createOptionButton("snap-enabled", {
+      container: optionsGroup,
+      name: "snapToFeatures",
+      title: `Toggle snapping ${ctx.options.keybindings && '(e)'}`,
+      activeClass: 'geohub-snapping-enabled',
+      inactiveClass: 'geohub-snapping-disabled'
+    });
+    buttonElements["routing-enabled"] = createOptionButton("routing-enabled", {
+      container: optionsGroup,
+      name: "routing",
+      title: `Toggle routing ${ctx.options.keybindings && '(e)'}`,
+      activeClass: 'geohub-routing-enabled',
+      inactiveClass: 'geohub-routing-disabled'
+    });
     buttonElements["combine"] = createActionButton("combine", {
-      container: controlGroup,
+      container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
       title: `Combine ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.api.combineFeatures()
     });
     buttonElements["create-polygon"] = createActionButton("create-polygon", {
-      container: controlGroup,
+      container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,
       title: `Create polygon ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.api.createPolygon()
     });
     buttonElements["delete"] = createActionButton("delete", {
-      container: controlGroup,
+      container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE,
       title: `Delete data ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.events.deleteUserData()
     });
     buttonElements["delete-snap"] = createActionButton("delete-snap", {
-      container: controlGroup,
+      container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE_SNAP,
       title: `Delete snap data ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.api.deleteSnapData()
     });
     buttonElements["zoom-in-features"] = createActionButton("zoom-in-features", {
-      container: controlGroup,
+      container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
       title: `Zoom in current features ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.api.zoomInFeatures()

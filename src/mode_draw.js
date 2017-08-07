@@ -69,8 +69,14 @@ module.exports = function (ctx) {
         return null;
       }
     };
-    const calculateRoute = !event.originalEvent.altKey;
-    const snapToPoint = !event.originalEvent.shiftKey;
+    let calculateRoute = ctx.options.routing;
+    if (event.originalEvent.altKey) {
+      calculateRoute = false;
+    }
+    let snapToPoint = ctx.options.snapToFeatures;
+    if (event.originalEvent.shiftKey) {
+      snapToPoint = false;
+    }
     const evtCoords = [event.lngLat.lng, event.lngLat.lat];
     let snapFeature = null;
     const debugFeatures = [];

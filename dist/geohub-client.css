@@ -121,6 +121,22 @@ button.active:hover {
     background-image: url(./svg/ic_polygon_black_24px.svg);
 }
 
+.geohub-snapping-enabled {
+    background-image: url(./svg/ic_center_focus_strong_black_24px.svg);
+}
+
+.geohub-snapping-disabled {
+    background-image: url(./svg/ic_center_focus_weak_black_24px.svg);
+}
+
+.geohub-routing-enabled {
+    background-image: url(./svg/ic_timeline_black_24px.svg);
+}
+
+.geohub-routing-disabled {
+    background-image: url(./svg/ic_timeline_gray_24px.svg);
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;

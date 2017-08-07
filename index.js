@@ -15,14 +15,8 @@ const zoomInFeatures = require("./src/zoom_in_features");
 const snackbar = require("./src/snackbar");
 
 const defaultOptions = {
-  controls: {
-    point: false,
-    line_string: false,
-    polygon: false,
-    trash: false,
-    combine_features: false,
-    uncombine_features: false
-  }
+  snapToFeatures : true,
+  routing : true
 };
 
 const setupGeoHub = function (options = defaultOptions, api) {

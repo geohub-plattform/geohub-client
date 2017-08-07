@@ -187,6 +187,7 @@ module.exports = function (ctx) {
     ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
   }
 
+
   return {
     addEventListeners: function (map) {
       map.on("mousemove", mouseMove);
