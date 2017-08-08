@@ -1,6 +1,7 @@
 import Constants from "./constants";
 import turf from "@turf/turf";
 import togeojson from "@mapbox/togeojson";
+
 const overpassApi = require("./overpass_api");
 const exportFile = require("./export_file");
 
@@ -118,6 +119,7 @@ module.exports = function (ctx) {
     input.setAttribute('multiple', 'multiple');
     input.addEventListener('change', handleSelection, false);
     input.click();
+
     function handleSelection(event) {
       const files = event.target.files;
       const names = input.files;
@@ -187,6 +189,21 @@ module.exports = function (ctx) {
     ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
   }
 
+  function hideFeatures() {
+    if (ctx.hiddenFeatures) {
+      ctx.selectedFeatures = ctx.selectedFeatures || [];
+      ctx.selectedFeatures.push(...ctx.hiddenFeatures);
+      ctx.hiddenFeatures = null;
+      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
+      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(ctx.selectedFeatures));
+    } else {
+      ctx.hiddenFeatures = ctx.selectedFeatures;
+      ctx.selectedFeatures = null;
+      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
+    }
+  }
+
 
   return {
     addEventListeners: function (map) {
@@ -211,6 +228,7 @@ module.exports = function (ctx) {
     handleSaveAsGeojsonButton,
     handleSaveAsKmlButton,
     handleLoadDataButton,
-    deleteUserData
+    deleteUserData,
+    hideFeatures
   };
 };

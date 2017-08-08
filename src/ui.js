@@ -293,6 +293,12 @@ module.exports = function (ctx) {
       title: `Zoom in current features ${ctx.options.keybindings && '(e)'}`,
       onAction: () => ctx.internalApi.zoomInFeatures()
     });
+    buttonElements["hide-selected"] = createActionButton("hide-selected", {
+      container: action2Group,
+      className: Constants.classes.CONTROL_BUTTON_HIDE_SELECTED,
+      title: `Hide/Unhide selected features ${ctx.options.keybindings && '(e)'}`,
+      onAction: () => ctx.events.hideFeatures()
+    });
     return containerGroup;
   }
 

@@ -145,6 +145,10 @@ button.active:hover {
     background-image: url(./svg/ic_group_work_gray_24px.svg);
 }
 
+.geohub-hide-selected {
+    background-image: url(./svg/ic_tab_unselected_black_24px.svg);
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;
