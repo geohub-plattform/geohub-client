@@ -31,6 +31,16 @@ module.exports = function (ctx) {
     console.log("key handled: ", keyHandled);
     if (!keyHandled) {
       switch (event.code) {
+        case "Home" : {
+          console.log("move 1");
+          ctx.internalApi.moveFeatures(1);
+          break;
+        }
+        case "End" : {
+          console.log("move -1");
+          ctx.internalApi.moveFeatures(-1);
+          break;
+        }
         case "Delete": {
           if (ctx.mode === Constants.modes.SELECT) {
             if (ctx.selectedFeatures) {
