@@ -18,51 +18,58 @@ module.exports = function (ctx) {
 
   const keypress = function (event) {
     console.log("keycode: ", event.keyCode, " => ", event.key, " | Code: ", event.code);
-    switch (event.code) {
-      case "KeyD": {
-        if (ctx.debug) {
-          console.log("Debug: ", JSON.stringify(ctx.debug));
-        }
-        break;
+    const buttonOptions = ctx.ui.getButtonOptions();
+
+    let keyHandled = false;
+    Object.keys(buttonOptions).forEach((buttonId) => {
+      const option = buttonOptions[buttonId];
+      if (option.key && option.key === event.key) {
+        option.button.click();
+        keyHandled = true;
       }
-      case "Delete": {
-        if (ctx.mode === Constants.modes.SELECT) {
-          if (ctx.selectedFeatures) {
-            ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-            ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
-            ctx.selectedFeatures = null;
-          }
-        } else if (ctx.mode === Constants.modes.DRAW) {
-          if (ctx.hotFeature) {
-            const coords = ctx.hotFeature.geometry.coordinates;
-            if (coords.length > 1) {
-              coords.splice(coords.length - 1, 1);
-              ctx.lastClick = {coords: coords[coords.length - 1]};
-              if (coords.length > 0) {
-                ctx.snapFeature = turf.point(coords[coords.length - 1]);
-              } else {
-                ctx.snapFeature = null;
-              }
+    });
+    console.log("key handled: ", keyHandled);
+    if (!keyHandled) {
+      switch (event.code) {
+        case "Delete": {
+          if (ctx.mode === Constants.modes.SELECT) {
+            if (ctx.selectedFeatures) {
+              ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
+              ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
+              ctx.selectedFeatures = null;
+            }
+          } else if (ctx.mode === Constants.modes.DRAW) {
+            if (ctx.hotFeature) {
+              const coords = ctx.hotFeature.geometry.coordinates;
               if (coords.length > 1) {
-                ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
-              } else {
-                ctx.hotFeature = null;
-                ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
+                coords.splice(coords.length - 1, 1);
+                ctx.lastClick = {coords: coords[coords.length - 1]};
+                if (coords.length > 0) {
+                  ctx.snapFeature = turf.point(coords[coords.length - 1]);
+                } else {
+                  ctx.snapFeature = null;
+                }
+                if (coords.length > 1) {
+                  ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+                } else {
+                  ctx.hotFeature = null;
+                  ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
+                }
               }
+              if (ctx.lastMouseEvent) {
+                mouseMove(ctx.lastMouseEvent);
+              }
+            } else if (ctx.snapFeature) {
+              ctx.snapFeature = null;
+              ctx.lastClick = null;
+              ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
             }
-            if (ctx.lastMouseEvent) {
-              mouseMove(ctx.lastMouseEvent);
-            }
-          } else if (ctx.snapFeature) {
-            ctx.snapFeature = null;
-            ctx.lastClick = null;
-            ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
           }
+          break;
         }
-        break;
       }
     }
-  };
+  }
 
   function handleWaysDownloadButton() {
     console.log("Downloading ", ctx.map.getBounds());

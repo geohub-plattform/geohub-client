@@ -5,6 +5,7 @@ const classTypes = ['mode', 'feature', 'mouse'];
 
 module.exports = function (ctx) {
   const buttonElements = {};
+  const buttonOptions = {};
   let activeButton = null;
 
   let currentMapClasses = {
@@ -49,11 +50,28 @@ module.exports = function (ctx) {
     currentMapClasses = xtend(currentMapClasses, nextMapClasses);
   }
 
-  function createControlButton(id, options = {}) {
+  function createTitle(options) {
+    return `${options.title}${(options.key ? ` (${options.key})` : "")}`;
+  }
+
+  function createBaseButton(id, options) {
     const button = document.createElement('button');
-    button.className = `${Constants.classes.CONTROL_BUTTON} ${options.className}`;
-    button.setAttribute('title', options.title);
+    if (options.title) {
+      button.setAttribute('title', createTitle(options));
+    }
     options.container.appendChild(button);
+
+    buttonElements[id] = button;
+    options["button"] = button;
+    buttonOptions[id] = options;
+
+    return button;
+
+  }
+
+  function createControlButton(id, options = {}) {
+    const button = createBaseButton(id, options);
+    button.className = `${Constants.classes.CONTROL_BUTTON} ${options.className}`;
 
     button.addEventListener('click', (e) => {
       e.preventDefault();
@@ -73,15 +91,13 @@ module.exports = function (ctx) {
   }
 
   function createOptionButton(id, options = {}) {
-    const button = document.createElement('button');
+    const button = createBaseButton(id, options);
     button.className = `${Constants.classes.CONTROL_BUTTON}`;
-    button.setAttribute('title', options.title);
     if (ctx.options[options.name]) {
       button.classList.add(options.activeClass);
     } else {
       button.classList.add(options.inactiveClass);
     }
-    options.container.appendChild(button);
 
     button.addEventListener('click', (e) => {
       e.preventDefault();
@@ -102,16 +118,12 @@ module.exports = function (ctx) {
         }
       }
     }, true);
-
-
     return button;
   }
 
   function createActionButton(id, options = {}) {
-    const button = document.createElement('button');
+    const button = createBaseButton(id, options);
     button.className = `${Constants.classes.ACTION_BUTTON} ${options.className}`;
-    button.setAttribute('title', options.title);
-    options.container.appendChild(button);
 
     button.addEventListener('click', (e) => {
       e.preventDefault();
@@ -176,127 +188,135 @@ module.exports = function (ctx) {
     containerGroup.appendChild(createDivider());
     containerGroup.appendChild(action2Group);
 
-
-    buttonElements["downloadWays"] = createActionButton("downloadWays", {
+    createActionButton("downloadWays", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
-      title: `Download way lines ${ctx.options.keybindings && '(d)'}`,
+      key: "w",
+      title: `Download way lines`,
       onAction: () => ctx.events.handleWaysDownloadButton()
     });
-    buttonElements["downloadBuildings"] = createActionButton("downloadBuildings", {
+    createActionButton("downloadBuildings", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
-      title: `Download building lines ${ctx.options.keybindings && '(d)'}`,
+      key: "b",
+      title: `Download building lines`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
-    buttonElements["loadData"] = createActionButton("loadData", {
+    createActionButton("loadData", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_LOAD_DATA,
+      key: "o",
       title: `Upload GeoJson, KML or GPX from PC`,
       onAction: () => ctx.events.handleLoadDataButton()
     });
-    buttonElements["saveFile"] = createActionButton("saveFile", {
+    createActionButton("saveFile", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE,
       title: `Export as Gist, GeoJson, KML`,
       onAction: () => ctx.events.handleSaveButton()
     });
-    buttonElements["saveAsGist"] = createActionButton("saveAsGist", {
+    createActionButton("saveAsGist", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GIST,
       title: `Export as Gist`,
       onAction: () => ctx.events.handleSaveAsGistButton()
     });
-    buttonElements["saveAsGeojson"] = createActionButton("saveAsGeojson", {
+    createActionButton("saveAsGeojson", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GEOJSON,
       title: `Export as Geojson`,
       onAction: () => ctx.events.handleSaveAsGeojsonButton()
     });
-    buttonElements["saveAsKML"] = createActionButton("saveAsKML", {
+    createActionButton("saveAsKML", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_KML,
       title: `Export as KML`,
       onAction: () => ctx.events.handleSaveAsKmlButton()
     });
-    buttonElements["select"] = createControlButton("select", {
+    createControlButton("select", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_SELECT,
-      title: `Select ${ctx.options.keybindings && '(s)'}`,
+      key: "s",
+      title: `Select features`,
       onActivate: () => ctx.events.changeMode(Constants.modes.SELECT)
     });
-    buttonElements["edit"] = createControlButton("edit", {
+    createControlButton("edit", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_EDIT,
-      title: `Edit ${ctx.options.keybindings && '(e)'}`,
+      key: "d",
+      title: `Edit`,
       onActivate: () => ctx.events.changeMode(Constants.modes.DRAW)
     });
-    buttonElements["cut"] = createControlButton("cut", {
+    createControlButton("cut", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_CUT,
-      title: `Cut ${ctx.options.keybindings && '(e)'}`,
+      key: "a",
+      title: `Cut`,
       onActivate: () => ctx.events.changeMode(Constants.modes.CUT)
     });
-    buttonElements["snap-enabled"] = createOptionButton("snap-enabled", {
+    createOptionButton("snap-enabled", {
       container: optionsGroup,
       name: "snapToFeatures",
-      title: `Toggle snapping ${ctx.options.keybindings && '(e)'}`,
+      title: `Toggle snapping`,
       activeClass: 'geohub-snapping-enabled',
       inactiveClass: 'geohub-snapping-disabled'
     });
-    buttonElements["routing-enabled"] = createOptionButton("routing-enabled", {
+    createOptionButton("routing-enabled", {
       container: optionsGroup,
       name: "routing",
-      title: `Toggle routing ${ctx.options.keybindings && '(e)'}`,
+      title: `Toggle routing`,
       activeClass: 'geohub-routing-enabled',
       inactiveClass: 'geohub-routing-disabled'
     });
-    buttonElements["combine"] = createActionButton("combine", {
+    createActionButton("combine", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
-      title: `Combine ${ctx.options.keybindings && '(e)'}`,
+      title: `Combine`,
       onAction: () => ctx.internalApi.combineFeatures()
     });
-    buttonElements["group-elements"] = createActionButton("group-elements", {
+    createActionButton("group-elements", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_GROUP_FEATURES,
-      title: `Group ${ctx.options.keybindings && '(e)'}`,
+      key: "g",
+      title: `Group`,
       onAction: () => ctx.internalApi.groupFeatures()
     });
-    buttonElements["ungroup-elements"] = createActionButton("ungroup-elements", {
+    createActionButton("ungroup-elements", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_UNGROUP_FEATURES,
-      title: `Ungroup ${ctx.options.keybindings && '(e)'}`,
+      key: "G",
+      title: `Ungroup`,
       onAction: () => ctx.internalApi.ungroupFeatures()
     });
-    buttonElements["create-polygon"] = createActionButton("create-polygon", {
+    createActionButton("create-polygon", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,
-      title: `Create polygon ${ctx.options.keybindings && '(e)'}`,
+      title: `Create polygon`,
       onAction: () => ctx.internalApi.createPolygon()
     });
-    buttonElements["delete"] = createActionButton("delete", {
+    createActionButton("delete", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE,
-      title: `Delete data ${ctx.options.keybindings && '(e)'}`,
+      title: `Delete data`,
       onAction: () => ctx.events.deleteUserData()
     });
-    buttonElements["delete-snap"] = createActionButton("delete-snap", {
+    createActionButton("delete-snap", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE_SNAP,
-      title: `Delete snap data ${ctx.options.keybindings && '(e)'}`,
+      title: `Delete snap data`,
       onAction: () => ctx.internalApi.deleteSnapData()
     });
-    buttonElements["zoom-in-features"] = createActionButton("zoom-in-features", {
+    createActionButton("zoom-in-features", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
-      title: `Zoom in current features ${ctx.options.keybindings && '(e)'}`,
+      key: "x",
+      title: `Zoom in current features`,
       onAction: () => ctx.internalApi.zoomInFeatures()
     });
-    buttonElements["hide-selected"] = createActionButton("hide-selected", {
+    createActionButton("hide-selected", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_HIDE_SELECTED,
-      title: `Hide/Unhide selected features ${ctx.options.keybindings && '(e)'}`,
+      title: `Hide/Unhide selected features`,
       onAction: () => ctx.events.hideFeatures()
     });
     return containerGroup;
@@ -309,7 +329,12 @@ module.exports = function (ctx) {
         button.parentNode.removeChild(button);
       }
       delete buttonElements[buttonId];
+      delete buttonOptions[buttonId];
     });
+  }
+
+  function getButtonOptions() {
+    return buttonOptions;
   }
 
   return {
@@ -317,6 +342,7 @@ module.exports = function (ctx) {
     queueMapClasses,
     updateMapClasses,
     addButtons,
-    removeButtons
+    removeButtons,
+    getButtonOptions
   };
 };
