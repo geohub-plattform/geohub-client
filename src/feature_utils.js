@@ -17,6 +17,8 @@ function combineSameTypeFeatures(features) {
         coords.push(...lineString.geometry.coordinates.slice(0, lineString.geometry.coordinates.length - 1).reverse());
       } else if (utils.isPointEqual(firstPoint, currentLastPoint)) {
         coords.splice(0, 0, ...lineString.geometry.coordinates.slice(0, lineString.geometry.coordinates.length - 1));
+      } else if (utils.isPointEqual(firstPoint, currentFirstPoint)) {
+        coords.splice(0, 1, ...lineString.geometry.coordinates.reverse());
       } else {
         const distanceToFirstPoint = turf.distance(lastPoint, currentFirstPoint);
         const distanceToLastPoint = turf.distance(lastPoint, currentLastPoint);
