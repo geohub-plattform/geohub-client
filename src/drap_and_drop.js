@@ -1,5 +1,6 @@
 module.exports = function (ctx) {
-  const dropZone = document.getElementById("nav");
+  const dropZone = document.getElementById("map");
+  const indicatorZone = document.getElementById("nav");
 
   function extractFiles(dt) {
     const files = [];
@@ -15,35 +16,52 @@ module.exports = function (ctx) {
     return files;
   }
 
-  if (dropZone) {
-    dropZone.addEventListener("drop", event => {
-      event.preventDefault();
-      dropZone.classList.remove("dragover");
-      const files = extractFiles(event.dataTransfer);
-      files.forEach((file) => {
-        const fileReader = new FileReader();
-        fileReader.onloadend = function () {
-          if (fileReader.readyState === FileReader.DONE) {
-            try {
-              ctx.api.addUserData(JSON.parse(fileReader.result));
-            } catch (e) {
-              ctx.snackbar("JSON Daten ungültig");
-            }
+  function processFiles(files, handler) {
+    files.forEach((file) => {
+      const fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        if (fileReader.readyState === FileReader.DONE) {
+          try {
+            handler(JSON.parse(fileReader.result));
+          } catch (e) {
+            ctx.snackbar("JSON Daten ungültig");
           }
-        };
-        fileReader.readAsText(file);
-      });
+        }
+      };
+      fileReader.readAsText(file);
     });
-    dropZone.addEventListener("dragenter", event => {
-      event.preventDefault();
-      dropZone.classList.add("dragover");
-    });
-    dropZone.addEventListener("dragleave", event => {
-      event.preventDefault();
-      dropZone.classList.remove("dragover");
-    });
-    dropZone.addEventListener("dragover", event => {
-      event.preventDefault();
-    });
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+    indicatorZone.classList.remove("dragover");
+    const files = extractFiles(event.dataTransfer);
+    processFiles(files, ctx.api.addUserData);
+  }
+
+  function handleDragEnter(event) {
+    event.preventDefault();
+    indicatorZone.classList.add("dragover");
+  }
+
+  function handleDragLeave(event) {
+    event.preventDefault();
+    indicatorZone.classList.remove("dragover");
+  }
+
+  function handleDropOver(event) {
+    event.preventDefault();
+  }
+
+  if (dropZone) {
+    dropZone.addEventListener("drop", handleDrop);
+    dropZone.addEventListener("dragenter", handleDragEnter);
+    dropZone.addEventListener("dragleave", handleDragLeave);
+    dropZone.addEventListener("dragover", handleDropOver);
+  }
+
+  if (indicatorZone) {
+    indicatorZone.addEventListener("dragover", handleDropOver);
+    indicatorZone.addEventListener("drop", handleDropOver);
   }
 };
