@@ -17,6 +17,7 @@ const groupFeatures = require("./src/group_features");
 const ungroupFeatures = require("./src/ungroup_features");
 const moveFeatures = require("./src/move_features");
 const editor = require("./src/editor");
+const dragAndDrop = require("./src/drap_and_drop");
 
 const defaultOptions = {
   snapToFeatures : true,
@@ -35,6 +36,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   ctx.events = events(ctx);
   ctx.featuresStore = new ColdFeaturesStore(ctx);
   ctx.editor = editor(ctx);
+  ctx.dragAndDrop = dragAndDrop(ctx);
 
   api.onAdd = function (map) {
     console.log("onAdd");
