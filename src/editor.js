@@ -24,19 +24,19 @@ module.exports = function (ctx) {
     }
     const getType = function (data) {
         var type = typeof data;
-        console.log(type);
+        //console.log(type);
         switch (type) {
             case 'object':
 
                 if (data.length > 1) {
                     $('#editor').append('<p>array</p>');
-                    console.log(data);
+                    //console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         showFeature(data[i]);
                     }
                 } else if (data.length === 1) {
                     $('#editor').append('<p>object</p>');
-                    console.log(data[0]);
+                    //console.log(data[0]);
                     showFeature(data[0]);
                 } else if (data.length === 0) {
                     return;
