@@ -110,19 +110,24 @@ module.exports = function (ctx) {
     }
   }
 
+  function getFeaturesForSave() {
+    if (ctx.selectedFeatures) {
+      return turf.featureCollection(ctx.selectedFeatures);
+    } else {
+      return turf.featureCollection(ctx.featuresStore.getColdFeatures());
+    }
+  }
+
   function handleSaveAsGistButton() {
-    const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
-    exportFile.asGist(file);
+    exportFile.asGist(getFeaturesForSave());
   }
 
   function handleSaveAsGeojsonButton() {
-    const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
-    exportFile.asGeojson(file);
+    exportFile.asGeojson(getFeaturesForSave());
   }
 
   function handleSaveAsKmlButton() {
-    const file = turf.featureCollection(ctx.featuresStore.getColdFeatures());
-    exportFile.asKml(file);
+    exportFile.asKml(getFeaturesForSave());
   }
 
   function stringToDOM(str) {
