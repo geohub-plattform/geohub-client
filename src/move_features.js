@@ -82,9 +82,11 @@ module.exports = function (ctx) {
           }
         });
         if (allFeaturesType === "LineString") {
+          const newSelectedFeatures = [];
           ctx.selectedFeatures.forEach((feature) => {
-            feature.geometry.coordinates = moveLine(feature.geometry.coordinates, direction);
+            newSelectedFeatures.push(turf.lineOffset(feature, moveDistance * direction));
           });
+          ctx.selectedFeatures = newSelectedFeatures;
           updateSources();
 
         } else {
