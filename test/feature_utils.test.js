@@ -18,7 +18,6 @@ test("geohub - combine two lines, second reverse order", {skip: false}, t => {
   t.end();
 });
 
-
 test("geohub - combine two lines, apart", {skip: false}, t => {
   const baseLine = turf.lineString([[9, 50], [10, 50], [11, 50]]);
   const secondLine = turf.lineString([[11, 49], [12, 49], [13, 49]]);

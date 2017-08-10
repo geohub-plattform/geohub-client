@@ -189,7 +189,7 @@
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v8',
-            center: [9.21295427, 49.1432579],
+            center: [9.21958, 49.145077],
             zoom: 17,
             maxZoom: 30
         });
@@ -209,12 +209,12 @@
             map.addControl(new mapboxgl.GeolocateControl());
             map.addControl(new mapboxgl.ScaleControl());
             map.addControl(new mapboxgl.FullscreenControl());
-            $.getJSON("overpass-experimenta.json", null, function (data) {
+            /*$.getJSON("overpass-experimenta.json", null, function (data) {
                 geoHubClient.addOverpassData(data);
-                /*$.getJSON("anwohner-neu.json", null, function (data) {
-                    geoHubClient.addUserData(data);
+            });*/
+            $.getJSON("anwohner-neu.json", null, function (data) {
+                geoHubClient.addUserData(data);
 
-                });*/
             });
         });
     </script>
