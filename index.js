@@ -16,6 +16,7 @@ const snackbar = require("./src/snackbar");
 const groupFeatures = require("./src/group_features");
 const ungroupFeatures = require("./src/ungroup_features");
 const moveFeatures = require("./src/move_features");
+const editor = require("./src/editor");
 
 const defaultOptions = {
   snapToFeatures : true,
@@ -33,6 +34,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   ctx.pointindex = pointindex(ctx);
   ctx.events = events(ctx);
   ctx.featuresStore = new ColdFeaturesStore(ctx);
+  ctx.editor = editor(ctx);
 
   api.onAdd = function (map) {
     console.log("onAdd");

@@ -202,6 +202,12 @@ module.exports = function (ctx) {
       title: `Download building lines`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
+    createActionButton("expandEditor", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_EXPAND_EDITOR,
+      title: `Expand GeoJson Feature Editor`,
+      onAction: () => ctx.events.handleExpandEditorButton()
+    });
     createActionButton("loadData", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_LOAD_DATA,

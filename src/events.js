@@ -129,7 +129,18 @@ module.exports = function (ctx) {
   function handleSaveAsKmlButton() {
     exportFile.asKml(getFeaturesForSave());
   }
-
+  function handleExpandEditorButton() {
+    if (!$('#editor').hasClass('expanded')) {
+      $('#map').css('width', '60%');
+      $('#editor').css('width', '40%');
+      $('#editor').addClass('expanded');
+      ctx.editor.renderEditor();
+    } else {
+      $('#map').css('width', '100%');
+      $('#editor').css('width', '0%');
+      $('#editor').removeClass('expanded');
+    }
+  }
   function stringToDOM(str) {
     const parser = new DOMParser();
     return parser.parseFromString(str, "text/xml");
@@ -249,6 +260,7 @@ module.exports = function (ctx) {
     handleSaveAsGistButton,
     handleSaveAsGeojsonButton,
     handleSaveAsKmlButton,
+    handleExpandEditorButton,
     handleLoadDataButton,
     deleteUserData,
     hideFeatures
