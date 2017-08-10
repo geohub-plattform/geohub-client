@@ -17,7 +17,16 @@ module.exports = function (ctx) {
       }
     });
     if (result === null) {
-      console.error("cannot find cold feature with id: ", id, " storeFeatureId: ", storeFeatureId, " coldFeatures length: ", coldFeatures.length);
+      if (ctx.selectedFeatures) {
+        const selectedIds = ctx.selectedFeatures.map((feature) => {
+          return feature.properties.geoHubId;
+        });
+        if (selectedIds.indexOf(id) === -1) {
+          console.error("cannot find cold feature with id: ", id, " storeFeatureId: ",
+            storeFeatureId, " coldFeatures: ", coldFeatures.length);
+          console.error("Selected IDs: ", selectedIds);
+        }
+      }
     }
     return result;
   }
