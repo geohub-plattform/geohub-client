@@ -7,7 +7,6 @@ module.exports = function (ctx) {
 
   function updateSources() {
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
-    ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(ctx.selectedFeatures));
   }
 
   function moveLine(line, direction) {

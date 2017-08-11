@@ -45,7 +45,6 @@ module.exports = function (ctx) {
           if (ctx.mode === Constants.modes.SELECT) {
             if (ctx.selectedFeatures) {
               ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-              ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
               ctx.selectedFeatures = null;
             }
           } else if (ctx.mode === Constants.modes.DRAW) {
@@ -219,7 +218,6 @@ module.exports = function (ctx) {
     ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-    ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
   }
 
   function hideFeatures() {
@@ -228,12 +226,10 @@ module.exports = function (ctx) {
       ctx.selectedFeatures.push(...ctx.hiddenFeatures);
       ctx.hiddenFeatures = null;
       ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
-      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(ctx.selectedFeatures));
     } else {
       ctx.hiddenFeatures = ctx.selectedFeatures;
       ctx.selectedFeatures = null;
       ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
     }
   }
 

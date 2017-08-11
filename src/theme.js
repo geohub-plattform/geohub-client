@@ -17,7 +17,8 @@ module.exports = [
     'type': 'circle',
     'paint': {
       'circle-radius': 3,
-      'circle-color': '#888'
+      'circle-color': '#888',
+      'circle-opacity': 0.3
     }
   },
   {
@@ -29,7 +30,7 @@ module.exports = [
       'line-join': 'round'
     },
     'paint': {
-      'line-color': '#ff0015',
+      'line-color': '#0D47A1',
       'line-width': 2
     }
   },
@@ -40,7 +41,7 @@ module.exports = [
     'layout': {},
     'filter': ["==", "$type", "Polygon"],
     'paint': {
-      'fill-color': '#ff0015',
+      'fill-color': '#0D47A1',
       'fill-opacity': 0.4
     }
   },
@@ -63,7 +64,7 @@ module.exports = [
       'line-join': 'round'
     },
     'paint': {
-      'line-color': '#0000ff',
+      'line-color': '#D500F9',
       'line-width': 2
     }
   },
@@ -72,8 +73,8 @@ module.exports = [
     'id': 'geohub-point-active',
     'type': 'circle',
     'paint': {
-      'circle-radius': 5,
-      'circle-color': '#3bb2d0'
+      'circle-radius': 4,
+      'circle-color': '#D81B60'
     }
   },
   {
@@ -85,7 +86,7 @@ module.exports = [
       'line-join': 'round'
     },
     'paint': {
-      'line-color': '#3bb2d0',
+      'line-color': '#D81B60',
       'line-width': 2
     }
   },
@@ -98,7 +99,7 @@ module.exports = [
       'line-join': 'round'
     },
     'paint': {
-      'line-color': '#D0981F',
+      'line-color': '#E65100',
       'line-width': 2
     }
   },
@@ -109,7 +110,7 @@ module.exports = [
     'layout': {},
     'filter': ["==", "$type", "Polygon"],
     'paint': {
-      'fill-color': '#D0981F',
+      'fill-color': '#E65100',
       'fill-opacity': 0.4
     }
   },
@@ -120,19 +121,8 @@ module.exports = [
     'layout': {
       'icon-image': 'arrow',
       'symbol-placement': 'line',
-      'icon-rotate': 180,
+      'icon-rotate': 0,
       'icon-offset': [0, 0]
-    }
-  },
-  {
-    'source': Constants.sources.SELECT_HELPER,
-    'id': 'geohub-point-select-helper',
-    'type': 'circle',
-    'paint': {
-      'circle-radius': 5,
-      'circle-color': '#fff',
-      'circle-stroke-width': 1,
-      'circle-stroke-color': '#d0981f'
     }
   }
 ];

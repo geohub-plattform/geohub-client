@@ -28,7 +28,7 @@ module.exports = function (ctx) {
   const queryUserFeatures = function (lngLat) {
     const filter = {
       layers: ["geohub-line-cold", "geohub-fill-cold", "geohub-point-cold",
-        "geohub-point-select-helper", "geohub-fill-select", "geohub-line-select"]
+         "geohub-fill-select", "geohub-line-select"]
     };
     const point = ctx.map.project([lngLat.lng, lngLat.lat]);
     const bbox = [[point.x - 5, point.y - 5], [point.x + 5, point.y + 5]];

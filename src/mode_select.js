@@ -30,14 +30,12 @@ module.exports = function (ctx) {
       });
     });
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
-    ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection(points));
   };
 
   this.deselectCurrentFeature = function () {
     if (ctx.selectedFeatures) {
       ctx.featuresStore.addFeatures(ctx.selectedFeatures);
       ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-      ctx.map.getSource(Constants.sources.SELECT_HELPER).setData(turf.featureCollection([]));
       ctx.selectedFeatures = null;
     }
   };
