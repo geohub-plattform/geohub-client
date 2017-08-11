@@ -278,6 +278,7 @@ module.exports = function (ctx) {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
       title: `Combine`,
+      key: '+',
       onAction: () => ctx.internalApi.combineFeatures()
     });
     createActionButton("group-elements", {
@@ -297,6 +298,7 @@ module.exports = function (ctx) {
     createActionButton("create-polygon", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,
+      key: 'p',
       title: `Create polygon`,
       onAction: () => ctx.internalApi.createPolygon()
     });
