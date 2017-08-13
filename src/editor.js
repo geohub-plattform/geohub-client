@@ -1,5 +1,12 @@
 module.exports = function (ctx) {
-    const renderObject = function (properties) {
+    const renderKeyVal = function(key, val){
+        var item = $('<div class="item"><div class="key"><span>' + key + ':</span></div><div class="val editable"><span contenteditable=true>' + val + '</span></div></div>');
+        
+        item.focus(function(){
+        });
+        return item;
+    }
+    const renderObject = function (properties, ref) {
         var value = '';
         var key, keys = [];
         for (key in properties) {
@@ -9,7 +16,8 @@ module.exports = function (ctx) {
         }
         for (var i = 0; i < keys.length; i++) {
             if (keys[i] != 'geoHubId') {
-                value += '<div class="item"><div class="key"><span>' + keys[i] + ':</span></div><div class="val editable"><span contenteditable=true>' + properties[keys[i]] + '</span></div></div>';
+                var element = renderKeyVal(keys[i], properties[keys[i]]);
+                ref.append(element);
             }
         }
         return value;
@@ -17,8 +25,12 @@ module.exports = function (ctx) {
     const showFeature = function (data) {
         var element = $('<div></div>').addClass('feature');
         element.append('<div class="item"><div class="key"><span>type:</span></div><div class="val editable"><span contenteditable=true>' + data['type'] + '</span></div></div>');
-        element.append('<div class="item"><div class="key"><span>properties:</span></div><div class="val">' + renderObject(data['properties']) + '</div></div>');
-        element.append('<div class="item"><div class="key"><span>geometry:</span></div><div class="val">' + renderObject(data['geometry']) + '</div></div>');
+        var props = $('<div class="item"><div class="key"><span>properties:</span></div><div class="val"></div></div>');
+        renderObject(data['properties'], props);
+        element.append(props);
+        var geometry = $('<div class="item"><div class="key"><span>geometry:</span></div><div class="val"></div></div>');
+        renderObject(data['geometry'], geometry);
+        element.append(geometry);
 
         $('#editor').append(element);
     }
@@ -29,24 +41,18 @@ module.exports = function (ctx) {
             case 'object':
 
                 if (data.length > 1) {
-                    $('#editor').append('<p>array</p>');
-                    //console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         showFeature(data[i]);
                     }
                 } else if (data.length === 1) {
-                    $('#editor').append('<p>object</p>');
-                    //console.log(data[0]);
                     showFeature(data[0]);
                 } else if (data.length === 0) {
                     return;
                 }
                 break;
             case undefined:
-                $('#editor').append('<p>undefined</p>');
-                break;
             case null:
-                $('#editor').append('<p>null</p>');
+                ctx.snackbar('Noch keine Daten')
                 break;
             default:
                 ctx.snackbar('Kein Geojson-Format')
