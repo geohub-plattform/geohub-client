@@ -15,13 +15,11 @@ module.exports = function (ctx) {
         const newFeatures = [];
         if (currentFeature.geometry.type === "MultiPolygon") {
           currentFeature.geometry.coordinates.forEach((coords) => {
-            // TODO merge properties from all features
-            newFeatures.push(turf.polygon(coords));
+            newFeatures.push(turf.polygon(coords, Object.assign({}, currentFeature.properties)));
           });
         } else if (currentFeature.geometry.type === "MultiLineString") {
           currentFeature.geometry.coordinates.forEach((coords) => {
-            // TODO merge properties from all features
-            newFeatures.push(turf.lineString(coords));
+            newFeatures.push(turf.lineString(coords, Object.assign({}, currentFeature.properties)));
           });
         } else {
           ctx.snackbar("Unbekannte Gruppe");

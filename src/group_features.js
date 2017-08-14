@@ -1,5 +1,6 @@
 const Constants = require("./constants");
 const turf = require("@turf/turf");
+const propertiesMerge = require("./properties_merge");
 
 module.exports = function (ctx) {
 
@@ -25,8 +26,7 @@ module.exports = function (ctx) {
             coords.push(feature.geometry.coordinates);
           });
           if (coords.length > 0) {
-            // TODO merge properties from all features
-            ctx.featuresStore.addFeatures([turf.multiPolygon(coords, ctx.selectedFeatures[0].properties)]);
+            ctx.featuresStore.addFeatures([turf.multiPolygon(coords, propertiesMerge(ctx.selectedFeatures))]);
             updateSources();
             ctx.snackbar("Elemente gruppiert");
           }
@@ -36,8 +36,7 @@ module.exports = function (ctx) {
             coords.push(feature.geometry.coordinates);
           });
           if (coords.length > 0) {
-            // TODO merge properties from all features
-            ctx.featuresStore.addFeatures([turf.multiLineString(coords, ctx.selectedFeatures[0].properties)]);
+            ctx.featuresStore.addFeatures([turf.multiLineString(coords, propertiesMerge(ctx.selectedFeatures))]);
             updateSources();
             ctx.snackbar("Elemente gruppiert");
           }
