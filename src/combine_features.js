@@ -1,6 +1,7 @@
 const Constants = require("./constants");
 const turf = require("@turf/turf");
 const featureUtils = require("./feature_utils");
+const propertiesMerge = require("./properties_merge");
 
 module.exports = function (ctx) {
 
@@ -26,22 +27,22 @@ module.exports = function (ctx) {
             polygons.push(...polygon.geometry.coordinates);
           });
           if (polygons.length > 0) {
-            ctx.featuresStore.addFeatures([turf.polygon(polygons, ctx.selectedFeatures[0].properties)]);
+            ctx.featuresStore.addFeatures([turf.polygon(polygons, propertiesMerge(ctx.selectedFeatures))]);
             updateSources();
           }
         } else if (allFeaturesType === "LineString") {
           const coords = featureUtils.combineSameTypeFeatures(ctx.selectedFeatures);
           if (coords.length > 0) {
-            ctx.featuresStore.addFeatures([turf.lineString(coords, ctx.selectedFeatures[0].properties)]);
+            ctx.featuresStore.addFeatures([turf.lineString(coords, propertiesMerge(ctx.selectedFeatures))]);
             updateSources();
           }
         } else {
-          alert("Es können nur Objekte vom selben Typ kombiniert werden, " +
+          ctx.snackbar("Es können nur Objekte vom selben Typ kombiniert werden, " +
             "d.h. Linien mit Linien und Polygone mit Polygonen");
         }
       }
     } else {
-      alert("Die Funktion 'Kombinieren' kann nur im Auswahlmodus ausgeführt werden");
+      ctx.snackbar("Die Funktion 'Kombinieren' kann nur im Auswahlmodus ausgeführt werden");
     }
   }
 
