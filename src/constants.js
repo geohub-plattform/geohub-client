@@ -12,6 +12,7 @@ module.exports = {
     CONTROL_BUTTON_DELETE_SNAP: 'geohub-delete-snap-data',
     CONTROL_BUTTON_ZOOM_IN_FEATURES: 'geohub-zoom-in-features',
     CONTROL_BUTTON_HIDE_SELECTED: 'geohub-hide-selected',
+    CONTROL_BUTTON_ADD_FEATURE_TO_GRID: 'geohub-add-feature-to-grid',
     CONTROL_BUTTON_CREATE_POLYGON: 'geohub-create-polygon',
     CONTROL_BUTTON_COMBINE_FEATURES: 'mapbox-gl-draw_combine',
     CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',

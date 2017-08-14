@@ -159,6 +159,10 @@ button.active:hover {
     background-image: url(./svg/ic_tab_unselected_black_24px.svg);
 }
 
+.geohub-add-feature-to-grid {
+    background-image: url(./svg/ic_add_to_photos_black_24px.svg);
+}
+
 .geohub-action-group > button, .geohub-ctrl-group > button, .geohub-dropdown-group > button {
     width: 30px;
     height: 30px;

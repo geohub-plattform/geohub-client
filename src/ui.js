@@ -327,6 +327,12 @@ module.exports = function (ctx) {
       title: `Hide/Unhide selected features`,
       onAction: () => ctx.events.hideFeatures()
     });
+    createActionButton("add-feature-to-grid", {
+      container: action2Group,
+      className: Constants.classes.CONTROL_BUTTON_ADD_FEATURE_TO_GRID,
+      title: `Add feature to snap grid`,
+      onAction: () => ctx.events.addSelectedFeaturesToSnapGrid()
+    });
     return containerGroup;
   }
 

@@ -128,6 +128,7 @@ module.exports = function (ctx) {
   function handleSaveAsKmlButton() {
     exportFile.asKml(getFeaturesForSave());
   }
+
   function handleExpandEditorButton() {
     if (!$('#editor').hasClass('expanded')) {
       $('#map').css('width', '60%');
@@ -140,6 +141,7 @@ module.exports = function (ctx) {
       $('#editor').removeClass('expanded');
     }
   }
+
   function stringToDOM(str) {
     const parser = new DOMParser();
     return parser.parseFromString(str, "text/xml");
@@ -233,6 +235,11 @@ module.exports = function (ctx) {
     }
   }
 
+  function addSelectedFeaturesToSnapGrid() {
+    if (ctx.selectedFeatures) {
+      ctx.internalApi.addFeaturesToMesh(ctx.selectedFeatures);
+    }
+  }
 
   return {
     addEventListeners: function (map) {
@@ -259,6 +266,7 @@ module.exports = function (ctx) {
     handleExpandEditorButton,
     handleLoadDataButton,
     deleteUserData,
-    hideFeatures
+    hideFeatures,
+    addSelectedFeaturesToSnapGrid
   };
 };
