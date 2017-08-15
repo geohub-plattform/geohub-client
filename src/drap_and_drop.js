@@ -24,6 +24,7 @@ module.exports = function (ctx) {
           try {
             handler(JSON.parse(fileReader.result));
           } catch (e) {
+            console.log(e);
             ctx.snackbar("JSON Daten ungültig");
           }
         }

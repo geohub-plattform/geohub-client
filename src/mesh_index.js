@@ -30,13 +30,15 @@ const MeshIndex = function (originalData) {
   }
 
   function coordinatesToLineStrings(coords, result) {
-    let firstPoint = coords[0];
+    let firstPoint = turf.truncate(turf.point(coords[0]), 7, 2, true);
     let secondPoint = null;
     for (let index = 1; index < coords.length; index++) {
-      secondPoint = coords[index];
-      const line = turf.lineString([firstPoint, secondPoint]);
-      addFeatureToIndex(line);
-      result.push(line);
+      secondPoint = turf.truncate(turf.point(coords[index]), 7, 2, true);
+      if (!utils.isPointEqual(firstPoint.geometry.coordinates, secondPoint.geometry.coordinates)) {
+        const line = turf.lineString([firstPoint.geometry.coordinates, secondPoint.geometry.coordinates]);
+        addFeatureToIndex(line);
+        result.push(line);
+      }
       firstPoint = secondPoint;
     }
   }
