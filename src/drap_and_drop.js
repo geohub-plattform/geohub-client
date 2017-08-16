@@ -1,3 +1,4 @@
+
 module.exports = function (ctx) {
   const dropZone = document.getElementById("map");
   const indicatorZone = document.getElementById("nav");
@@ -16,28 +17,11 @@ module.exports = function (ctx) {
     return files;
   }
 
-  function processFiles(files, handler) {
-    files.forEach((file) => {
-      const fileReader = new FileReader();
-      fileReader.onloadend = function () {
-        if (fileReader.readyState === FileReader.DONE) {
-          try {
-            handler(JSON.parse(fileReader.result));
-          } catch (e) {
-            console.log(e);
-            ctx.snackbar("JSON Daten ungültig");
-          }
-        }
-      };
-      fileReader.readAsText(file);
-    });
-  }
-
   function handleDrop(event) {
     event.preventDefault();
     indicatorZone.classList.remove("dragover");
     const files = extractFiles(event.dataTransfer);
-    processFiles(files, ctx.api.addUserData);
+    ctx.fileUtils.processFiles(files, ctx.api.addUserData);
   }
 
   function handleDragEnter(event) {

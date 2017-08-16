@@ -1,6 +1,5 @@
 import Constants from "./constants";
 import turf from "@turf/turf";
-import togeojson from "@mapbox/togeojson";
 
 const overpassApi = require("./overpass_api");
 const exportFile = require("./export_file");
@@ -32,12 +31,10 @@ module.exports = function (ctx) {
     if (!keyHandled) {
       switch (event.code) {
         case "Home" : {
-          console.log("move 1");
           ctx.internalApi.moveFeatures(1);
           break;
         }
         case "End" : {
-          console.log("move -1");
           ctx.internalApi.moveFeatures(-1);
           break;
         }
@@ -142,11 +139,6 @@ module.exports = function (ctx) {
     }
   }
 
-  function stringToDOM(str) {
-    const parser = new DOMParser();
-    return parser.parseFromString(str, "text/xml");
-  }
-
   function handleLoadDataButton() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -155,28 +147,11 @@ module.exports = function (ctx) {
     input.click();
 
     function handleSelection(event) {
-      const files = event.target.files;
-      const names = input.files;
-      for (var i = 0, f; f = files[i]; i++) {
-        const ext = names[i].name.substring(names[i].name.lastIndexOf('.') + 1, names[i].name.length).toLowerCase();
-        const reader = new FileReader();
-        reader.onload = (function (file) {
-          return function (e) {
-            if (ext === 'geojson' || ext === 'json') {
-              ctx.api.addUserData(JSON.parse(e.target.result));
-            } else if (ext === 'kml') {
-              var geojson = togeojson.kml(stringToDOM(e.target.result));
-              ctx.api.addUserData(geojson);
-            } else if (ext === 'gpx') {
-              var geojson = togeojson.gpx(stringToDOM(e.target.result));
-              ctx.api.addUserData(geojson);
-            } else {
-              alert(`unsupported file extension: ${ext}`);
-            }
-          };
-        })(f);
-        reader.readAsText(f);
+      const files = [];
+      for (let x = 0; x < event.target.files.length; x++) {
+        files.push(event.target.files[x]);
       }
+      ctx.fileUtils.processFiles(files, ctx.api.addUserData);
     }
   }
 
