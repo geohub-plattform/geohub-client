@@ -9,6 +9,7 @@ module.exports = function (ctx) {
 
   function updateSources() {
     ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
+    ctx.eventBus.dispatch("selection_changed", selectedFeatures);
   }
 
   function getFeatures() {

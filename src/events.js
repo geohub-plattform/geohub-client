@@ -135,6 +135,7 @@ module.exports = function (ctx) {
       $('#map').css('width', '100%');
       $('#editor').css('width', '0%');
       $('#editor').removeClass('expanded');
+      ctx.editor.hideEditor();
     }
   }
 

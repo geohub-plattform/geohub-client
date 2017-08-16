@@ -102,27 +102,33 @@ button.active:hover {
 .geohub-save {
     background-image: url(./svg/ic_save_black_24px.svg);
 }
+
 .geohub-save-as-gist {
     background-image: url(./github.png);
 }
+
 .geohub-save-as-geojson, .geohub-save-as-kml {
-    background-image: url(./svg/ic_file_download_black_24px.svg);    
+    background-image: url(./svg/ic_file_download_black_24px.svg);
 }
-.geohub-load-data{
-    background-image: url(./svg/ic_file_upload_black_24px.svg);    
+
+.geohub-load-data {
+    background-image: url(./svg/ic_file_upload_black_24px.svg);
 }
-.geohub-delete-data{
+
+.geohub-delete-data {
     background-image: url(./svg/ic_delete_black_24px.svg);
 }
-.geohub-delete-snap-data{
+
+.geohub-delete-snap-data {
     background-image: url(./svg/ic_delete_sweep_black_24px.svg);
 }
 
 .geohub-zoom-in-features {
     background-image: url(./svg/ic_zoom_out_map_black_24px.svg);
 }
+
 .geohub-expand-editor {
-    background-image: url(./svg/ic_format_align_left_black_24px.svg);    
+    background-image: url(./svg/ic_format_align_left_black_24px.svg);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -172,23 +178,26 @@ button.active:hover {
     border: none;
     border-bottom: 1px solid #ddd;
     box-sizing: border-box;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
 }
+
 /* https://bugzilla.mozilla.org/show_bug.cgi?id=140562 */
 .geohub-action-group > button::-moz-focus-inner, .geohub-ctrl-group > button::-moz-focus-inner, .geohub-dropdown-group > button::-moz-focus-inner {
     border: 0;
     padding: 0;
 }
+
 .geohub-action-group > button:last-child, .geohub-ctrl-group > button:last-child {
     border-bottom: 0;
 }
+
 .geohub-action-group > button:hover, .geohub-ctrl-group > button:hover {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-.geohub-dropdown-group{
-    border-top: 1px solid #dddddd;    
+.geohub-dropdown-group {
+    border-top: 1px solid #dddddd;
 }
 
 .mapboxgl-ctrl-top-right .geohub-divider {
@@ -245,16 +254,18 @@ button.active:hover {
     opacity: 0.5;
 }
 
-.feature{
+.feature {
     border: 1px solid red;
     border-top: 3px solid red;
     margin: 1rem;
     padding: 0.2rem;
 }
-.feature .item{
+
+.feature .item {
     padding-left: 1rem;
 }
-.key span{
+
+.key span {
     margin-bottom: 0.2rem;
     font-family: monospace;
     font-weight: 700;
@@ -262,28 +273,33 @@ button.active:hover {
     border: 1px solid red;
     border-radius: 3px;
 }
-.key{
-    margin-bottom: 0.2rem;    
+
+.key {
+    margin-bottom: 0.2rem;
 }
-.val span, .val{
+
+.val span, .val {
     margin-bottom: 0.5rem;
 }
-.val.editable span{
+
+.val.editable span {
     font-family: monospace;
     font-weight: 500;
     font-size: 20px;
     line-height: 150%;
     background: lightgrey;
-    border: 1px solid lightgrey;    
+    border: 1px solid lightgrey;
     border-radius: 3px;
 }
+
 .val.editable span:hover,
 .val.editable span:active,
-.val.editable span:focus{
+.val.editable span:focus {
     background: lightgrey;
     border: 1px solid red;
     border-radius: 3px;
 }
+
 .paper-snackbar {
     transition-property: opacity, bottom, left, right, width, margin, border-radius;
     transition-duration: 0.5s;
@@ -353,4 +369,21 @@ button.active:hover {
     margin: 0 0 0 24px;
     padding: 0;
     min-width: min-content;
+}
+
+#data-editor {
+    margin: 16px;
+}
+
+#data-editor table {
+    width: 100%;
+    border: 1px solid #000;
+}
+
+#data-editor td {
+    width: 50%;
+}
+
+#data-editor input {
+    width: 90%;
 }

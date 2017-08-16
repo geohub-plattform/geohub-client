@@ -1,73 +1,52 @@
 module.exports = function (ctx) {
-    const renderKeyVal = function(key, val){
-        var item = $('<div class="item"><div class="key"><span>' + key + ':</span></div><div class="val editable"><span contenteditable=true>' + val + '</span></div></div>');
+  const editor = document.getElementById("data-editor");
 
-        item.focus(function(){
-        });
-        return item;
+  function element(tagName, html) {
+    const element = document.createElement(tagName);
+    if (html) {
+      element.innerHTML = html;
     }
-    const renderObject = function (properties, ref) {
-        var value = '';
-        var key, keys = [];
-        for (key in properties) {
-            if (properties.hasOwnProperty(key)) {
-                keys.push(key);
-            }
-        }
-        for (var i = 0; i < keys.length; i++) {
-            if (keys[i] != 'geoHubId') {
-                var element = renderKeyVal(keys[i], properties[keys[i]]);
-                ref.append(element);
-            }
-        }
-        return value;
-    }
-    const showFeature = function (data) {
-        var element = $('<div></div>').addClass('feature');
-        element.append('<div class="item"><div class="key"><span>type:</span></div><div class="val editable"><span contenteditable=true>' + data['type'] + '</span></div></div>');
-        var props = $('<div class="item"><div class="key"><span>properties:</span></div><div class="val"></div></div>');
-        renderObject(data['properties'], props);
-        element.append(props);
-        var geometry = $('<div class="item"><div class="key"><span>geometry:</span></div><div class="val"></div></div>');
-        renderObject(data['geometry'], geometry);
-        element.append(geometry);
+    return element;
+  }
 
-        $('#editor').append(element);
-    }
-    const getType = function (data) {
-        var type = typeof data;
-        //console.log(type);
-        switch (type) {
-            case 'object':
+  const renderKeyVal = function (key, val) {
+    const row = element("tr");
+    const keyColumn = element("td", key);
+    const valueColumn = element("td");
+    const inputField = element("input");
+    valueColumn.appendChild(inputField);
+    inputField.value = val;
+    row.appendChild(keyColumn);
+    row.appendChild(valueColumn);
+    return row;
+  };
 
-                if (data.length > 1) {
-                    for (var i = 0; i < data.length; i++) {
-                        showFeature(data[i]);
-                    }
-                } else if (data.length === 1) {
-                    showFeature(data[0]);
-                } else if (data.length === 0) {
-                    return;
-                }
-                break;
-            case undefined:
-            case null:
-                ctx.snackbar('Noch keine Daten')
-                break;
-            default:
-                ctx.snackbar('Kein Geojson-Format')
-                break;
-        }
+  function updateSelectedFeatures() {
+    editor.innerHTML = "";
+    if (ctx.selectStore.hasSelection()) {
+      const mergedProperties = ctx.selectStore.getMergedProperties();
+      const container = element("table");
+      const header = element("tr");
+      header.appendChild(element("th", "Eigenschaft"));
+      header.appendChild(element("th", "Wert"));
+      container.appendChild(header);
+      Object.keys(mergedProperties).forEach((property) => {
+        container.appendChild(renderKeyVal(property, mergedProperties[property]));
+      });
+      editor.appendChild(container);
+
+      // TODO add save button
     }
-    return {
-        renderEditor: function () {
-            if (ctx.featuresStore.getColdFeatures().length === 0) {
-                ctx.snackbar('Keine Daten');
-            }
-            _.observe(ctx.featuresStore.getColdFeatures(), function () {
-                $('#editor').html('');
-                getType(ctx.featuresStore.getColdFeatures());
-            });
-        }
-    };
-}
+  }
+
+  return {
+    renderEditor: function () {
+      console.log("update selected features");
+      updateSelectedFeatures();
+      ctx.eventBus.addEventListener("selection_changed", updateSelectedFeatures);
+    },
+    hideEditor: function () {
+      ctx.eventBus.removeEventListener("selection_changed", updateSelectedFeatures);
+    }
+  };
+};
