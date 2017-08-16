@@ -1,7 +1,7 @@
 module.exports = function (ctx) {
     const renderKeyVal = function(key, val){
         var item = $('<div class="item"><div class="key"><span>' + key + ':</span></div><div class="val editable"><span contenteditable=true>' + val + '</span></div></div>');
-        
+
         item.focus(function(){
         });
         return item;

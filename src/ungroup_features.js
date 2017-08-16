@@ -3,15 +3,11 @@ const turf = require("@turf/turf");
 
 module.exports = function (ctx) {
 
-  function updateSources() {
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-    ctx.selectedFeatures = null;
-  }
 
   function ungroup() {
     if (ctx.mode === Constants.modes.SELECT) {
-      if (ctx.selectedFeatures && ctx.selectedFeatures.length === 1) {
-        const currentFeature = ctx.selectedFeatures[0];
+      if (ctx.selectStore.hasSingleSelection()) {
+        const currentFeature = ctx.selectStore.getFeatures()[0];
         const newFeatures = [];
         if (currentFeature.geometry.type === "MultiPolygon") {
           currentFeature.geometry.coordinates.forEach((coords) => {
@@ -26,7 +22,7 @@ module.exports = function (ctx) {
         }
         if (newFeatures.length > 0) {
           ctx.featuresStore.addFeatures(newFeatures);
-          updateSources();
+          ctx.selectStore.clearSelection();
           ctx.snackbar("Gruppe aufgelöst");
         }
       } else {

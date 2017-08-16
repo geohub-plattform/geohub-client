@@ -17,10 +17,8 @@ module.exports = function (ctx) {
       }
     });
     if (result === null) {
-      if (ctx.selectedFeatures) {
-        const selectedIds = ctx.selectedFeatures.map((feature) => {
-          return feature.properties.geoHubId;
-        });
+      if (ctx.selectStore.hasSelection()) {
+        const selectedIds = ctx.selectStore.getSelectedFeatureIds();
         if (selectedIds.indexOf(id) === -1) {
           console.error("cannot find cold feature with id: ", id, " storeFeatureId: ",
             storeFeatureId, " coldFeatures: ", coldFeatures.length);

@@ -1,40 +1,27 @@
 const Constants = require("./constants");
 const turf = require("@turf/turf");
 const featureUtils = require("./feature_utils");
-const propertiesMerge = require("./properties_merge");
 
 module.exports = function (ctx) {
 
-  function updateSources() {
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-    ctx.selectedFeatures = null;
-  }
-
   function combine() {
     if (ctx.mode === Constants.modes.SELECT) {
-      if (ctx.selectedFeatures) {
-        let allFeaturesType = null;
-        ctx.selectedFeatures.forEach((feature) => {
-          if (allFeaturesType === null) {
-            allFeaturesType = feature.geometry.type;
-          } else if (feature.geometry.type !== allFeaturesType) {
-            allFeaturesType = "illegal";
-          }
-        });
+      if (ctx.selectStore.hasSelection()) {
+        const allFeaturesType = ctx.selectStore.getCommonGeometryType();
         if (allFeaturesType === "Polygon") {
           const polygons = [];
-          ctx.selectedFeatures.forEach((polygon) => {
+          ctx.selectStore.forEach((polygon) => {
             polygons.push(...polygon.geometry.coordinates);
           });
           if (polygons.length > 0) {
-            ctx.featuresStore.addFeatures([turf.polygon(polygons, propertiesMerge(ctx.selectedFeatures))]);
-            updateSources();
+            ctx.featuresStore.addFeatures([turf.polygon(polygons, ctx.selectStore.getMergedProperties())]);
+            ctx.selectStore.clearSelection();
           }
         } else if (allFeaturesType === "LineString") {
-          const coords = featureUtils.combineSameTypeFeatures(ctx.selectedFeatures);
+          const coords = featureUtils.combineSameTypeFeatures(ctx.selectStore.getFeatures());
           if (coords.length > 0) {
-            ctx.featuresStore.addFeatures([turf.lineString(coords, propertiesMerge(ctx.selectedFeatures))]);
-            updateSources();
+            ctx.featuresStore.addFeatures([turf.lineString(coords, ctx.selectStore.getMergedProperties())]);
+            ctx.selectStore.clearSelection();
           }
         } else {
           ctx.snackbar("Es können nur Objekte vom selben Typ kombiniert werden, " +

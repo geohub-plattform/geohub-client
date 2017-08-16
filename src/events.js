@@ -40,9 +40,8 @@ module.exports = function (ctx) {
         }
         case "Delete": {
           if (ctx.mode === Constants.modes.SELECT) {
-            if (ctx.selectedFeatures) {
-              ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-              ctx.selectedFeatures = null;
+            if (ctx.selectStore.hasSelection()) {
+              ctx.selectStore.clearSelection();
             }
           } else if (ctx.mode === Constants.modes.DRAW) {
             if (ctx.hotFeature) {
@@ -107,8 +106,8 @@ module.exports = function (ctx) {
   }
 
   function getFeaturesForSave() {
-    if (ctx.selectedFeatures) {
-      return turf.featureCollection(ctx.selectedFeatures);
+    if (ctx.selectStore.hasSelection()) {
+      return turf.featureCollection(ctx.selectStore.getFeatures());
     } else {
       return turf.featureCollection(ctx.featuresStore.getColdFeatures());
     }
@@ -190,29 +189,15 @@ module.exports = function (ctx) {
     ctx.featuresStore.deleteFeatures();
     ctx.hotFeature = null;
     ctx.snapFeature = null;
-    ctx.selectedFeatures = null;
+    ctx.selectStore.clearSelection();
     ctx.lastClick = null;
     ctx.map.getSource(Constants.sources.SNAP).setData(turf.featureCollection([]));
     ctx.map.getSource(Constants.sources.HOT).setData(turf.featureCollection([]));
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-  }
-
-  function hideFeatures() {
-    if (ctx.hiddenFeatures) {
-      ctx.selectedFeatures = ctx.selectedFeatures || [];
-      ctx.selectedFeatures.push(...ctx.hiddenFeatures);
-      ctx.hiddenFeatures = null;
-      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
-    } else {
-      ctx.hiddenFeatures = ctx.selectedFeatures;
-      ctx.selectedFeatures = null;
-      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-    }
   }
 
   function addSelectedFeaturesToSnapGrid() {
-    if (ctx.selectedFeatures) {
-      ctx.internalApi.addFeaturesToMesh(ctx.selectedFeatures);
+    if (ctx.selectStore.hasSelection()) {
+      ctx.internalApi.addFeaturesToMesh(ctx.selectStore.getFeatures());
     }
   }
 
@@ -241,7 +226,6 @@ module.exports = function (ctx) {
     handleExpandEditorButton,
     handleLoadDataButton,
     deleteUserData,
-    hideFeatures,
     addSelectedFeaturesToSnapGrid
   };
 };

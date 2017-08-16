@@ -1,43 +1,30 @@
 const Constants = require("./constants");
 const turf = require("@turf/turf");
-const propertiesMerge = require("./properties_merge");
 
 module.exports = function (ctx) {
 
-  function updateSources() {
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-    ctx.selectedFeatures = null;
-  }
-
   function group() {
     if (ctx.mode === Constants.modes.SELECT) {
-      if (ctx.selectedFeatures) {
-        let allFeaturesType = null;
-        ctx.selectedFeatures.forEach((feature) => {
-          if (allFeaturesType === null) {
-            allFeaturesType = feature.geometry.type;
-          } else if (feature.geometry.type !== allFeaturesType) {
-            allFeaturesType = "illegal";
-          }
-        });
+      if (ctx.selectStore.hasSelection()) {
+        const allFeaturesType = ctx.selectStore.getCommonGeometryType();
         if (allFeaturesType === "Polygon") {
           const coords = [];
-          ctx.selectedFeatures.forEach((feature) => {
+          ctx.selectStore.forEach((feature) => {
             coords.push(feature.geometry.coordinates);
           });
           if (coords.length > 0) {
-            ctx.featuresStore.addFeatures([turf.multiPolygon(coords, propertiesMerge(ctx.selectedFeatures))]);
-            updateSources();
+            ctx.featuresStore.addFeatures([turf.multiPolygon(coords, ctx.selectStore.getMergedProperties())]);
+            ctx.selectStore.clearSelection();
             ctx.snackbar("Elemente gruppiert");
           }
         } else if (allFeaturesType === "LineString") {
           const coords = [];
-          ctx.selectedFeatures.forEach((feature) => {
+          ctx.selectStore.forEach((feature) => {
             coords.push(feature.geometry.coordinates);
           });
           if (coords.length > 0) {
-            ctx.featuresStore.addFeatures([turf.multiLineString(coords, propertiesMerge(ctx.selectedFeatures))]);
-            updateSources();
+            ctx.featuresStore.addFeatures([turf.multiLineString(coords, ctx.selectStore.getMergedProperties())]);
+            ctx.selectStore.clearSelection();
             ctx.snackbar("Elemente gruppiert");
           }
         } else {

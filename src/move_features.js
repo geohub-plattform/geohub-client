@@ -5,10 +5,6 @@ module.exports = function (ctx) {
 
   const moveDistance = 0.001;
 
-  function updateSources() {
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
-  }
-
   function moveLine(line, direction) {
     const result = [];
     let lastDestinationPoint = null;
@@ -71,26 +67,18 @@ module.exports = function (ctx) {
 
   function move(direction) {
     if (ctx.mode === Constants.modes.SELECT) {
-      if (ctx.selectedFeatures) {
-        let allFeaturesType = null;
-        ctx.selectedFeatures.forEach((feature) => {
-          if (allFeaturesType === null) {
-            allFeaturesType = feature.geometry.type;
-          } else if (feature.geometry.type !== allFeaturesType) {
-            allFeaturesType = "illegal";
-          }
-        });
+      if (ctx.selectedStore.hasSelection()) {
+        const allFeaturesType = ctx.selectStore.getCommonGeometryType();
         if (allFeaturesType === "LineString") {
           const newSelectedFeatures = [];
-          ctx.selectedFeatures.forEach((feature) => {
+          ctx.selectStore.forEach((feature) => {
             newSelectedFeatures.push(turf.lineOffset(feature, moveDistance * direction));
           });
-          ctx.selectedFeatures = newSelectedFeatures;
-          updateSources();
+          ctx.selectStore.setFeatures(newSelectedFeatures);
 
         } else {
           ctx.snackbar("Es können nur Objekte vom selben Typ verschoben werden, " +
-            "d.h. Linien mit Linien und Polygone mit Polygonen");
+            "d.h. Linien mit Linien");
         }
       }
     } else {

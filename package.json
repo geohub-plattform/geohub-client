@@ -67,6 +67,7 @@
     "@turf/turf": "4.5.2",
     "cheap-ruler": "^2.5.0",
     "clone-deep": "^0.3.0",
+    "eventbusjs": "^0.2.0",
     "strxml": "1.0.0",
     "tokml": "^0.4.0"
   }

@@ -19,6 +19,8 @@ const moveFeatures = require("./src/move_features");
 const editor = require("./src/editor");
 const dragAndDrop = require("./src/drap_and_drop");
 const fileUtils = require("./src/file_utils");
+const eventBux = require("eventbusjs");
+const selectStore = require("./src/select_store");
 
 const defaultOptions = {
   snapToFeatures : true,
@@ -39,6 +41,8 @@ const setupGeoHub = function (options = defaultOptions, api) {
   ctx.editor = editor(ctx);
   ctx.dragAndDrop = dragAndDrop(ctx);
   ctx.fileUtils = fileUtils(ctx);
+  ctx.eventBus = eventBux;
+  ctx.selectStore = selectStore(ctx);
 
   api.onAdd = function (map) {
     console.log("onAdd");

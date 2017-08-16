@@ -5,37 +5,25 @@ const utils = require("./utils");
 
 module.exports = function (ctx) {
 
-  function updateSources() {
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-    ctx.selectedFeatures = null;
-  }
-
   function createPolygon() {
     if (ctx.mode === Constants.modes.SELECT) {
-      if (ctx.selectedFeatures) {
-        let allFeaturesType = null;
-        ctx.selectedFeatures.forEach((feature) => {
-          if (allFeaturesType === null) {
-            allFeaturesType = feature.geometry.type;
-          } else if (feature.geometry.type !== allFeaturesType) {
-            allFeaturesType = "illegal";
-          }
-        });
+      if (ctx.selectStore.hasSelection()) {
+        const allFeaturesType = ctx.selectStore.getCommonGeometryType();
         if (allFeaturesType === "LineString") {
-          const coords = featureUtils.combineSameTypeFeatures(ctx.selectedFeatures);
+          const coords = featureUtils.combineSameTypeFeatures(ctx.selectStore.getFeatures());
           if (coords.length > 0) {
             if (!utils.isPointEqual(coords[0], coords[coords.length - 1])) {
               coords.push(coords[0]);
             }
-            ctx.featuresStore.addFeatures([turf.polygon([coords], ctx.selectedFeatures[0].properties)]);
-            updateSources();
+            ctx.featuresStore.addFeatures([turf.polygon([coords], ctx.selectStore.getMergedProperties())]);
+            ctx.selectStore.clearSelection();
           }
         } else {
-          alert("Es können nur Objekte vom Typ LineString zu einem Polygon kombiniert werden");
+          ctx.snackbar("Es können nur Objekte vom Typ LineString zu einem Polygon kombiniert werden");
         }
       }
     } else {
-      alert("Die Funktion 'Polygon erstellen' kann nur im Auswahlmodus ausgeführt werden");
+      ctx.snackbar("Die Funktion 'Polygon erstellen' kann nur im Auswahlmodus ausgeführt werden");
     }
   }
 

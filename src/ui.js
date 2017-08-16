@@ -325,7 +325,7 @@ module.exports = function (ctx) {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_HIDE_SELECTED,
       title: `Hide/Unhide selected features`,
-      onAction: () => ctx.events.hideFeatures()
+      onAction: () => ctx.selectStore.hideFeatures()
     });
     createActionButton("add-feature-to-grid", {
       container: action2Group,

@@ -11,36 +11,29 @@ module.exports = function (ctx) {
     if (ctx.lastKnownSelectIds.indexOf(selectedFeatureId) === -1) {
       ctx.lastKnownSelectIds.push(selectedFeatureId);
     }
-    if (ctx.selectedFeatures) {
-      ctx.selectedFeatures.forEach((feature) => {
+    if (ctx.selectStore.hasSelection()) {
+      ctx.selectStore.forEach((feature) => {
         if (selectedFeatureId === feature.properties.geoHubId) {
           // wenn ausgewählt, dann nicht mehr hinzufügen oder togglen
         }
       });
     } else {
-      ctx.selectedFeatures = [];
+      ctx.selectStore.clearSelection();
     }
 
     const removedFeatures = ctx.featuresStore.removeFeatures(selectedFeatureId);
-    ctx.selectedFeatures.push(...removedFeatures);
-    const points = [];
-    ctx.selectedFeatures.forEach((feature) => {
-      turf.coordEach(feature, (pointCoords) => {
-        points.push(turf.point(pointCoords, {geoHubId: feature.properties.geoHubId}));
-      });
-    });
-    ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection(ctx.selectedFeatures));
+    ctx.selectStore.addFeatures(removedFeatures);
   };
 
   this.deselectCurrentFeature = function () {
-    if (ctx.selectedFeatures) {
-      ctx.featuresStore.addFeatures(ctx.selectedFeatures);
-      ctx.map.getSource(Constants.sources.SELECT).setData(turf.featureCollection([]));
-      ctx.selectedFeatures = null;
+    if (ctx.selectStore.hasSelection()) {
+      ctx.featuresStore.addFeatures(ctx.selectStore.getFeatures());
+      ctx.selectStore.clearSelection();
     }
   };
 
   this.handleMove = function (event) {
+    // empty handler, keep it
   };
 
   this.handleClick = function (event) {
