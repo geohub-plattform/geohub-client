@@ -18,7 +18,7 @@ module.exports = function (ctx) {
 
   function setFeatures(features) {
     if (features !== undefined && features !== null) {
-      selectedFeatures.splice(0, selectedFeatures.length, features);
+      selectedFeatures.splice(0, selectedFeatures.length, ...features);
       updateSources();
     }
   }

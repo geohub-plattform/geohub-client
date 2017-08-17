@@ -67,7 +67,7 @@ module.exports = function (ctx) {
 
   function move(direction) {
     if (ctx.mode === Constants.modes.SELECT) {
-      if (ctx.selectedStore.hasSelection()) {
+      if (ctx.selectStore.hasSelection()) {
         const allFeaturesType = ctx.selectStore.getCommonGeometryType();
         if (allFeaturesType === "LineString") {
           const newSelectedFeatures = [];
