@@ -371,6 +371,14 @@ button.active:hover {
     min-width: min-content;
 }
 
+#editor {
+    font-family: RobotoDraft, sans-serif;
+}
+
+#editor h2, #editor h4  {
+    margin-left: 16px;
+}
+
 #data-editor {
     margin: 16px;
 }
@@ -386,4 +394,8 @@ button.active:hover {
 
 #data-editor input {
     width: 90%;
+}
+
+div.actions {
+    margin-top: 16px;
 }

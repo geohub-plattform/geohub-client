@@ -205,6 +205,7 @@ module.exports = function (ctx) {
     createActionButton("expandEditor", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_EXPAND_EDITOR,
+      key: "e",
       title: `Expand GeoJson Feature Editor`,
       onAction: () => ctx.events.handleExpandEditorButton()
     });

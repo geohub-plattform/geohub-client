@@ -82,6 +82,10 @@ module.exports = function (ctx) {
     return propertiesMerge(selectedFeatures);
   }
 
+  function length() {
+    return selectedFeatures.length;
+  }
+
   return {
     getSelectedFeatureIds,
     clearSelection,
@@ -93,6 +97,7 @@ module.exports = function (ctx) {
     hideFeatures,
     getCommonGeometryType,
     forEach,
-    getMergedProperties
+    getMergedProperties,
+    length
   };
 };
