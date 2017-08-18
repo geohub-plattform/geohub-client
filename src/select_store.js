@@ -45,7 +45,7 @@ module.exports = function (ctx) {
   }
 
   function hasSingleSelection() {
-    return selectedFeatures.length === 0;
+    return selectedFeatures.length === 1;
   }
 
   function forEach(handler) {
@@ -86,6 +86,14 @@ module.exports = function (ctx) {
     return selectedFeatures.length;
   }
 
+  function updateProperties(newProperties) {
+    console.log("properties to save: ", JSON.stringify(newProperties));
+    selectedFeatures.forEach((feature) => {
+      const savedId = feature.properties.geoHubId;
+      feature.properties = Object.assign({}, newProperties, {geoHubId: savedId});
+    });
+  }
+
   return {
     getSelectedFeatureIds,
     clearSelection,
@@ -98,6 +106,7 @@ module.exports = function (ctx) {
     getCommonGeometryType,
     forEach,
     getMergedProperties,
-    length
+    length,
+    updateProperties
   };
 };

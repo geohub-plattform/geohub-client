@@ -4,14 +4,22 @@ module.exports = function (ctx) {
   let currentTable = null;
   const currentRows = [];
 
+  function reset() {
+    currentRows.splice(0, currentRows.length);
+    currentTable = null;
+  }
+
   const deleteHandler = function (row) {
     return () => {
+      console.log("rows before delete: ", currentRows.length);
       const index = currentRows.indexOf(row);
       if (index !== -1) {
-        currentRows.splice(index, 1);
-        currentTable.removeChild(row);
+        const removedRows = currentRows.splice(index, 1);
+        removedRows.forEach((removed) => {
+          currentTable.removeChild(removed);
+        });
       }
-
+      console.log("rows after delete: ", currentRows.length);
     };
   };
 
@@ -20,8 +28,8 @@ module.exports = function (ctx) {
     const keyColumn = element("td", "editor-label");
     const valueColumn = element("td", "editor-value");
     const actionColumn = element("td", "editor-action");
-    const valueField = element("input");
-    const labelField = element("input");
+    const valueField = element("input", "input-value");
+    const labelField = element("input", "input-label");
     const deleteButton = element("button", "delete-button", "Löschen");
     valueColumn.appendChild(valueField);
     valueField.value = val;
@@ -47,6 +55,18 @@ module.exports = function (ctx) {
       }
     });
     const saveButton = element("button", null, "Speichern");
+    saveButton.addEventListener("click", () => {
+      console.log("rows before save: ", currentRows.length);
+      const newProperties = {};
+      currentRows.forEach((row) => {
+        const labelElement = row.getElementsByClassName("input-label")[0];
+        const valueElement = row.getElementsByClassName("input-value")[0];
+        if (labelElement.value) {
+          newProperties[labelElement.value] = valueElement.value;
+        }
+      });
+      ctx.selectStore.updateProperties(newProperties);
+    });
 
     generalActions.appendChild(addButton);
     generalActions.appendChild(saveButton);
@@ -88,11 +108,9 @@ module.exports = function (ctx) {
       editor.appendChild(currentTable);
       editor.appendChild(createActionButtons());
 
-      // TODO add save button
-      // TODO add + button
     } else {
       counter.innerHTML = "Keine Elemente ausgewählt";
-      currentTable = null;
+      reset();
     }
   }
 
@@ -103,6 +121,7 @@ module.exports = function (ctx) {
       ctx.eventBus.addEventListener("selection_changed", updateSelectedFeatures);
     },
     hideEditor: function () {
+      reset();
       ctx.eventBus.removeEventListener("selection_changed", updateSelectedFeatures);
     }
   };
