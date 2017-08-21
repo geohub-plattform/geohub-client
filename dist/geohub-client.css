@@ -1,7 +1,3 @@
-* {
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
 
 /* Override default control style */
 .mapbox-gl-draw_ctrl-bottom-left,
@@ -383,4 +379,9 @@ button.active:hover {
 
 div.actions {
     margin-top: 16px;
+    display: flex;
+}
+
+.actions button {
+    margin-right: 8px;
 }
