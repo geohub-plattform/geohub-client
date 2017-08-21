@@ -28,7 +28,7 @@ module.exports = function (ctx) {
     const actionColumn = element("td", "editor-action");
     const valueField = element("input", "input-value");
     const labelField = element("input", "input-label");
-    const deleteButton = element("button", "delete-button", "Löschen");
+    const deleteButton = element("button", "btn btn-warning", "Löschen");
     valueColumn.appendChild(valueField);
     valueField.value = val;
     keyColumn.appendChild(labelField);
@@ -68,9 +68,9 @@ module.exports = function (ctx) {
   function createActionButtons() {
     const generalActions = element("div", "actions");
 
-    const addButton = element("button", null, "+ Hinzufügen");
+    const addButton = element("button", "btn btn-info", "+ Hinzufügen");
     addButton.addEventListener("click", addHandler);
-    const saveButton = element("button", null, "Speichern");
+    const saveButton = element("button", "btn btn-primary", "Speichern");
     saveButton.addEventListener("click", saveHandler);
 
     generalActions.appendChild(addButton);
@@ -81,6 +81,9 @@ module.exports = function (ctx) {
 
   function element(tagName, className, html) {
     const element = document.createElement(tagName);
+    if (tagName === "button") {
+      element.setAttribute("type", "button");
+    }
     if (html) {
       element.innerHTML = html;
     }
