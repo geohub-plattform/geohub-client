@@ -27,9 +27,7 @@
             height: 100%;
         }
 
-        #nav {
-            height: 4rem;
-            background: white;
+        .nav-shadow {
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
             z-index: 9999;
         }
@@ -48,32 +46,6 @@
             flex: 1;
         }
 
-        #nav .link {
-            position: relative;
-            height: 4rem;
-            font-size: 16px;
-            font-family: monospace;
-            line-height: 4rem;
-            text-transform: uppercase;
-            float: left;
-            padding: 0 0.5rem;
-            color: black;
-            text-decoration: none;
-        }
-
-        #nav .link.title {
-            font-size: 30px !important;
-        }
-
-        #nav .separator {
-            float: left;
-            border-left: 2px solid grey;
-            padding: 0;
-            height: 4rem;
-            margin: 0 0.5rem;
-            line-height: 4rem;
-
-        }
 
         .dragover {
             border-top: 3px dashed blue;
@@ -145,9 +117,10 @@
         }
 
         .zoom-container {
+            display: none;
             position: fixed;
             left: 8px;
-            top: 8px;
+            top: 80px;
             font-family: sans-serif;
             font-size: small;
         }
@@ -160,14 +133,30 @@
 
 <body>
 <div style="display: flex; height: 100%; flex-direction: column">
-    <div id="nav">
-        <a class="link" href="#"><img src="https://avatars6.githubusercontent.com/u/26528000?v=4&s=56" alt=""></a>
-        <a class="link title" href="#">GeoHub Client</a>
-        <a class="separator"></a>
-        <a class="link" href="https://github.com/geohub-plattform/geohub-client">Github</a>
-        <a class="link" href="https://geohub-plattform.github.io/">Blog</a>
-    </div>
-    <div id="edit-div">
+    <nav class="navbar navbar-expand-lg navbar-light nav-shadow">
+        <a class="navbar-brand" href="#">
+            <img src="https://avatars6.githubusercontent.com/u/26528000?v=4&s=30" width="30" height="30" class="d-inline-block align-top" alt="">
+            GeoHub Editor
+        </a>        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://geohub-plattform.github.io/">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hilfe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Über</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/geohub-plattform/geohub-client">Source code</a>
+                </li>
+            </ul>
+        </div>
+    </nav>    <div id="edit-div">
         <div id="map"></div>
         <div id="editor" style="display: none">
             <h4>Property Editor</h4>
@@ -217,7 +206,7 @@
         map.addControl(geoHubClient);
         map.addControl(new mapboxgl.GeolocateControl());
         map.addControl(new mapboxgl.ScaleControl());
-        map.addControl(new mapboxgl.FullscreenControl());
+        /*map.addControl(new mapboxgl.FullscreenControl()); */
         /*$.getJSON("overpass-experimenta.json", null, function (data) {
             geoHubClient.addOverpassData(data);
         });*/
