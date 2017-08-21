@@ -85,7 +85,7 @@ module.exports = function (ctx) {
       element.innerHTML = html;
     }
     if (className) {
-      element.classList.add(className);
+      element.classList.add(...className.split(" "));
     }
     return element;
   }
@@ -99,17 +99,20 @@ module.exports = function (ctx) {
       } else {
         counter.innerHTML = `${ctx.selectStore.length()} Elemente ausgewählt`;
       }
-      currentTable = element("table");
-      const header = element("tr");
-      header.appendChild(element("th", "editor-label", "Eigenschaft"));
-      header.appendChild(element("th", "editor-value", "Wert"));
-      header.appendChild(element("th", "editor-action", "Action"));
+      currentTable = element("table", "table table-bordered");
+      const header = element("thead");
+      const headerRow = element("tr");
+      headerRow.appendChild(element("th", "editor-label", "Eigenschaft"));
+      headerRow.appendChild(element("th", "editor-value", "Wert"));
+      headerRow.appendChild(element("th", "editor-action", "Action"));
+      header.appendChild(headerRow);
       currentTable.appendChild(header);
+      const body = element("tbody");
       const mergedProperties = ctx.selectStore.getMergedProperties();
       Object.keys(mergedProperties).forEach((property) => {
-        currentTable.appendChild(renderKeyVal(property, mergedProperties[property]));
+        body.appendChild(renderKeyVal(property, mergedProperties[property]));
       });
-
+      currentTable.appendChild(body);
       editor.appendChild(currentTable);
       editor.appendChild(createActionButtons());
 

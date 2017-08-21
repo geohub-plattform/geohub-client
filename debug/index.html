@@ -7,6 +7,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GeoHub Online Editor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://localhost:9967/mapbox-gl.css' rel='stylesheet'/>
     <script src='http://localhost:9967/mapbox-gl.js'></script>
@@ -14,22 +16,36 @@
         <link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />-->
     <link href='http://localhost:9967/dist/geohub-client.css' rel='stylesheet'/>
     <script src='http://localhost:9967/geohub-client.js'></script>
-    <script src='https://code.jquery.com/jquery-3.2.1.js'></script>
     <style>
+        html {
+            height: 100%;
+        }
+
         body {
             margin: 0;
             padding: 0;
+            height: 100%;
         }
 
         #nav {
-            position: absolute;
-            top: 0;
-            left: 0;
             height: 4rem;
-            width: 100%;
             background: white;
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
             z-index: 9999;
+        }
+
+        #map {
+            flex-grow: 1;
+        }
+
+        #editor {
+            width: 550px;
+            overflow-y: scroll;
+        }
+
+        #edit-div {
+            display: flex;
+            flex: 1;
         }
 
         #nav .link {
@@ -128,29 +144,11 @@
             }
         }
 
-        #map {
-            position: absolute;
-            top: 4rem;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-        }
-
-        #editor {
-            position: absolute;
-            top: 4rem;
-            bottom: 0;
-            right: 0;
-            width: 0%;
-            height: calc(100% - 4rem);
-            overflow-y: scroll;
-        }
-
         .zoom-container {
             position: fixed;
             left: 8px;
             top: 8px;
-            font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+            font-family: sans-serif;
             font-size: small;
         }
 
@@ -161,29 +159,31 @@
 </head>
 
 <body>
-<div id="nav">
-    <a class="link" href="#"><img src="https://avatars6.githubusercontent.com/u/26528000?v=4&s=56" alt=""></a>
-    <a class="link title" href="#">GeoHub Client</a>
-    <a class="separator"></a>
-    <a class="link" href="https://github.com/geohub-plattform/geohub-client">Github</a>
-    <a class="link" href="https://geohub-plattform.github.io/">Blog</a>
-</div>
-<div id="loading">
-    <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
+<div style="display: flex; height: 100%; flex-direction: column">
+    <div id="nav">
+        <a class="link" href="#"><img src="https://avatars6.githubusercontent.com/u/26528000?v=4&s=56" alt=""></a>
+        <a class="link title" href="#">GeoHub Client</a>
+        <a class="separator"></a>
+        <a class="link" href="https://github.com/geohub-plattform/geohub-client">Github</a>
+        <a class="link" href="https://geohub-plattform.github.io/">Blog</a>
     </div>
+    <div id="edit-div">
+        <div id="map"></div>
+        <div id="editor" style="display: none">
+            <h4>Property Editor</h4>
+            <h6 id="data-counter"></h6>
+            <div id="data-editor"></div>
+        </div>
+    </div>
+    <div id="loading">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+    <div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
 </div>
-<div id="map"></div>
-<div id="editor">
-    <h2>Property Editor</h2>
-    <h4 id="data-counter"></h4>
-    <div id="data-editor"></div>
-</div>
-<div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
-<script src="underscore.js"></script>
-<script src="underscore-observe.js"></script>
 <script>
     var zoomContainer = document.getElementById('zoom');
     var positionContainer = document.getElementById('position');

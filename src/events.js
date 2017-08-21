@@ -3,6 +3,7 @@ import turf from "@turf/turf";
 
 const overpassApi = require("./overpass_api");
 const exportFile = require("./export_file");
+const jQuery = require("jquery");
 
 module.exports = function (ctx) {
 
@@ -74,7 +75,7 @@ module.exports = function (ctx) {
         }
       }
     }
-  }
+  };
 
   function handleWaysDownloadButton() {
     console.log("Downloading ", ctx.map.getBounds());
@@ -97,8 +98,8 @@ module.exports = function (ctx) {
   }
 
   function handleSaveButton() {
-    const dropdownGroup = $('.geohub-dropdown-group');
-    if (dropdownGroup.css('display') == 'none') {
+    const dropdownGroup = jQuery('.geohub-dropdown-group');
+    if (dropdownGroup.css('display') === 'none') {
       dropdownGroup.show();
     } else {
       dropdownGroup.hide();
@@ -126,17 +127,17 @@ module.exports = function (ctx) {
   }
 
   function handleExpandEditorButton() {
-    if (!$('#editor').hasClass('expanded')) {
-      $('#map').css('width', '60%');
-      $('#editor').css('width', '40%');
-      $('#editor').addClass('expanded');
-      ctx.editor.renderEditor();
-    } else {
-      $('#map').css('width', '100%');
-      $('#editor').css('width', '0%');
-      $('#editor').removeClass('expanded');
+    const editorContainer = jQuery('#editor');
+    if (editorContainer.hasClass('expanded')) {
+      editorContainer.removeClass('expanded');
+      editorContainer.hide();
       ctx.editor.hideEditor();
+    } else {
+      editorContainer.addClass('expanded');
+      editorContainer.show();
+      ctx.editor.renderEditor();
     }
+    ctx.map.resize();
   }
 
   function handleLoadDataButton() {

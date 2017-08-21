@@ -22,11 +22,17 @@ const fileUtils = require("./src/file_utils");
 const eventBux = require("eventbusjs");
 const selectStore = require("./src/select_store");
 
+window.jQuery = require("jquery");
+window.$ = window.jQuery;
+window.Popper = require("popper.js");
+require("bootstrap");
+
 const defaultOptions = {
   baseDir: "",
   snapToFeatures: true,
   routing: true
 };
+
 
 const setupGeoHub = function (options, api) {
   const ctx = {
