@@ -11,7 +11,6 @@ module.exports = function (ctx) {
 
   const deleteHandler = function (row) {
     return () => {
-      console.log("rows before delete: ", currentRows.length);
       const index = currentRows.indexOf(row);
       if (index !== -1) {
         const removedRows = currentRows.splice(index, 1);
@@ -19,7 +18,6 @@ module.exports = function (ctx) {
           currentTable.removeChild(removed);
         });
       }
-      console.log("rows after delete: ", currentRows.length);
     };
   };
 
@@ -44,29 +42,36 @@ module.exports = function (ctx) {
     return row;
   };
 
+  const addHandler = function () {
+    if (currentTable) {
+      const newRow = renderKeyVal("", "");
+      currentTable.appendChild(newRow);
+      const labels = newRow.getElementsByClassName("input-label");
+      if (labels.length > 0) {
+        labels[0].focus();
+      }
+    }
+  };
+
+  const saveHandler = function () {
+    const newProperties = {};
+    currentRows.forEach((row) => {
+      const labelElement = row.getElementsByClassName("input-label")[0];
+      const valueElement = row.getElementsByClassName("input-value")[0];
+      if (labelElement.value) {
+        newProperties[labelElement.value] = valueElement.value;
+      }
+    });
+    ctx.selectStore.updateProperties(newProperties);
+  };
 
   function createActionButtons() {
     const generalActions = element("div", "actions");
 
     const addButton = element("button", null, "+ Hinzufügen");
-    addButton.addEventListener("click", () => {
-      if (currentTable) {
-        currentTable.appendChild(renderKeyVal("", ""));
-      }
-    });
+    addButton.addEventListener("click", addHandler);
     const saveButton = element("button", null, "Speichern");
-    saveButton.addEventListener("click", () => {
-      console.log("rows before save: ", currentRows.length);
-      const newProperties = {};
-      currentRows.forEach((row) => {
-        const labelElement = row.getElementsByClassName("input-label")[0];
-        const valueElement = row.getElementsByClassName("input-value")[0];
-        if (labelElement.value) {
-          newProperties[labelElement.value] = valueElement.value;
-        }
-      });
-      ctx.selectStore.updateProperties(newProperties);
-    });
+    saveButton.addEventListener("click", saveHandler);
 
     generalActions.appendChild(addButton);
     generalActions.appendChild(saveButton);
@@ -94,13 +99,13 @@ module.exports = function (ctx) {
       } else {
         counter.innerHTML = `${ctx.selectStore.length()} Elemente ausgewählt`;
       }
-      const mergedProperties = ctx.selectStore.getMergedProperties();
       currentTable = element("table");
       const header = element("tr");
       header.appendChild(element("th", "editor-label", "Eigenschaft"));
       header.appendChild(element("th", "editor-value", "Wert"));
       header.appendChild(element("th", "editor-action", "Action"));
       currentTable.appendChild(header);
+      const mergedProperties = ctx.selectStore.getMergedProperties();
       Object.keys(mergedProperties).forEach((property) => {
         currentTable.appendChild(renderKeyVal(property, mergedProperties[property]));
       });
