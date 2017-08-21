@@ -1,5 +1,5 @@
 {
-  "name": "@geohub/geohub-client",
+  "name": "geohub-client",
   "version": "0.1.0",
   "description": "A drawing component for Mapbox GL JS",
   "homepage": "https://github.com/geohub-plattform/geohub-client",
