@@ -23,13 +23,14 @@ const eventBux = require("eventbusjs");
 const selectStore = require("./src/select_store");
 
 const defaultOptions = {
-  snapToFeatures : true,
-  routing : true
+  baseDir: "",
+  snapToFeatures: true,
+  routing: true
 };
 
-const setupGeoHub = function (options = defaultOptions, api) {
+const setupGeoHub = function (options, api) {
   const ctx = {
-    options: options
+    options: Object.assign({}, defaultOptions, options)
   };
   ctx.api = api;
   ctx.internalApi = {};
@@ -46,10 +47,10 @@ const setupGeoHub = function (options = defaultOptions, api) {
 
   api.onAdd = function (map) {
     console.log("onAdd");
-    map.loadImage("../dist/ic_edit_location_black_24dp_1x.png", (error, image) => {
+    map.loadImage(`${ctx.options.baseDir}ic_edit_location_black_24dp_1x.png`, (error, image) => {
       map.addImage("location", image);
     });
-    map.loadImage("../dist/arrow_color.png", (error, image) => {
+    map.loadImage(`${ctx.options.baseDir}arrow_color.png`, (error, image) => {
       map.addImage("arrow", image);
     });
     ctx.map = map;
@@ -91,6 +92,7 @@ const setupGeoHub = function (options = defaultOptions, api) {
   api.addData = ctx.pointindex.addData;
   api.addOverpassData = ctx.pointindex.addOverpassData;
   api.addUserData = ctx.userData.addUserData;
+  api.downloadWays = ctx.events.handleWaysDownloadButton;
 
   ctx.internalApi.addUserData = ctx.pointindex.addUserData;
 

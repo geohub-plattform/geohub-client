@@ -373,6 +373,7 @@ button.active:hover {
 
 #editor {
     font-family: RobotoDraft, sans-serif;
+    border-left: 1px solid #cccccc;
 }
 
 #editor h2, #editor h4  {

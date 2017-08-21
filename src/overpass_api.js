@@ -3,7 +3,7 @@ const turf = require("@turf/turf");
 function loadData(query, success) {
   const xhr = new XMLHttpRequest();
   console.log("Query data: ", query);
-  xhr.open('GET', "http://overpass-api.de/api/interpreter?data=" + query, true);
+  xhr.open('GET', "//overpass-api.de/api/interpreter?data=" + query, true);
   xhr.onreadystatechange = function (e) {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
