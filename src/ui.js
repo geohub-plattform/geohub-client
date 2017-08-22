@@ -190,14 +190,14 @@ module.exports = function (ctx) {
 
     createActionButton("downloadWays", {
       container: actionGroup,
-      className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
+      className: Constants.classes.CONTROL_BUTTON_DOWNLOAD_WAYS,
       key: "w",
       title: `Download way lines`,
       onAction: () => ctx.events.handleWaysDownloadButton()
     });
     createActionButton("downloadBuildings", {
       container: actionGroup,
-      className: Constants.classes.CONTROL_BUTTON_DOWNLOAD,
+      className: Constants.classes.CONTROL_BUTTON_DOWNLOAD_BUILDINGS,
       key: "b",
       title: `Download building lines`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
