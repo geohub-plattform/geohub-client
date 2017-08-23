@@ -1,5 +1,4 @@
 const Constants = require("./constants");
-const turf = require("@turf/turf");
 
 module.exports = function (ctx) {
 
