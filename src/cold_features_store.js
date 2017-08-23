@@ -6,7 +6,18 @@ module.exports = function (ctx) {
   let storeFeatureId = 1;
 
   function updateSource() {
-    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(coldFeatures));
+    const clonedFeatures = [];
+    coldFeatures.forEach((feature) => {
+      const props = feature.properties;
+      if (props["color"] === undefined) {
+        const clone = turf.clone(feature, true);
+        clone.properties.color = "#0D47A1";
+        clonedFeatures.push(clone);
+      } else {
+        clonedFeatures.push(feature);
+      }
+    });
+    ctx.map.getSource(Constants.sources.COLD).setData(turf.featureCollection(clonedFeatures));
   }
 
   function getFeatureById(id) {

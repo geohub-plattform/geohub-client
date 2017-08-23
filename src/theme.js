@@ -30,7 +30,10 @@ module.exports = [
       'line-join': 'round'
     },
     'paint': {
-      'line-color': '#0D47A1',
+      'line-color': {
+        "property" : "color",
+        "type": "identity"
+      },
       'line-width': 2
     }
   },
@@ -41,7 +44,10 @@ module.exports = [
     'layout': {},
     'filter': ["==", "$type", "Polygon"],
     'paint': {
-      'fill-color': '#0D47A1',
+      'fill-color': {
+        "property" : "color",
+        "type": "identity"
+      },
       'fill-opacity': 0.4
     }
   },
