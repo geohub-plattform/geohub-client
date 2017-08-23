@@ -1,11 +1,14 @@
 const turf = require("@turf/turf");
+const jQuery = require("jquery");
 
 function loadData(query, success) {
+  jQuery('#loading').fadeIn(300);
   const xhr = new XMLHttpRequest();
   console.log("Query data: ", query);
   xhr.open('GET', "//overpass-api.de/api/interpreter?data=" + query, true);
   xhr.onreadystatechange = function (e) {
     if (xhr.readyState === 4) {
+      jQuery('#loading').fadeOut(300);
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
         success(response);
@@ -19,15 +22,18 @@ function loadData(query, success) {
 }
 
 function loadBuildings(bbox, success) {
-  const query = '[out:json][timeout:25];' +
-    '(way["building"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + ');' +
-    'relation["building"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + '););' +
-    'out body;>;out skel qt;';
+  const query = '[out:json][timeout:25];(' +
+    'way["highway"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + ');' +
+    'way["building"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + ');' +
+    'relation["building"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + ');' +
+    ');out body;>;out skel qt;';
   loadData(query, success);
 }
 
 function loadWays(bbox, success) {
-  const query = '[out:json][timeout:25];(way["highway"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + '););out body;>;out skel qt;';
+  const query = '[out:json][timeout:25];(' +
+    'way["highway"](' + bbox.getSouth() + ',' + bbox.getWest() + ',' + bbox.getNorth() + ',' + bbox.getEast() + ');' +
+    ');out body;>;out skel qt;';
   loadData(query, success);
 }
 
