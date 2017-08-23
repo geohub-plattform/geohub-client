@@ -16,118 +16,6 @@
         <link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />-->
     <link href='http://localhost:9967/dist/geohub-client.css' rel='stylesheet'/>
     <script src='http://localhost:9967/geohub-client.js'></script>
-    <style>
-        html {
-            height: 100%;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-
-        .nav-shadow {
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-            z-index: 9999;
-        }
-
-        #map {
-            flex-grow: 1;
-        }
-
-        #editor {
-            width: 550px;
-            overflow-y: scroll;
-        }
-
-        #edit-div {
-            display: flex;
-            flex: 1;
-        }
-
-        .dragover {
-            border-top: 3px dashed blue;
-        }
-
-        #loading {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9998;
-            text-align: center;
-            vertical-align: center;
-            background-size: cover;
-            background-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .spinner {
-            margin: 400px auto 0;
-            left: calc(50% - 35%);
-            width: 70px;
-            text-align: center;
-        }
-
-        .spinner > div {
-            width: 18px;
-            height: 18px;
-            background-color: rgba(0, 0, 0, 0.4);
-
-            border-radius: 100%;
-            display: inline-block;
-            -webkit-animation: sk-bouncedelay 1s infinite ease-in-out both;
-            animation: sk-bouncedelay 1s infinite ease-in-out both;
-        }
-
-        .spinner .bounce1 {
-            -webkit-animation-delay: -0.24s;
-            animation-delay: -0.24s;
-        }
-
-        .spinner .bounce2 {
-            -webkit-animation-delay: -0.12s;
-            animation-delay: -0.12s;
-        }
-
-        @-webkit-keyframes sk-bouncedelay {
-            0%,
-            80%,
-            100% {
-                -webkit-transform: scale(0)
-            }
-            40% {
-                -webkit-transform: scale(1.0)
-            }
-        }
-
-        @keyframes sk-bouncedelay {
-            0%,
-            80%,
-            100% {
-                -webkit-transform: scale(0);
-                transform: scale(0);
-            }
-            40% {
-                -webkit-transform: scale(1.0);
-                transform: scale(1.0);
-            }
-        }
-
-        .zoom-container {
-            display: none;
-            position: fixed;
-            left: 8px;
-            top: 80px;
-            font-family: sans-serif;
-            font-size: small;
-        }
-
-        .mapboxgl-map.mouse-add .mapboxgl-canvas-container.mapboxgl-interactive {
-            cursor: crosshair;
-        }
-    </style>
 </head>
 
 <body>
@@ -145,10 +33,10 @@
                     <a class="nav-link" href="https://geohub-plattform.github.io/">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Hilfe</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#helpModal">Hilfe</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Über</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#aboutModal">Über</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://github.com/geohub-plattform/geohub-client">Source code</a>
@@ -171,6 +59,60 @@
         </div>
     </div>
     <div class="zoom-container">Debug - zoom: <span id="zoom"></span>, position: <span id="position"></span></div>
+</div>
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpModalLabel">Hilfe zum GeoHub Online Editor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Der GeoHub Online Editor ist ein Tool um Geodaten zu erstellen. Die Geodaten können
+                anhand bereits vorhandener Geodaten ausgerichtet werden. Hierzu werden die Koordinaten der
+                Straßen und Gebäude als Stützpunkte und Linien geladen. Der Benutzer kann dann entlang
+                    der bereits vorhandener Geodaten neue Daten erstellen.</p>
+                <p></p>
+
+                <h6>Erklärung der einzelnen Funktionen</h6>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Schliessen</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aboutModalLabel">Über GeoHub Online Editor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Das Projekt GeoHub ist einer der Finalisten der ersten Runde des <a href="https://www.prototypefund.de/">Prototype Funds</a>. Das Projekt wird vom BMBF im Rahmen vom Software Sprint gefördert.</p>
+
+                <p>Verantwortlich für den Inhalt:</p>
+
+                <p>Adrian Stabiszewski<br>
+                Ingeborg-Bachmann-Str. 13<br>
+                    74199 Untergruppenbach</p>
+
+                <p>E-Mail: as(at)nitegate(punkt)de</p>
+
+                <img src="https://geohub-plattform.github.io/images/bmbf.jpg">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Schliessen</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var zoomContainer = document.getElementById('zoom');
