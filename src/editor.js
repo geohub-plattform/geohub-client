@@ -116,7 +116,6 @@ module.exports = function (ctx) {
   function updateSelectedFeatures() {
     editor.innerHTML = "";
     if (ctx.selectStore.hasSelection()) {
-      console.log("selected elements:", ctx.selectStore.length());
       if (ctx.selectStore.hasSingleSelection()) {
         counter.innerHTML = "Ein Element ausgewählt";
       } else {
@@ -146,7 +145,6 @@ module.exports = function (ctx) {
 
   return {
     renderEditor: function () {
-      console.log("update selected features");
       updateSelectedFeatures();
       setTimeout(() => {
         updateViewPort();
