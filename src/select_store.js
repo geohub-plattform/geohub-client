@@ -87,11 +87,18 @@ module.exports = function (ctx) {
   }
 
   function updateProperties(newProperties) {
-    console.log("properties to save: ", JSON.stringify(newProperties));
     selectedFeatures.forEach((feature) => {
       const savedId = feature.properties.geoHubId;
       feature.properties = Object.assign({}, newProperties, {geoHubId: savedId});
     });
+  }
+
+  function getSelectedFeaturesBbox() {
+    if (hasSelection()) {
+      return turf.bbox(turf.featureCollection(selectedFeatures));
+    } else {
+      return null;
+    }
   }
 
   return {
@@ -107,6 +114,7 @@ module.exports = function (ctx) {
     forEach,
     getMergedProperties,
     length,
-    updateProperties
+    updateProperties,
+    getSelectedFeaturesBbox
   };
 };

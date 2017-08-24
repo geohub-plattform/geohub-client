@@ -1,8 +1,11 @@
+const turf = require("@turf/turf");
+
 module.exports = function (ctx) {
   const editor = document.getElementById("data-editor");
   const counter = document.getElementById("data-counter");
   let currentTable = null;
   const currentRows = [];
+  let updateViewPortTimeout = null;
 
   function reset() {
     currentRows.splice(0, currentRows.length);
@@ -93,6 +96,23 @@ module.exports = function (ctx) {
     return element;
   }
 
+
+  function updateViewPort() {
+    const bbox = ctx.selectStore.getSelectedFeaturesBbox();
+    if (bbox) {
+      const bboxPolygon = turf.bboxPolygon(bbox);
+      const mapBounds = ctx.map.getBounds();
+      const mapPolygon = turf.polygon([[[mapBounds.getWest(), mapBounds.getNorth()],
+        [mapBounds.getEast(), mapBounds.getNorth()],
+        [mapBounds.getEast(), mapBounds.getSouth()], [mapBounds.getWest(), mapBounds.getSouth()],
+        [mapBounds.getWest(), mapBounds.getNorth()]]]);
+
+      if (!turf.booleanContains(mapPolygon, bboxPolygon)) {
+        ctx.map.fitBounds(bbox, {maxZoom: ctx.map.getZoom()});
+      }
+    }
+  }
+
   function updateSelectedFeatures() {
     editor.innerHTML = "";
     if (ctx.selectStore.hasSelection()) {
@@ -118,7 +138,6 @@ module.exports = function (ctx) {
       currentTable.appendChild(body);
       editor.appendChild(currentTable);
       editor.appendChild(createActionButtons());
-
     } else {
       counter.innerHTML = "Keine Elemente ausgewählt";
       reset();
@@ -129,6 +148,9 @@ module.exports = function (ctx) {
     renderEditor: function () {
       console.log("update selected features");
       updateSelectedFeatures();
+      setTimeout(() => {
+        updateViewPort();
+      }, 500);
       ctx.eventBus.addEventListener("selection_changed", updateSelectedFeatures);
     },
     hideEditor: function () {
