@@ -79,17 +79,27 @@ module.exports = function (ctx) {
   }
 
   function getMergedProperties() {
-    return propertiesMerge(selectedFeatures);
+    return propertiesMerge.simpleMerge(selectedFeatures);
+  }
+
+  function getMergedPropertiesForEditor() {
+    return propertiesMerge.mergeForEditor(selectedFeatures);
   }
 
   function length() {
     return selectedFeatures.length;
   }
 
-  function updateProperties(newProperties) {
+  function updateProperties(newProperties, propertiesToKeep) {
     selectedFeatures.forEach((feature) => {
       const savedId = feature.properties.geoHubId;
-      feature.properties = Object.assign({}, newProperties, {geoHubId: savedId});
+      const baseProperties = {};
+      propertiesToKeep.forEach((propertyName) => {
+        if (feature.properties[propertyName]) {
+          baseProperties[propertyName] = feature.properties[propertyName];
+        }
+      });
+      feature.properties = Object.assign(baseProperties, newProperties, {geoHubId: savedId});
     });
   }
 
@@ -115,6 +125,7 @@ module.exports = function (ctx) {
     getMergedProperties,
     length,
     updateProperties,
-    getSelectedFeaturesBbox
+    getSelectedFeaturesBbox,
+    getMergedPropertiesForEditor
   };
 };

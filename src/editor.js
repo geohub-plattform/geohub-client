@@ -3,13 +3,12 @@ const turf = require("@turf/turf");
 module.exports = function (ctx) {
   const editor = document.getElementById("data-editor");
   const counter = document.getElementById("data-counter");
-  let currentTable = null;
+  let tableBody = null;
   const currentRows = [];
-  let updateViewPortTimeout = null;
 
   function reset() {
     currentRows.splice(0, currentRows.length);
-    currentTable = null;
+    tableBody = null;
   }
 
   const deleteHandler = function (row) {
@@ -18,7 +17,7 @@ module.exports = function (ctx) {
       if (index !== -1) {
         const removedRows = currentRows.splice(index, 1);
         removedRows.forEach((removed) => {
-          currentTable.removeChild(removed);
+          tableBody.removeChild(removed);
         });
       }
     };
@@ -33,7 +32,14 @@ module.exports = function (ctx) {
     const labelField = element("input", "input-label");
     const deleteButton = element("button", "btn btn-warning", "Löschen");
     valueColumn.appendChild(valueField);
-    valueField.value = val;
+    if (val.length === 0) {
+      valueField.value = "";
+    } else if (val.length === 1) {
+      valueField.value = val[0];
+    } else {
+      valueField.value = "";
+      valueField.placeholder = `(${val.join(", ")})`;
+    }
     keyColumn.appendChild(labelField);
     labelField.value = key;
     actionColumn.appendChild(deleteButton);
@@ -46,9 +52,9 @@ module.exports = function (ctx) {
   };
 
   const addHandler = function () {
-    if (currentTable) {
-      const newRow = renderKeyVal("", "");
-      currentTable.appendChild(newRow);
+    if (tableBody) {
+      const newRow = renderKeyVal("", [""]);
+      tableBody.appendChild(newRow);
       const labels = newRow.getElementsByClassName("input-label");
       if (labels.length > 0) {
         labels[0].focus();
@@ -58,14 +64,23 @@ module.exports = function (ctx) {
 
   const saveHandler = function () {
     const newProperties = {};
+    const propertiesToKeep = [];
+    console.log("rows to save: ", currentRows);
     currentRows.forEach((row) => {
       const labelElement = row.getElementsByClassName("input-label")[0];
       const valueElement = row.getElementsByClassName("input-value")[0];
+      console.log("label: ", labelElement.value, "value: ", valueElement.value, "placeholder: ", valueElement.placeholder);
       if (labelElement.value) {
-        newProperties[labelElement.value] = valueElement.value;
+        if (valueElement.value) {
+          newProperties[labelElement.value] = valueElement.value;
+        } else if (valueElement.placeholder) {
+          propertiesToKeep.push(labelElement.value);
+        }
       }
     });
-    ctx.selectStore.updateProperties(newProperties);
+    console.log("newProperties: ", newProperties);
+    console.log("keepProperties: ", propertiesToKeep);
+    ctx.selectStore.updateProperties(newProperties, propertiesToKeep);
   };
 
   function createActionButtons() {
@@ -115,13 +130,14 @@ module.exports = function (ctx) {
 
   function updateSelectedFeatures() {
     editor.innerHTML = "";
+    reset();
     if (ctx.selectStore.hasSelection()) {
       if (ctx.selectStore.hasSingleSelection()) {
         counter.innerHTML = "Ein Element ausgewählt";
       } else {
         counter.innerHTML = `${ctx.selectStore.length()} Elemente ausgewählt`;
       }
-      currentTable = element("table", "table table-bordered");
+      const currentTable = element("table", "table table-bordered");
       const header = element("thead");
       const headerRow = element("tr");
       headerRow.appendChild(element("th", "editor-label", "Eigenschaft"));
@@ -129,17 +145,16 @@ module.exports = function (ctx) {
       headerRow.appendChild(element("th", "editor-action", "Action"));
       header.appendChild(headerRow);
       currentTable.appendChild(header);
-      const body = element("tbody");
-      const mergedProperties = ctx.selectStore.getMergedProperties();
+      tableBody = element("tbody");
+      const mergedProperties = ctx.selectStore.getMergedPropertiesForEditor();
       Object.keys(mergedProperties).forEach((property) => {
-        body.appendChild(renderKeyVal(property, mergedProperties[property]));
+        tableBody.appendChild(renderKeyVal(property, mergedProperties[property]));
       });
-      currentTable.appendChild(body);
+      currentTable.appendChild(tableBody);
       editor.appendChild(currentTable);
       editor.appendChild(createActionButtons());
     } else {
       counter.innerHTML = "Keine Elemente ausgewählt";
-      reset();
     }
   }
 
