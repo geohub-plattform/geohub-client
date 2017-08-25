@@ -86,6 +86,18 @@ module.exports = function (ctx) {
     return propertiesMerge.mergeForEditor(selectedFeatures);
   }
 
+  function getPropertyNames() {
+    const names = [];
+    selectedFeatures.forEach((feature) => {
+      Object.keys(feature.properties).forEach((propertyName) => {
+        if (names.indexOf(propertyName) === -1 && propertyName !== "geoHubId") {
+          names.push(propertyName);
+        }
+      });
+    });
+    return names;
+  }
+
   function length() {
     return selectedFeatures.length;
   }
@@ -126,6 +138,7 @@ module.exports = function (ctx) {
     length,
     updateProperties,
     getSelectedFeaturesBbox,
-    getMergedPropertiesForEditor
+    getMergedPropertiesForEditor,
+    getPropertyNames
   };
 };

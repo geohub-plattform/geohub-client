@@ -1,14 +1,18 @@
 const turf = require("@turf/turf");
+const jQuery = require("jquery");
 
 module.exports = function (ctx) {
+  const globalProperties = ["color", "description", "name", "label", "city", "street", "population"];
   const editor = document.getElementById("data-editor");
   const counter = document.getElementById("data-counter");
   let tableBody = null;
+  let knownPropertyNames = null;
   const currentRows = [];
 
   function reset() {
     currentRows.splice(0, currentRows.length);
     tableBody = null;
+    knownPropertyNames = null;
   }
 
   const deleteHandler = function (row) {
@@ -48,6 +52,9 @@ module.exports = function (ctx) {
     row.appendChild(valueColumn);
     row.appendChild(actionColumn);
     currentRows.push(row);
+    if (knownPropertyNames) {
+      jQuery(labelField).typeahead({source: knownPropertyNames});
+    }
     return row;
   };
 
@@ -128,6 +135,14 @@ module.exports = function (ctx) {
     }
   }
 
+  function createPropertyNameList() {
+    const knownNames = new Set(globalProperties);
+    ctx.selectStore.getPropertyNames().forEach((name) => {
+      knownNames.add(name);
+    });
+    knownPropertyNames = [...knownNames.values()];
+  }
+
   function updateSelectedFeatures() {
     editor.innerHTML = "";
     reset();
@@ -137,6 +152,7 @@ module.exports = function (ctx) {
       } else {
         counter.innerHTML = `${ctx.selectStore.length()} Elemente ausgewählt`;
       }
+      createPropertyNameList();
       const currentTable = element("table", "table table-bordered");
       const header = element("thead");
       const headerRow = element("tr");
