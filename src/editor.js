@@ -88,6 +88,7 @@ module.exports = function (ctx) {
     console.log("newProperties: ", newProperties);
     console.log("keepProperties: ", propertiesToKeep);
     ctx.selectStore.updateProperties(newProperties, propertiesToKeep);
+    ctx.snackbar("Gespeichert");
   };
 
   function createActionButtons() {
