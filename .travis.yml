@@ -1,0 +1,35 @@
+
+language: node_js
+node_js: '4.0'
+
+notifications:
+  email: false
+
+before_install:
+  - rvm install 2.1
+  - rvm use 2.1
+  - . $HOME/.nvm/nvm.sh && nvm install 6.1 && nvm use 6.1
+  - gem install bundler
+  - bundle check || bundle install
+
+install:
+  - npm install -g firebase-tools
+  - npm install .
+
+before_script:
+  - npm run prepublish
+
+script: npm run build
+
+after_success:
+  - firebase deploy --token $FIREBASE_TOKEN
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
+
+sudo: false # route your build to the container-based infrastructure for a faster
