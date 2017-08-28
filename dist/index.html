@@ -14,7 +14,6 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet'/>
     <link href='geohub-client.css' rel='stylesheet'/>
     <script src='geohub-client.js'></script>
-    <script src='https://code.jquery.com/jquery-3.2.1.js'></script>
 </head>
 
 <body>
@@ -77,6 +76,85 @@
 
                 <h6>Erklärung der einzelnen Funktionen</h6>
 
+                <p><img src="./help/action_download_ways.png"/>
+                Lädt die Straßen-Geodaten für den aktuellen Bereich um sie als Stützdaten anzuzeigen. Mit Hilfe
+                der Stützdaten können andere Geo-Objekte ausgerichtet werden, z.B. endlang von Straßen oder
+                Gebäuden.</p>
+
+                <p><img src="./help/action_download_all.png"/>
+                Lädt die Straßen und Gebäude-Geodaten für den aktuellen Bereich um sie als Stützdaten anzuzeigen.</p>
+
+                <p><img src="./help/action_editor.png"/>
+                    Öffnet den Editor um die Eigenschaften der ausgewählten Geodaten zu bearbeiten. Die Eigenschaften
+                    sind einfache Schlüssel-Wert Paare, die jedem Objekt oder einer Gruppe von Objekten zugeordnet
+                    werden können. Sind die Werte für manche Schlüssel unterschiedlich, so werden sie als Platzhalter
+                    angezeigt.
+                </p>
+                <p><img src="./help/action_load.png"/>
+                    Lädt Geodaten von der Festplatte runter. Die Geodaten können im GEOJSON oder KML Format sein.
+                    Es ist auch möglich die GSOJSON oder KML Datei einfach in den Browser zu ziehen um sie zu laden.
+                </p>
+                <p><img src="./help/action_save.png"/>
+                    Speichert die aktuellen Geodaten als GEOJSON oder KML Datei auf der Festplatte. Alternativ können die
+                    Daten auch als GIST gespeichert werden. Wenn nur bestimmte Objekte ausgewählt sind, so werden nur
+                    sie gespeichert.
+                </p>
+                <p><img src="./help/action_select.png"/>
+                    Auswahlwerkzeug um bestimmte Objekte auszuwählen. Bei gedrückter SHIFT-Taste können mehrere Objekte
+                    selektiert werden.
+                </p>
+                <p><img src="./help/action_draw.png"/>
+                    Zeichenwerkzeug zum Zeichnen von neuen Geodaten. Bei aktiviertem Snapping werden die Daten
+                    automatisch entlang bereits vorhandener Geodaten gezeichnet. Beim Drücken der SHIFT-Taste wird das
+                    Snapping deaktiviert. Beim Drücken der ALT-Taste wird das Routing deaktiviert. Zum Löschen
+                    der letzten Punkte kann die ENFT-Taste gedrückt werden.
+                    Beim erneutem Klick auf den letzten Punkt wird das Zeichnen beendet und das Objekt abgeschlossen.
+                </p>
+                <p><img src="./help/action_cut.png"/>
+                    Schneidewerk trennt die aktuelle Linie in zwei Teile. Beim Trennen von Polygonen wird das Polygon
+                    aufgelöst und eventuelle innere Polygone als einzelne Polygone ausgelöst.
+                </p>
+                <p><img src="./help/action_snapping.png"/>
+                    Snapping Funktion aktivieren oder deaktivieren. Mit der Snapping Funktion wird versucht immer
+                    den nächstgelegenen Punkt als Stützpunkt zu verwenden.
+                </p>
+                <p><img src="./help/action_routing.png"/>
+                    Routing Funktion aktivieren oder deaktivieren. Mit der Routing Funktion wird die gezeichnete Linie entlang bereits vorhandener Linien gezogen.
+                    Dadurch stimmendie Daten exakt mit den bereits vorhandenen Geodaten überein.
+                </p>
+                <p><img src="./help/action_combine.png"/>
+                    Kombiniert die ausgewählten Objekte zu einem Objekt. Mehrere Linien werden dabei zu einer Linie
+                    zusammengeführt. Die erste Linie legt dabei die Richtung für die Gesamtlinie fest.
+                    Bei mehreren Polygonen ist das erste Polygon das äußere und die anderen sind die inneren Polygone.
+                </p>
+                <p><img src="./help/action_group.png"/>
+                    Objekte gruppieren. Es können nur Linien mit Linien (MultiLineString) und Polygone mit
+                    Polygonen (MultiPolygon) gruppiert werden.
+                </p>
+                <p><img src="./help/action_ungroup.png"/>
+                    Gruppierung rückgängig machen. Die gruppierten Objekte werden dabei in ihre Ursprungsformen
+                    aufgeteilt.
+                </p>
+                <p><img src="./help/action_polygon.png"/>
+                    Eine Linie zum Poylgon machen. Sind der Anfang- und Endpunkt nicht gleich, dann wird das
+                    Polygon automatisch geschlossen.
+                </p>
+                <p><img src="./help/action_delete.png"/>
+                    Gezeichnete Daten löschen. Löscht alle Benutzerdaten. Kann nicht rückgängig gemacht werden.
+                </p>
+                <p><img src="./help/action_delete_snap.png"/>
+                    Löscht die Sützdaten im Hintergrund.
+                </p>
+                <p><img src="./help/action_zoom.png"/>
+                    Bewegt die Karte so, dass alle Benutzerobjekte sichtbar sind.
+                </p>
+                <p><img src="./help/action_hide_selected.png"/>
+                    Versteckt die gerade ausgewählten Objekt. Diese Funktion kann nützlich sein, wenn viele Objekte
+                    übereinander liegen und man das gewünschte Objekte nicht direkt auswählen kann.
+                </p>
+                <p><img src="./help/action_add_snap.png"/>
+                    Fügt die aktuell ausgewählten Daten zur den Stützdaten hinzu.
+                </p>
 
             </div>
             <div class="modal-footer">
@@ -150,10 +228,10 @@
         /*$.getJSON("overpass-experimenta.json", null, function (data) {
             geoHubClient.addOverpassData(data);
         });*/
-        $.getJSON("anwohner-neu.json", null, function (data) {
+/*        $.getJSON("anwohner-neu.json", null, function (data) {
             geoHubClient.addUserData(data);
 
-        });
+        });*/
     });
 </script>
 </body>
