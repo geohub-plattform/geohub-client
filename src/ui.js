@@ -192,93 +192,93 @@ module.exports = function (ctx) {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD_WAYS,
       key: "w",
-      title: `Download way lines`,
+      title: `Wege downloaden`,
       onAction: () => ctx.events.handleWaysDownloadButton()
     });
     createActionButton("downloadBuildings", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_DOWNLOAD_BUILDINGS,
       key: "b",
-      title: `Download building lines`,
+      title: `Wege und Gebäude downloaden`,
       onAction: () => ctx.events.handleBuildingsDownloadButton()
     });
     createActionButton("expandEditor", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_EXPAND_EDITOR,
       key: "e",
-      title: `Expand GeoJson Feature Editor`,
+      title: `GeoJson Feature Editor öffnen`,
       onAction: () => ctx.events.handleExpandEditorButton()
     });
     createActionButton("loadData", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_LOAD_DATA,
       key: "o",
-      title: `Upload GeoJson, KML or GPX from PC`,
+      title: `Öffnen von GeoJson, KML or GPX Dateien`,
       onAction: () => ctx.events.handleLoadDataButton()
     });
     createActionButton("saveFile", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE,
-      title: `Export as Gist, GeoJson, KML`,
+      title: `Als Gist, GeoJson oder KML speichern`,
       onAction: () => ctx.events.handleSaveButton()
     });
     createActionButton("saveAsGist", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GIST,
-      title: `Export as Gist`,
+      title: `Als Gist speichern`,
       onAction: () => ctx.events.handleSaveAsGistButton()
     });
     createActionButton("saveAsGeojson", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GEOJSON,
-      title: `Export as Geojson`,
+      title: `Als Geojson speichern`,
       onAction: () => ctx.events.handleSaveAsGeojsonButton()
     });
     createActionButton("saveAsKML", {
       container: dropdownGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE_AS_KML,
-      title: `Export as KML`,
+      title: `Als KML speichern`,
       onAction: () => ctx.events.handleSaveAsKmlButton()
     });
     createControlButton("select", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_SELECT,
       key: "s",
-      title: `Select features`,
+      title: `Geodaten auswählen`,
       onActivate: () => ctx.events.changeMode(Constants.modes.SELECT)
     });
     createControlButton("edit", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_EDIT,
       key: "d",
-      title: `Edit`,
+      title: `Zeichnen`,
       onActivate: () => ctx.events.changeMode(Constants.modes.DRAW)
     });
     createControlButton("cut", {
       container: controlGroup,
       className: Constants.classes.CONTROL_BUTTON_CUT,
       key: "a",
-      title: `Cut`,
+      title: `Geodaten schneiden`,
       onActivate: () => ctx.events.changeMode(Constants.modes.CUT)
     });
     createOptionButton("snap-enabled", {
       container: optionsGroup,
       name: "snapToFeatures",
-      title: `Toggle snapping`,
+      title: `Snapping ein- und ausschalten`,
       activeClass: 'geohub-snapping-enabled',
       inactiveClass: 'geohub-snapping-disabled'
     });
     createOptionButton("routing-enabled", {
       container: optionsGroup,
       name: "routing",
-      title: `Toggle routing`,
+      title: `Routing ein- und ausschalten`,
       activeClass: 'geohub-routing-enabled',
       inactiveClass: 'geohub-routing-disabled'
     });
     createActionButton("combine", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_COMBINE_FEATURES,
-      title: `Combine`,
+      title: `Elemente kombinieren`,
       key: '+',
       onAction: () => ctx.internalApi.combineFeatures()
     });
@@ -286,52 +286,52 @@ module.exports = function (ctx) {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_GROUP_FEATURES,
       key: "g",
-      title: `Group`,
+      title: `Elemente groupieren`,
       onAction: () => ctx.internalApi.groupFeatures()
     });
     createActionButton("ungroup-elements", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_UNGROUP_FEATURES,
       key: "G",
-      title: `Ungroup`,
+      title: `Gruppe auflösen`,
       onAction: () => ctx.internalApi.ungroupFeatures()
     });
     createActionButton("create-polygon", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_CREATE_POLYGON,
       key: 'p',
-      title: `Create polygon`,
+      title: `Polygon erstellen`,
       onAction: () => ctx.internalApi.createPolygon()
     });
     createActionButton("delete", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE,
-      title: `Delete data`,
+      title: `Geodaten löschen`,
       onAction: () => ctx.events.deleteUserData()
     });
     createActionButton("delete-snap", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_DELETE_SNAP,
-      title: `Delete snap data`,
+      title: `Stützdaten löschen`,
       onAction: () => ctx.internalApi.deleteSnapData()
     });
     createActionButton("zoom-in-features", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
       key: "x",
-      title: `Zoom in current features`,
+      title: `Karte an den Geodaten ausrichten`,
       onAction: () => ctx.internalApi.zoomInFeatures()
     });
     createActionButton("hide-selected", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_HIDE_SELECTED,
-      title: `Hide/Unhide selected features`,
+      title: `Ausgewählte Elemente verstecken`,
       onAction: () => ctx.selectStore.hideFeatures()
     });
     createActionButton("add-feature-to-grid", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_ADD_FEATURE_TO_GRID,
-      title: `Add feature to snap grid`,
+      title: `Ausgewählte Element zur Stützdaten hinzufügen`,
       onAction: () => ctx.events.addSelectedFeaturesToSnapGrid()
     });
     return containerGroup;
