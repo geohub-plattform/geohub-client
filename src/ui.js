@@ -331,7 +331,7 @@ module.exports = function (ctx) {
     createActionButton("add-feature-to-grid", {
       container: action2Group,
       className: Constants.classes.CONTROL_BUTTON_ADD_FEATURE_TO_GRID,
-      title: `Ausgewählte Element zur Stützdaten hinzufügen`,
+      title: `Ausgewählte Elemente zur Stützdaten hinzufügen`,
       onAction: () => ctx.events.addSelectedFeaturesToSnapGrid()
     });
     return containerGroup;
