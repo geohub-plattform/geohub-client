@@ -4,6 +4,7 @@ import turf from "@turf/turf";
 const overpassApi = require("./overpass_api");
 const exportFile = require("./export_file");
 const jQuery = require("jquery");
+const gistApi = require("./gist_api");
 
 module.exports = function (ctx) {
 
@@ -115,7 +116,16 @@ module.exports = function (ctx) {
   }
 
   function handleSaveAsGistButton() {
-    exportFile.asGist(getFeaturesForSave());
+    gistApi.saveGist(getFeaturesForSave(), (gistUrl) => {
+      const gistModal = jQuery("#gistModal");
+      const inputField = jQuery("#gistUrl");
+      jQuery("#gistModalLabel").text("Als Gist gespeichert");
+      gistModal.on("shown.bs.modal", () => {
+        inputField.focus().val(gistUrl);
+      });
+      gistModal.find(".btn-primary").hide();
+      gistModal.modal();
+    });
   }
 
   function handleSaveAsGeojsonButton() {
@@ -154,6 +164,33 @@ module.exports = function (ctx) {
       }
       ctx.fileUtils.processFiles(files, ctx.api.addUserData);
     }
+  }
+
+  function handleLoadFromGist() {
+    const gistModal = jQuery("#gistModal");
+    const inputField = jQuery("#gistUrl");
+    jQuery("#gistModalLabel").text("Von Gist laden");
+    gistModal.on("shown.bs.modal", () => {
+      inputField.focus();
+    });
+    gistModal.on("hide.bs.modal", () => {
+      gistModal.find(".btn-primary").off("click");
+    });
+    gistModal.find(".btn-primary").show().text("Laden").on("click", () => {
+      const urlMatcher = new RegExp(".*://gist.github.com/(.*/)?(.*)", "i").exec(inputField.val());
+      if (urlMatcher) {
+        const gistId = urlMatcher[2];
+        gistApi.loadGist(gistId, (content) => {
+          ctx.api.addUserData(content);
+          gistModal.modal('hide');
+          ctx.internalApi.zoomInFeatures();
+        });
+      } else {
+        ctx.snackbar("Gist URL ungültig");
+        gistModal.modal('hide');
+      }
+    });
+    gistModal.modal();
   }
 
   function changeMode(modeName) {
@@ -228,6 +265,7 @@ module.exports = function (ctx) {
     handleExpandEditorButton,
     handleLoadDataButton,
     deleteUserData,
-    addSelectedFeaturesToSnapGrid
+    addSelectedFeaturesToSnapGrid,
+    handleLoadFromGist
   };
 };

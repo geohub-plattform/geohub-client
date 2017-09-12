@@ -216,6 +216,12 @@ module.exports = function (ctx) {
       title: `Öffnen von GeoJson, KML or GPX Dateien`,
       onAction: () => ctx.events.handleLoadDataButton()
     });
+    createActionButton("loadAsGist", {
+      container: actionGroup,
+      className: Constants.classes.CONTROL_BUTTON_SAVE_AS_GIST,
+      title: `Von Gist laden`,
+      onAction: () => ctx.events.handleLoadFromGist()
+    });
     createActionButton("saveFile", {
       container: actionGroup,
       className: Constants.classes.CONTROL_BUTTON_SAVE,
