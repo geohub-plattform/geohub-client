@@ -5,6 +5,7 @@
   "homepage": "https://github.com/geohub-plattform/geohub-client",
   "author": "grundid",
   "main": "index.js",
+  "license": "ISC",
   "browserify": {
     "transform": [
       "babelify"
